@@ -537,8 +537,12 @@
      non più embeddati qui. Schema di ogni giocata, per riferimento:
      Giocata secca ("codice"/"nota" opzionali, solo informativi):
        { data, evento, tipologia, selezione, quota, stake, esito, codice?, nota? }
-     Ciclo Paracadute (importo LIBERO, non a unità — quote di OGNI step):
-       { data, evento, tipologia: "Paracadute", selezione, quote: [1.40,1.35,1.45], esito, codice? }
+     Paracadute (importo LIBERO, non a unità — ogni STEP è la sua
+     riga: non si conoscono step 2/3 finché non li giocate davvero.
+     Righe con lo stesso "ciclo" vengono raggruppate e ordinate per
+     "step"; il ciclo vince se lo step 3 vince, perde se un step
+     qualsiasi perde):
+       { data, evento, tipologia: "Paracadute", selezione, quota, ciclo, step, esito, codice? }
      esito è "vinta" | "persa" | "in_attesa". Il bot (o il comando
      "traccia giocata") scrive solo su dati/giocate.json — questa
      pagina si limita a leggerlo ad ogni caricamento.
@@ -793,76 +797,112 @@
 
   /* ============================================================
      Render: Paracadute (sempre tutto lo storico, cassa a parte)
-     Non è a unità — importo libero. Simula una catena di cicli a
-     partire da uno stake ipotetico fisso: ogni vittoria incassa
-     metà e reinveste l'altra metà nel ciclo successivo; ogni
-     fallimento perde lo stake corrente e si riparte dalla base.
+     Non è a unità — importo libero. Ogni STEP è pubblicato come
+     messaggio separato (non si sa in anticipo lo step 2/3): le
+     righe con lo stesso "ciclo" vengono raggruppate e ordinate
+     per "step". Simula una catena a partire da uno stake ipotetico
+     fisso: ogni step vinto rilancia tutto sul successivo; al terzo
+     step vinto metà si incassa e metà riparte come ciclo successivo;
+     un fallimento in un punto qualsiasi perde quanto era in gioco
+     in quel momento e il ciclo dopo riparte dalla base.
      ============================================================ */
+  function raggruppaCicli() {
+    const rows = GIOCATE.filter(g => g.tipologia === "Paracadute");
+    const per = {};
+    rows.forEach(g => { (per[g.ciclo] = per[g.ciclo] || []).push(g); });
+    return Object.keys(per)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .map(numero => ({ numero, steps: per[numero].slice().sort((a, b) => a.step - b.step) }));
+  }
+
   function simulateParacadute(baseStake) {
-    const settled = GIOCATE.filter(g => g.tipologia === "Paracadute" && isSettled(g))
-      .sort((a, b) => a.data.localeCompare(b.data));
+    const cicli = raggruppaCicli();
     let current = baseStake;
     let totaleIncassato = 0;
-    const timeline = settled.map(g => {
-      const moltiplicatore = (g.quote || []).reduce((m, q) => m * q, 1);
-      if (g.esito === "vinta") {
-        const payout = current * moltiplicatore;
-        const incassato = payout / 2;
-        const row = { giocata: g, data: g.data, esito: "vinta", moltiplicatore, stakeIniziale: current, incassato };
-        totaleIncassato += incassato;
-        current = payout / 2;
-        return row;
+    const risultati = cicli.map(({ numero, steps }) => {
+      const stakeIniziale = current;
+      let running = current;
+      let esito = "in_attesa";
+      let ultimaData = steps[0].data;
+      for (const s of steps) {
+        ultimaData = s.data;
+        if (s.esito === "vinta") {
+          running = running * s.quota;
+          if (s.step >= 3) esito = "vinta";
+        } else if (s.esito === "persa") {
+          esito = "persa";
+          break;
+        } else {
+          esito = "in_attesa";
+          break;
+        }
       }
-      const row = { giocata: g, data: g.data, esito: "persa", moltiplicatore, stakeIniziale: current, perso: current };
-      current = baseStake;
-      return row;
+      let incassato = null, perso = null;
+      if (esito === "vinta") {
+        incassato = running / 2;
+        totaleIncassato += incassato;
+        current = running / 2;
+      } else if (esito === "persa") {
+        perso = running;
+        current = baseStake;
+      }
+      return { numero, steps, esito, stakeIniziale, incassato, perso, data: ultimaData };
     });
-    return { timeline, totaleIncassato, stakeAttuale: current };
+    return { risultati, totaleIncassato, stakeAttuale: current };
   }
 
   function renderParacadute() {
-    const rows = GIOCATE.filter(g => g.tipologia === "Paracadute");
+    const cicli = raggruppaCicli();
     const host = document.getElementById("paracaduteHost");
-    if (rows.length === 0) {
+    if (cicli.length === 0) {
       host.innerHTML = '<div class="chart-empty"><div class="glyph">🪂</div><p>Nessun ciclo Paracadute registrato.</p></div>';
       return;
     }
     const baseStake = parseFloat(document.getElementById("paraBaseInput").value) || 0;
-    const settled = rows.filter(isSettled);
-    const riusciti = settled.filter(g => g.esito === "vinta");
-    const falliti = settled.filter(g => g.esito === "persa");
-    const inAttesa = rows.length - settled.length;
     const sim = simulateParacadute(baseStake);
+    const riusciti = sim.risultati.filter(r => r.esito === "vinta");
+    const falliti = sim.risultati.filter(r => r.esito === "persa");
+    const inCorso = sim.risultati.filter(r => r.esito === "in_attesa");
 
     const stats =
       '<div class="stats" style="margin-bottom:18px">' +
-      '<div class="stat-tile"><p class="stat-label">Cicli</p><div class="stat-value">' + rows.length + (inAttesa ? ' <span style="font-size:12px;color:var(--accent)">(' + inAttesa + ' in corso)</span>' : '') + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Cicli</p><div class="stat-value">' + sim.risultati.length + (inCorso.length ? ' <span style="font-size:12px;color:var(--accent)">(' + inCorso.length + ' in corso)</span>' : '') + '</div></div>' +
       '<div class="stat-tile"><p class="stat-label">Riusciti</p><div class="stat-value good">' + riusciti.length + '</div></div>' +
       '<div class="stat-tile"><p class="stat-label">Falliti</p><div class="stat-value critical">' + falliti.length + '</div></div>' +
       '<div class="stat-tile"><p class="stat-label">Incassato (simulato)</p><div class="stat-value good">' + sim.totaleIncassato.toFixed(2) + '</div></div>' +
       '<div class="stat-tile"><p class="stat-label">Stake attuale (simulato)</p><div class="stat-value">' + sim.stakeAttuale.toFixed(2) + '</div></div>' +
       '</div>';
 
-    const quoteStr = g => (g.quote || []).map(q => q.toFixed(2)).join(" · ") +
-      (g.quote && g.quote.length > 1 ? " (" + g.quote.reduce((m, q) => m * q, 1).toFixed(2) + "x)" : "");
-    const evtCol = g => g.evento +
-      (g.codice ? ' <span style="color:var(--ink-muted);font-size:11px">#' + g.codice + '</span>' : "") +
-      (g.nota ? '<div style="font-size:11.5px;color:var(--ink-secondary);font-style:italic;margin-top:2px">' + g.nota + '</div>' : "");
+    const percorsoStr = steps => steps.map(s => {
+      const marker = s.esito === "persa" ? "✕" : s.esito === "in_attesa" ? "…" : "";
+      return s.quota.toFixed(2) + marker;
+    }).join(" → ");
 
-    const pending = rows.filter(g => !isSettled(g));
-    const trsPending = pending.map(g => {
-      return '<tr><td>' + g.data + '</td><td>' + evtCol(g) + '</td><td>' + quoteStr(g) + '</td><td>—</td><td>—</td><td><span class="badge pending">⏳ In corso</span></td></tr>';
-    }).join("");
-    const trsSettled = [...sim.timeline].sort((a, b) => b.data.localeCompare(a.data)).map(t => {
-      const badge = t.esito === "vinta" ? '<span class="badge win">✓ Incassato</span>' : '<span class="badge loss">✕ Fallito</span>';
-      const risultato = t.esito === "vinta" ? "+" + t.incassato.toFixed(2) : "-" + t.perso.toFixed(2);
-      return '<tr><td>' + t.data + '</td><td>' + evtCol(t.giocata) + '</td><td>' + quoteStr(t.giocata) + '</td>' +
-        '<td>' + t.stakeIniziale.toFixed(2) + '</td><td>' + risultato + '</td><td>' + badge + '</td></tr>';
+    const dettaglioStep = steps => steps.map(s =>
+      '<div style="font-size:11.5px;color:var(--ink-secondary)">Step ' + s.step + ': ' + s.evento + ' — ' + s.selezione +
+      (s.codice ? ' <span style="color:var(--ink-muted)">#' + s.codice + '</span>' : '') + '</div>'
+    ).join("");
+
+    const sorted = [...sim.risultati].sort((a, b) => b.data.localeCompare(a.data));
+    const trs = sorted.map(r => {
+      const badge = r.esito === "vinta" ? '<span class="badge win">✓ Incassato</span>'
+        : r.esito === "persa" ? '<span class="badge loss">✕ Fallito</span>'
+        : '<span class="badge pending">⏳ In corso</span>';
+      const risultato = r.esito === "vinta" ? "+" + r.incassato.toFixed(2)
+        : r.esito === "persa" ? "-" + r.perso.toFixed(2)
+        : "—";
+      return '<tr><td>' + r.data + '</td>' +
+        '<td>Ciclo ' + r.numero + '<br>' + dettaglioStep(r.steps) + '</td>' +
+        '<td>' + percorsoStr(r.steps) + '</td>' +
+        '<td>' + r.stakeIniziale.toFixed(2) + '</td>' +
+        '<td>' + risultato + '</td>' +
+        '<td>' + badge + '</td></tr>';
     }).join("");
 
     host.innerHTML = stats +
-      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Ciclo</th><th>Quote per step</th><th>Stake sim.</th><th>Risultato sim.</th><th>Esito</th></tr></thead>' +
-      '<tbody>' + trsPending + trsSettled + '</tbody></table></div>';
+      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Ciclo</th><th>Percorso quote</th><th>Stake sim.</th><th>Risultato sim.</th><th>Esito</th></tr></thead>' +
+      '<tbody>' + trs + '</tbody></table></div>';
   }
 
   /* ============================================================

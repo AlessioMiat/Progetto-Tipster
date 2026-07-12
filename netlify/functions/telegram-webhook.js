@@ -41,20 +41,26 @@ function parseGiocataSecca(testo, tipologia) {
   };
 }
 
-function parseParacadute(testo) {
-  const steps = ["Step 1", "Step 2", "Step 3"]
-    .map(label => estraiCampo(testo, label))
-    .filter(Boolean)
-    .map(v => parseFloat(v.replace(",", ".")));
-  if (steps.length === 0) return null;
+function parseParacaduteStep(testo) {
+  // Ogni step si pubblica come messaggio a sé (non si conoscono step 2/3 in
+  // anticipo) — "Ciclo" collega gli step tra loro, "Step" li ordina.
+  const cicloStr = estraiCampo(testo, "Ciclo");
+  const stepStr = estraiCampo(testo, "Step");
+  const evento = estraiCampo(testo, "Evento");
+  const quotaStr = estraiCampo(testo, "Quota");
+  if (!cicloStr || !stepStr || !evento || !quotaStr) return null;
   const codice = estraiCampo(testo, "Codice");
+  const nota = estraiCampo(testo, "Nota");
   return {
-    evento: estraiCampo(testo, "Evento") || (steps.length + " step Paracadute"),
+    evento,
     tipologia: "Paracadute",
-    selezione: estraiCampo(testo, "Selezione") || "Scala Paracadute",
-    quote: steps,
+    selezione: estraiCampo(testo, "Selezione") || "",
+    quota: parseFloat(quotaStr.replace(",", ".")),
+    ciclo: parseInt(cicloStr, 10),
+    step: parseInt(stepStr, 10),
     esito: "in_attesa",
-    ...(codice ? { codice } : {})
+    ...(codice ? { codice } : {}),
+    ...(nota ? { nota } : {})
   };
 }
 
@@ -95,7 +101,7 @@ exports.handler = async event => {
     // Caso 1: nuovo post con didascalia strutturata -> nuova giocata "in_attesa"
     if (post.caption) {
       const tipologia = estraiTipologia(post.caption);
-      const giocata = tipologia === "Paracadute" ? parseParacadute(post.caption)
+      const giocata = tipologia === "Paracadute" ? parseParacaduteStep(post.caption)
         : tipologia ? parseGiocataSecca(post.caption, tipologia)
         : null;
       if (giocata) {
