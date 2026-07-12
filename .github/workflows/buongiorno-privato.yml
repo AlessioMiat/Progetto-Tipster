@@ -1,0 +1,22 @@
+name: Buongiorno privato
+
+on:
+  schedule:
+    # 06:00 UTC = 08:00 ora italiana (CEST, in vigore da fine marzo a fine ottobre).
+    # Lo script poi aspetta 0-120 minuti in piu' a caso, quindi il messaggio
+    # arriva in un punto casuale tra le 08:00 e le 10:00.
+    # NOTA: quando l'Italia passa a CET (ultima domenica di ottobre), cambiare
+    # in '0 7 * * *' per restare sulle 08:00-10:00 locali.
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  invia:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Invia buongiorno
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID_PRIVATO: ${{ secrets.TELEGRAM_CHAT_ID_PRIVATO }}
+        run: node automazioni/invia-buongiorno.js
