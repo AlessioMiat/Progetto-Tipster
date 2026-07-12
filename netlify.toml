@@ -1,5 +1,9 @@
 [build]
   functions = "netlify/functions"
+  # Il bot scrive solo su giocate.json: senza questa regola, ogni sua
+  # giocata farebbe ripartire una build qui, sprecando i minuti gratuiti
+  # per niente. Si ricostruisce SOLO se cambia il codice della funzione.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- netlify/functions netlify.toml"
 
 [functions]
   node_bundler = "esbuild"
