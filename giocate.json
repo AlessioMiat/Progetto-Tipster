@@ -1,0 +1,6 @@
+{
+  "bankroll_iniziale": 100,
+  "unita": "1 unità = 1% del bankroll totale",
+  "tipologie": ["Tridente", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"],
+  "giocate": []
+}

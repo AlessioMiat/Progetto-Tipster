@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>L'ISOLA — Tracciamento</title>
+<style>
+  :root {
+    --bg-page: #0b0905;
+    --bg-card: #1c150d;
+    --bg-card-raised: #251b10;
+    --ink-primary: #f5ecd8;
+    --ink-secondary: #b3a186;
+    --ink-muted: #7a6b52;
+    --accent: #e0aa3e;
+    --accent-dim: rgba(224, 170, 62, 0.16);
+    --hairline: rgba(245, 236, 216, 0.10);
+    --good: #17c964;
+    --critical: #e35d5d;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(224,170,62,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(30,140,130,0.05), transparent 55%),
+      var(--bg-page);
+    color: var(--ink-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* ---------- Header ---------- */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  .brand-mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    line-height: 1;
+    flex-shrink: 0;
+    box-shadow: 0 0 16px rgba(224,170,62,0.30);
+    overflow: hidden;
+  }
+  .brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+  .brand-text h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .brand-text p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: var(--ink-secondary);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: linear-gradient(160deg, var(--bg-card) 0%, var(--bg-card-raised) 100%);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 28px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 16px;
+  }
+  .hero-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--ink-secondary);
+    margin: 0 0 6px;
+  }
+  .hero-value {
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .hero-value span.unit {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink-secondary);
+  }
+  .hero-delta {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-delta.flat { color: var(--ink-secondary); }
+  .hero-delta.up { color: var(--good); }
+  .hero-delta.down { color: var(--critical); }
+  .hero-main { flex: 1 1 auto; }
+  .hero-secondary {
+    padding-left: 24px;
+    border-left: 1px solid var(--hairline);
+  }
+  .hero-value-sm {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .hero-value-sm.up { color: var(--good); }
+  .hero-value-sm.down { color: var(--critical); }
+  .hero-note {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    max-width: 220px;
+    line-height: 1.6;
+    margin-left: auto;
+  }
+  .hero-note p { margin: 0; }
+
+  /* ---------- Filter row ---------- */
+  .filter-block {
+    margin: 0 0 20px;
+  }
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .filter-pill {
+    border: 1px solid var(--hairline);
+    background: var(--bg-card);
+    color: var(--ink-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .filter-pill:hover { background: var(--bg-card-raised); color: var(--ink-primary); }
+  .filter-pill.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .filter-pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- Highlight card (categoria migliore) ---------- */
+  .highlight-card {
+    background: linear-gradient(135deg, var(--accent-dim), transparent);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 16px 22px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hc-icon { font-size: 28px; line-height: 1; flex-shrink: 0; }
+  .hc-body { flex: 1; min-width: 0; }
+  .hc-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-secondary);
+    margin: 0 0 3px;
+  }
+  .hc-title { font-size: 16px; font-weight: 800; margin: 0 0 2px; }
+  .hc-stats { font-size: 13px; color: var(--ink-secondary); margin: 0; font-variant-numeric: tabular-nums; }
+
+  /* ---------- Stat tiles ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stats.compact { grid-template-columns: repeat(5, 1fr); margin-bottom: 16px; }
+  .stat-tile {
+    background: var(--bg-card);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .stat-tile.sm { padding: 10px 14px; }
+  .stat-label {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    margin: 0 0 8px;
+  }
+  .stat-value {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-value.sm { font-size: 19px; }
+  .stat-value.good { color: var(--good); }
+  .stat-value.critical { color: var(--critical); }
+
+  /* ---------- Section ---------- */
+  .section {
+    background: var(--bg-card);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 24px 26px;
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .section .section-sub {
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: var(--ink-secondary);
+  }
+
+  .split-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .split-row .section { margin-bottom: 0; }
+
+  /* ---------- Bankroll chart ---------- */
+  .chart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 30px 16px;
+    color: var(--ink-muted);
+    text-align: center;
+  }
+  .chart-empty .glyph { font-size: 26px; opacity: 0.7; }
+  .chart-empty p { margin: 0; font-size: 13px; max-width: 300px; line-height: 1.6; }
+
+  .chart-frame { position: relative; }
+  svg.linechart { width: 100%; height: 160px; overflow: visible; display: block; cursor: crosshair; }
+  .grid-line { stroke: var(--hairline); stroke-width: 1; }
+  .bankroll-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .bankroll-area { fill: var(--accent); opacity: 0.08; }
+  .bankroll-dot { fill: var(--accent); stroke: var(--bg-card); stroke-width: 2; }
+  .hover-line { stroke: var(--ink-secondary); stroke-width: 1; stroke-dasharray: 3,3; }
+  .hover-dot { fill: var(--ink-primary); stroke: var(--bg-card); stroke-width: 2; }
+  .axis-label { fill: var(--ink-muted); font-size: 10px; }
+  .chart-tooltip {
+    position: absolute;
+    transform: translate(-50%, -115%);
+    background: var(--bg-card-raised);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 6px 11px;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
+  .chart-tooltip strong { color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  /* ---------- Calculator ---------- */
+  .calc-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .calc-row label {
+    font-size: 12.5px;
+    color: var(--ink-secondary);
+    font-weight: 600;
+  }
+  .calc-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-card-raised);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 6px 12px;
+  }
+  .calc-input-wrap span { font-size: 13px; color: var(--ink-muted); }
+  .calc-input-wrap input {
+    width: 60px;
+    background: none;
+    border: none;
+    color: var(--ink-primary);
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .calc-input-wrap input:focus { outline: none; }
+  .calc-input-wrap input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .calc-line { margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--ink-secondary); }
+  .calc-highlight { font-weight: 800; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .calc-highlight.up { color: var(--good); }
+  .calc-highlight.down { color: var(--critical); }
+
+  /* ---------- Tipologia bars ---------- */
+  .tip-row {
+    display: grid;
+    grid-template-columns: 150px 1fr 46px;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+  }
+  .tip-row .tip-name {
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tip-track {
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .tip-fill { height: 100%; border-radius: 4px; min-width: 2px; background: var(--accent); }
+  .tip-row .tip-count {
+    font-size: 12.5px;
+    color: var(--ink-secondary);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Table ---------- */
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th {
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    font-weight: 600;
+    padding: 0 10px 10px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  td {
+    padding: 11px 10px 11px 0;
+    border-bottom: 1px solid var(--hairline);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge.win { background: rgba(23,201,100,0.14); color: var(--good); }
+  .badge.loss { background: rgba(227,93,93,0.14); color: var(--critical); }
+  .badge.pending { background: var(--accent-dim); color: var(--accent); }
+
+  /* ---------- Accordion mesi ---------- */
+  .accordion { display: flex; flex-direction: column; gap: 8px; }
+  .accordion-item {
+    background: var(--bg-card);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .accordion-item.open { border-color: var(--accent); }
+  .accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: none;
+    border: none;
+    color: var(--ink-primary);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+  }
+  .accordion-header:hover { background: var(--bg-card-raised); }
+  .accordion-header:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .accordion-chevron { color: var(--accent); font-size: 11px; width: 10px; flex-shrink: 0; }
+  .accordion-title { font-size: 14px; font-weight: 700; }
+  .accordion-preview {
+    margin-left: auto;
+    font-size: 12.5px;
+    color: var(--ink-secondary);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .accordion-panel { display: none; padding: 4px 18px 18px; }
+  .accordion-item.open .accordion-panel { display: block; }
+
+  footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 640px) {
+    .stats, .stats.compact { grid-template-columns: repeat(2, 1fr); }
+    .hero { flex-direction: column; align-items: flex-start; }
+    .hero-secondary { padding-left: 0; border-left: none; border-top: 1px solid var(--hairline); padding-top: 14px; }
+    .hero-note { text-align: left; max-width: none; margin-left: 0; }
+    .tip-row { grid-template-columns: 110px 1fr 40px; }
+    .calc-row { flex-direction: column; align-items: flex-start; }
+    .split-row { grid-template-columns: 1fr; }
+    .accordion-preview { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-mark">🏝️</div>
+    <div class="brand-text">
+      <h1>L'ISOLA</h1>
+      <p>Tracciamento pronostici — bilancio del canale, aggiornato ad ogni giocata</p>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-main">
+      <p class="hero-label">Bankroll</p>
+      <div class="hero-value" id="heroValue">100<span class="unit">unità</span></div>
+      <div class="hero-delta flat" id="heroDelta">Punto di partenza — nessuna giocata ancora registrata</div>
+    </div>
+    <div class="hero-secondary">
+      <p class="hero-label">Rendimento</p>
+      <div class="hero-value-sm" id="heroRoi">—</div>
+    </div>
+    <div class="hero-note">
+      <p id="heroPeriodLabel">Tutto il periodo</p>
+      <p>1 unità = 1% del bankroll totale</p>
+    </div>
+  </div>
+
+  <div class="filter-block">
+    <div class="filter-group" id="topTipoFilters"></div>
+  </div>
+
+  <div class="highlight-card" id="bestCategoryHost"></div>
+
+  <div class="split-row">
+    <div class="section">
+      <h2>Andamento bankroll</h2>
+      <p class="section-sub">Tutto lo storico, tipologie selezionate sopra</p>
+      <div id="chartHost"></div>
+    </div>
+    <div class="section calc-section">
+      <h2>Calcola la tua vincita</h2>
+      <p class="section-sub">Quanto varrebbe con il tuo stake</p>
+      <div class="calc-row">
+        <label for="calcUnitValue">€ per unità</label>
+        <div class="calc-input-wrap">
+          <span>€</span>
+          <input type="number" id="calcUnitValue" min="0" step="1" value="10" inputmode="decimal" />
+        </div>
+      </div>
+      <div id="calcResult"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Storico mensile</h2>
+    <p class="section-sub">Apri un mese per vedere tutte le giocate, filtrabili per tipologia o per giorni</p>
+    <div class="accordion" id="monthAccordion"></div>
+  </div>
+
+  <div class="section">
+    <h2>🪂 Paracadute</h2>
+    <p class="section-sub">Scala a 3 step all-in con incasso parziale — importo libero, non a unità. Simulazione: quanto avresti in tasca partendo da uno stake fisso ipotetico.</p>
+    <div class="calc-row">
+      <label for="paraBaseInput">Stake iniziale ipotetico</label>
+      <div class="calc-input-wrap">
+        <span>€</span>
+        <input type="number" id="paraBaseInput" min="0" step="1" value="20" inputmode="decimal" />
+      </div>
+    </div>
+    <div id="paracaduteHost"></div>
+  </div>
+
+  <div class="section">
+    <h2>Per tipologia</h2>
+    <p class="section-sub">Le 5 giocate secche del canale — conteggio e percentuale di vincita</p>
+    <div id="tipHost"></div>
+  </div>
+
+  <footer>L'ISOLA · dashboard generata automaticamente da Claude a ogni nuova giocata registrata</footer>
+</div>
+
+<script>
+  /* ============================================================
+     DATI — caricati da dati/giocate.json (fonte di verità unica),
+     non più embeddati qui. Schema di ogni giocata, per riferimento:
+     Giocata secca ("codice"/"nota" opzionali, solo informativi):
+       { data, evento, tipologia, selezione, quota, stake, esito, codice?, nota? }
+     Ciclo Paracadute (importo LIBERO, non a unità — quote di OGNI step):
+       { data, evento, tipologia: "Paracadute", selezione, quote: [1.40,1.35,1.45], esito, codice? }
+     esito è "vinta" | "persa" | "in_attesa". Il bot (o il comando
+     "traccia giocata") scrive solo su dati/giocate.json — questa
+     pagina si limita a leggerlo ad ogni caricamento.
+     ============================================================ */
+  let BANKROLL_INIZIALE = 100;
+  const CORE_TIPOLOGIE = [
+    { key: "Tridente",       icon: "🔱" },
+    { key: "Marcatore",      icon: "⚽" },
+    { key: "RaddoppioAI",    icon: "🤖" },
+    { key: "Live",           icon: "🎥" },
+    { key: "QuoteBoostate",  icon: "✅" }
+  ];
+  const PARACADUTE = { key: "Paracadute", icon: "🪂" };
+  const TIPOLOGIE = [...CORE_TIPOLOGIE, PARACADUTE];
+
+  function isCoreBet(g) { return g.tipologia !== "Paracadute"; }
+
+  let GIOCATE = [];
+
+  /* ============================================================
+     Calcolo statistiche — una giocata si registra subito alla
+     pubblicazione, prima di conoscere l'esito: finché non arriva
+     lo sticker di vittoria (o la conferma di persa), resta
+     "in_attesa" e non entra nel profitto/win rate, solo nel totale.
+     ============================================================ */
+  function isSettled(g) { return g.esito === "vinta" || g.esito === "persa"; }
+
+  function profitUnita(g) {
+    if (g.esito === "vinta") return g.stake * (g.quota - 1);
+    if (g.esito === "persa") return -g.stake;
+    return 0;
+  }
+
+  function computeStats(rows) {
+    // Il Paracadute ha un modello economico diverso (importo libero, non a
+    // unità) — anche se rows contiene righe Paracadute (es. dentro un mese),
+    // qui vengono sempre escluse dal calcolo di vinte/perse/winrate/profitto.
+    const core = rows.filter(isCoreBet);
+    const settled = core.filter(isSettled);
+    const vinte = settled.filter(g => g.esito === "vinta").length;
+    const perse = settled.length - vinte;
+    const winrate = settled.length ? (vinte / settled.length * 100) : null;
+    const profitto = settled.reduce((sum, g) => sum + profitUnita(g), 0);
+    return { giocate: rows.length, inAttesa: core.length - settled.length, vinte, perse, winrate, profitto };
+  }
+
+  function fmtNum(n, decimals) {
+    const sign = n > 0 ? "+" : "";
+    return sign + n.toFixed(decimals);
+  }
+
+  const MESI_NOMI = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  function monthLabel(ym) {
+    const [y, m] = ym.split("-");
+    return MESI_NOMI[parseInt(m, 10) - 1] + " " + y;
+  }
+
+  /* ============================================================
+     STATO — quadro generale in alto (sempre visibile, filtrabile
+     solo per tipologia) + stato locale del mese eventualmente
+     aperto nell'accordion sotto (tipologia + giorni, indipendente)
+     ============================================================ */
+  const state = {
+    topTipologieSelected: new Set(CORE_TIPOLOGIE.map(t => t.key)),
+    openMonth: null,
+    monthTipologieSelected: new Set(TIPOLOGIE.map(t => t.key)),
+    monthDays: null
+  };
+
+  function getTopRows() {
+    return GIOCATE.filter(isCoreBet).filter(g => state.topTipologieSelected.has(g.tipologia));
+  }
+
+  /* ============================================================
+     Render: hero (quadro generale, sempre tutto lo storico)
+     ============================================================ */
+  function renderHeroAndStats(rows) {
+    const stats = computeStats(rows);
+    const bankroll = BANKROLL_INIZIALE + stats.profitto;
+
+    document.getElementById("heroValue").innerHTML =
+      (Math.round(bankroll * 100) / 100) + '<span class="unit">unità</span>';
+
+    const deltaEl = document.getElementById("heroDelta");
+    const roiEl = document.getElementById("heroRoi");
+    if (stats.winrate === null) {
+      deltaEl.className = "hero-delta flat";
+      deltaEl.textContent = rows.length === 0 ? "Nessuna giocata in questo filtro" : "In attesa di esiti";
+      roiEl.textContent = "—";
+      roiEl.className = "hero-value-sm";
+    } else {
+      const deltaPct = (stats.profitto / BANKROLL_INIZIALE) * 100;
+      deltaEl.className = "hero-delta " + (deltaPct >= 0 ? "up" : "down");
+      deltaEl.textContent = fmtNum(deltaPct, 1) + "% (" + fmtNum(stats.profitto, 1) + " u)";
+      roiEl.textContent = fmtNum(deltaPct, 1) + "%";
+      roiEl.className = "hero-value-sm " + (deltaPct >= 0 ? "up" : "down");
+    }
+
+    const tipoNote = state.topTipologieSelected.size < CORE_TIPOLOGIE.length
+      ? state.topTipologieSelected.size + "/" + CORE_TIPOLOGIE.length + " tipologie selezionate"
+      : "Tutte le tipologie";
+    document.getElementById("heroPeriodLabel").textContent = "Tutto il periodo · " + tipoNote;
+  }
+
+  /* ============================================================
+     Render: categoria migliore (evidenza per convincere)
+     ============================================================ */
+  function renderBestCategory(rows) {
+    const host = document.getElementById("bestCategoryHost");
+    const candidates = CORE_TIPOLOGIE
+      .filter(t => state.topTipologieSelected.has(t.key))
+      .map(t => {
+        const subset = rows.filter(g => g.tipologia === t.key && isSettled(g));
+        if (subset.length === 0) return null;
+        const wins = subset.filter(g => g.esito === "vinta").length;
+        const profitto = subset.reduce((s, g) => s + profitUnita(g), 0);
+        return { t, count: subset.length, winrate: wins / subset.length * 100, profitto };
+      })
+      .filter(Boolean);
+
+    if (candidates.length === 0) {
+      host.innerHTML =
+        '<div class="hc-icon">🏆</div>' +
+        '<div class="hc-body"><p class="hc-label">Categoria più forte</p>' +
+        '<p class="hc-title">Ancora nessun dato</p>' +
+        '<p class="hc-stats">Compare qui appena c\'è almeno una giocata conclusa</p></div>';
+      return;
+    }
+    candidates.sort((a, b) => b.profitto - a.profitto);
+    const best = candidates[0];
+    host.innerHTML =
+      '<div class="hc-icon">🏆</div>' +
+      '<div class="hc-body">' +
+      '<p class="hc-label">Categoria più forte</p>' +
+      '<p class="hc-title">' + best.t.icon + ' ' + best.t.key + '</p>' +
+      '<p class="hc-stats">' + best.winrate.toFixed(0) + '% vincita · ' + fmtNum(best.profitto, 1) + ' u su ' + best.count + ' giocate</p>' +
+      '</div>';
+  }
+
+  /* ============================================================
+     Render: bankroll trend chart (SVG line, hand-rolled, con hover)
+     ============================================================ */
+  function renderChart(rows) {
+    const host = document.getElementById("chartHost");
+    const settled = rows.filter(isSettled);
+    if (settled.length === 0) {
+      host.innerHTML =
+        '<div class="chart-empty"><div class="glyph">📈</div>' +
+        '<p>Il grafico prende vita dalla prima giocata conclusa. Bankroll di partenza: ' +
+        BANKROLL_INIZIALE + ' unità.</p></div>';
+      return;
+    }
+    const sorted = [...settled].sort((a, b) => a.data.localeCompare(b.data));
+    let running = BANKROLL_INIZIALE;
+    const points = [{ label: "Inizio", value: running }];
+    sorted.forEach(g => {
+      running += profitUnita(g);
+      points.push({ label: g.data, value: running });
+    });
+
+    const W = 400, H = 150, PAD = 22;
+    const values = points.map(p => p.value);
+    const min = Math.min(...values, BANKROLL_INIZIALE);
+    const max = Math.max(...values, BANKROLL_INIZIALE);
+    const range = (max - min) || 1;
+    const x = i => PAD + (i / (points.length - 1 || 1)) * (W - PAD * 2);
+    const y = v => H - PAD - ((v - min) / range) * (H - PAD * 2);
+
+    const linePath = points.map((p, i) => (i === 0 ? "M" : "L") + x(i) + "," + y(p.value)).join(" ");
+    const areaPath = linePath + ` L${x(points.length - 1)},${H - PAD} L${x(0)},${H - PAD} Z`;
+    const last = points[points.length - 1];
+
+    host.innerHTML =
+      '<div class="chart-frame">' +
+      '<svg class="linechart" id="bankrollSvg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">' +
+      '<line class="grid-line" x1="' + PAD + '" y1="' + y(BANKROLL_INIZIALE) + '" x2="' + (W - PAD) + '" y2="' + y(BANKROLL_INIZIALE) + '" stroke-dasharray="3,3" />' +
+      '<path class="bankroll-area" d="' + areaPath + '" />' +
+      '<path class="bankroll-line" d="' + linePath + '" />' +
+      '<line class="hover-line" id="hoverLine" x1="0" y1="' + PAD + '" x2="0" y2="' + (H - PAD) + '" style="opacity:0" />' +
+      '<circle class="hover-dot" id="hoverDot" r="5" style="opacity:0" />' +
+      '<circle class="bankroll-dot" cx="' + x(points.length - 1) + '" cy="' + y(last.value) + '" r="4.5" />' +
+      '<text class="axis-label" x="' + PAD + '" y="' + (H - 4) + '">' + points[0].label + '</text>' +
+      '<text class="axis-label" x="' + (W - PAD) + '" y="' + (H - 4) + '" text-anchor="end">' + last.label + '</text>' +
+      '</svg>' +
+      '<div class="chart-tooltip" id="chartTooltip"></div>' +
+      '</div>';
+
+    const svg = document.getElementById("bankrollSvg");
+    const hoverLine = document.getElementById("hoverLine");
+    const hoverDot = document.getElementById("hoverDot");
+    const tooltip = document.getElementById("chartTooltip");
+
+    function showAt(idx) {
+      const p = points[idx];
+      const px = x(idx), py = y(p.value);
+      hoverLine.setAttribute("x1", px);
+      hoverLine.setAttribute("x2", px);
+      hoverLine.style.opacity = 1;
+      hoverDot.setAttribute("cx", px);
+      hoverDot.setAttribute("cy", py);
+      hoverDot.style.opacity = 1;
+      tooltip.style.left = (px / W * 100) + "%";
+      tooltip.style.top = (py / H * 100) + "%";
+      tooltip.style.opacity = 1;
+      tooltip.innerHTML = '<strong>' + (Math.round(p.value * 100) / 100) + ' u</strong> — ' + p.label;
+    }
+    function hide() {
+      hoverLine.style.opacity = 0;
+      hoverDot.style.opacity = 0;
+      tooltip.style.opacity = 0;
+    }
+    svg.addEventListener("mousemove", e => {
+      const rect = svg.getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / rect.width * W;
+      let idx = 0, bestDist = Infinity;
+      points.forEach((p, i) => { const d = Math.abs(x(i) - relX); if (d < bestDist) { bestDist = d; idx = i; } });
+      showAt(idx);
+    });
+    svg.addEventListener("mouseleave", hide);
+    svg.addEventListener("touchstart", e => {
+      const touch = e.touches[0];
+      const rect = svg.getBoundingClientRect();
+      const relX = (touch.clientX - rect.left) / rect.width * W;
+      let idx = 0, bestDist = Infinity;
+      points.forEach((p, i) => { const d = Math.abs(x(i) - relX); if (d < bestDist) { bestDist = d; idx = i; } });
+      showAt(idx);
+    }, { passive: true });
+  }
+
+  /* ============================================================
+     Render: per-tipologia breakdown (quadro generale)
+     ============================================================ */
+  function renderTipologie(rows) {
+    const host = document.getElementById("tipHost");
+    const active = CORE_TIPOLOGIE.filter(t => state.topTipologieSelected.has(t.key));
+    const maxCount = Math.max(1, ...active.map(t => rows.filter(g => g.tipologia === t.key).length));
+
+    host.innerHTML = active.map(t => {
+      const subset = rows.filter(g => g.tipologia === t.key);
+      const count = subset.length;
+      const settledSubset = subset.filter(isSettled);
+      const wins = settledSubset.filter(g => g.esito === "vinta").length;
+      const pct = settledSubset.length ? Math.round(wins / settledSubset.length * 100) : null;
+      const widthPct = (count / maxCount) * 100;
+      return '<div class="tip-row">' +
+        '<div class="tip-name">' + t.icon + ' ' + t.key + '</div>' +
+        '<div class="tip-track"><div class="tip-fill" style="width:' + widthPct + '%"></div></div>' +
+        '<div class="tip-count">' + count + (pct !== null ? " · " + pct + "%" : "") + '</div>' +
+        '</div>';
+    }).join("");
+  }
+
+  /* ============================================================
+     Render: Paracadute (sempre tutto lo storico, cassa a parte)
+     Non è a unità — importo libero. Simula una catena di cicli a
+     partire da uno stake ipotetico fisso: ogni vittoria incassa
+     metà e reinveste l'altra metà nel ciclo successivo; ogni
+     fallimento perde lo stake corrente e si riparte dalla base.
+     ============================================================ */
+  function simulateParacadute(baseStake) {
+    const settled = GIOCATE.filter(g => g.tipologia === "Paracadute" && isSettled(g))
+      .sort((a, b) => a.data.localeCompare(b.data));
+    let current = baseStake;
+    let totaleIncassato = 0;
+    const timeline = settled.map(g => {
+      const moltiplicatore = (g.quote || []).reduce((m, q) => m * q, 1);
+      if (g.esito === "vinta") {
+        const payout = current * moltiplicatore;
+        const incassato = payout / 2;
+        const row = { giocata: g, data: g.data, esito: "vinta", moltiplicatore, stakeIniziale: current, incassato };
+        totaleIncassato += incassato;
+        current = payout / 2;
+        return row;
+      }
+      const row = { giocata: g, data: g.data, esito: "persa", moltiplicatore, stakeIniziale: current, perso: current };
+      current = baseStake;
+      return row;
+    });
+    return { timeline, totaleIncassato, stakeAttuale: current };
+  }
+
+  function renderParacadute() {
+    const rows = GIOCATE.filter(g => g.tipologia === "Paracadute");
+    const host = document.getElementById("paracaduteHost");
+    if (rows.length === 0) {
+      host.innerHTML = '<div class="chart-empty"><div class="glyph">🪂</div><p>Nessun ciclo Paracadute registrato.</p></div>';
+      return;
+    }
+    const baseStake = parseFloat(document.getElementById("paraBaseInput").value) || 0;
+    const settled = rows.filter(isSettled);
+    const riusciti = settled.filter(g => g.esito === "vinta");
+    const falliti = settled.filter(g => g.esito === "persa");
+    const inAttesa = rows.length - settled.length;
+    const sim = simulateParacadute(baseStake);
+
+    const stats =
+      '<div class="stats" style="margin-bottom:18px">' +
+      '<div class="stat-tile"><p class="stat-label">Cicli</p><div class="stat-value">' + rows.length + (inAttesa ? ' <span style="font-size:12px;color:var(--accent)">(' + inAttesa + ' in corso)</span>' : '') + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Riusciti</p><div class="stat-value good">' + riusciti.length + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Falliti</p><div class="stat-value critical">' + falliti.length + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Incassato (simulato)</p><div class="stat-value good">' + sim.totaleIncassato.toFixed(2) + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Stake attuale (simulato)</p><div class="stat-value">' + sim.stakeAttuale.toFixed(2) + '</div></div>' +
+      '</div>';
+
+    const quoteStr = g => (g.quote || []).map(q => q.toFixed(2)).join(" · ") +
+      (g.quote && g.quote.length > 1 ? " (" + g.quote.reduce((m, q) => m * q, 1).toFixed(2) + "x)" : "");
+    const evtCol = g => g.evento +
+      (g.codice ? ' <span style="color:var(--ink-muted);font-size:11px">#' + g.codice + '</span>' : "") +
+      (g.nota ? '<div style="font-size:11.5px;color:var(--ink-secondary);font-style:italic;margin-top:2px">' + g.nota + '</div>' : "");
+
+    const pending = rows.filter(g => !isSettled(g));
+    const trsPending = pending.map(g => {
+      return '<tr><td>' + g.data + '</td><td>' + evtCol(g) + '</td><td>' + quoteStr(g) + '</td><td>—</td><td>—</td><td><span class="badge pending">⏳ In corso</span></td></tr>';
+    }).join("");
+    const trsSettled = [...sim.timeline].sort((a, b) => b.data.localeCompare(a.data)).map(t => {
+      const badge = t.esito === "vinta" ? '<span class="badge win">✓ Incassato</span>' : '<span class="badge loss">✕ Fallito</span>';
+      const risultato = t.esito === "vinta" ? "+" + t.incassato.toFixed(2) : "-" + t.perso.toFixed(2);
+      return '<tr><td>' + t.data + '</td><td>' + evtCol(t.giocata) + '</td><td>' + quoteStr(t.giocata) + '</td>' +
+        '<td>' + t.stakeIniziale.toFixed(2) + '</td><td>' + risultato + '</td><td>' + badge + '</td></tr>';
+    }).join("");
+
+    host.innerHTML = stats +
+      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Ciclo</th><th>Quote per step</th><th>Stake sim.</th><th>Risultato sim.</th><th>Esito</th></tr></thead>' +
+      '<tbody>' + trsPending + trsSettled + '</tbody></table></div>';
+  }
+
+  /* ============================================================
+     Render: calcolatore € per unità (quadro generale)
+     ============================================================ */
+  function renderCalculator(rows) {
+    const stats = computeStats(rows);
+    const input = document.getElementById("calcUnitValue");
+    const unitValue = parseFloat(input.value) || 0;
+    const host = document.getElementById("calcResult");
+
+    if (stats.winrate === null) {
+      host.innerHTML = '<p class="calc-line">Nessuna giocata conclusa in questo filtro — imposta comunque il valore, si aggiorna da solo appena arrivano i primi risultati.</p>';
+      return;
+    }
+    const bankrollEuro = BANKROLL_INIZIALE * unitValue;
+    const profitEuro = stats.profitto * unitValue;
+    const sign = profitEuro >= 0 ? "up" : "down";
+    const fmtEuro = n => n.toLocaleString("it-IT", { maximumFractionDigits: 2 });
+
+    host.innerHTML =
+      '<p class="calc-line">Con <strong>' + fmtEuro(unitValue) + ' € a unità</strong>, un bankroll equivalente di ' + fmtEuro(bankrollEuro) + ' € avrebbe fruttato ' +
+      '<span class="calc-highlight ' + sign + '">' + (profitEuro >= 0 ? "+" : "") + fmtEuro(profitEuro) + ' €</span></p>';
+  }
+
+  function updateTop() {
+    const rows = getTopRows();
+    renderHeroAndStats(rows);
+    renderBestCategory(rows);
+    renderChart(rows);
+    renderCalculator(rows);
+    renderTipologie(rows);
+  }
+
+  /* ============================================================
+     Accordion mesi — ognuno con filtri locali (tipologia + giorni)
+     ============================================================ */
+  function buildAccordion() {
+    const container = document.getElementById("monthAccordion");
+    const months = [...new Set(GIOCATE.map(g => g.data.slice(0, 7)))].sort().reverse();
+
+    if (months.length === 0) {
+      container.innerHTML = '<div class="chart-empty"><div class="glyph">🗓️</div><p>I mesi compaiono qui appena registri la prima giocata.</p></div>';
+      return;
+    }
+
+    container.innerHTML = months.map(ym => {
+      const s = computeStats(GIOCATE.filter(g => g.data.slice(0, 7) === ym).filter(isCoreBet));
+      const preview = s.winrate === null
+        ? s.giocate + " giocate"
+        : s.giocate + " giocate · " + s.winrate.toFixed(0) + "% · " + fmtNum(s.profitto, 1) + " u";
+      return '<div class="accordion-item" data-month="' + ym + '">' +
+        '<button class="accordion-header" type="button">' +
+        '<span class="accordion-chevron">▸</span>' +
+        '<span class="accordion-title">' + monthLabel(ym) + '</span>' +
+        '<span class="accordion-preview">' + preview + '</span>' +
+        '</button>' +
+        '<div class="accordion-panel"></div>' +
+        '</div>';
+    }).join("");
+
+    container.querySelectorAll(".accordion-header").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const item = btn.closest(".accordion-item");
+        const ym = item.dataset.month;
+        openMonth(state.openMonth === ym ? null : ym);
+      });
+    });
+  }
+
+  function buildMonthDetailTemplate() {
+    const el = document.createElement("div");
+    el.id = "monthDetail";
+    el.innerHTML =
+      '<div class="filter-block"><div class="filter-group" id="monthTipoFilters"></div></div>' +
+      '<div class="filter-block"><div class="filter-group" id="monthDayFilters">' +
+      '<button class="filter-pill active" data-days="">Tutto il mese</button>' +
+      '<button class="filter-pill" data-days="7">Ultimi 7g</button>' +
+      '<button class="filter-pill" data-days="15">Ultimi 15g</button>' +
+      '</div></div>' +
+      '<div class="stats compact" id="monthStats">' +
+      '<div class="stat-tile sm"><p class="stat-label">Giocate</p><div class="stat-value sm" id="monthStatGiocate">0</div></div>' +
+      '<div class="stat-tile sm"><p class="stat-label">Vinte</p><div class="stat-value sm good" id="monthStatVinte">0</div></div>' +
+      '<div class="stat-tile sm"><p class="stat-label">Perse</p><div class="stat-value sm critical" id="monthStatPerse">0</div></div>' +
+      '<div class="stat-tile sm"><p class="stat-label">Win rate</p><div class="stat-value sm" id="monthStatWinrate">—</div></div>' +
+      '<div class="stat-tile sm"><p class="stat-label">Profitto</p><div class="stat-value sm" id="monthStatProfitto">0 u</div></div>' +
+      '</div>' +
+      '<div id="monthTableHost"></div>';
+
+    return el;
+  }
+
+  const monthDetail = buildMonthDetailTemplate();
+
+  function initMonthDetailFilters() {
+    const tipoRow = monthDetail.querySelector("#monthTipoFilters");
+    TIPOLOGIE.forEach(t => {
+      const btn = document.createElement("button");
+      btn.className = "filter-pill active";
+      btn.dataset.tipo = t.key;
+      btn.innerHTML = t.icon + " " + t.key;
+      tipoRow.appendChild(btn);
+    });
+    tipoRow.addEventListener("click", e => {
+      const btn = e.target.closest(".filter-pill");
+      if (!btn) return;
+      const key = btn.dataset.tipo;
+      if (state.monthTipologieSelected.has(key)) {
+        if (state.monthTipologieSelected.size === 1) return;
+        state.monthTipologieSelected.delete(key);
+        btn.classList.remove("active");
+      } else {
+        state.monthTipologieSelected.add(key);
+        btn.classList.add("active");
+      }
+      updateMonthPanel();
+    });
+
+    const dayRow = monthDetail.querySelector("#monthDayFilters");
+    dayRow.addEventListener("click", e => {
+      const btn = e.target.closest(".filter-pill");
+      if (!btn) return;
+      dayRow.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      state.monthDays = btn.dataset.days ? parseInt(btn.dataset.days, 10) : null;
+      updateMonthPanel();
+    });
+  }
+
+  function openMonth(ym) {
+    state.openMonth = ym;
+    state.monthTipologieSelected = new Set(TIPOLOGIE.map(t => t.key));
+    state.monthDays = null;
+
+    document.querySelectorAll("#monthAccordion .accordion-item").forEach(item => {
+      const isOpen = item.dataset.month === ym;
+      item.classList.toggle("open", isOpen);
+      item.querySelector(".accordion-chevron").textContent = isOpen ? "▾" : "▸";
+      if (isOpen) item.querySelector(".accordion-panel").appendChild(monthDetail);
+    });
+
+    if (ym) {
+      monthDetail.querySelectorAll("#monthTipoFilters .filter-pill").forEach(b => b.classList.add("active"));
+      monthDetail.querySelectorAll("#monthDayFilters .filter-pill").forEach((b, i) => b.classList.toggle("active", i === 0));
+      updateMonthPanel();
+    }
+  }
+
+  function updateMonthPanel() {
+    if (!state.openMonth) return;
+    let rows = GIOCATE.filter(g => g.data.slice(0, 7) === state.openMonth);
+    rows = rows.filter(g => state.monthTipologieSelected.has(g.tipologia));
+    if (state.monthDays !== null) {
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - state.monthDays);
+      const cutoffStr = cutoff.toISOString().slice(0, 10);
+      rows = rows.filter(g => g.data >= cutoffStr);
+    }
+
+    const stats = computeStats(rows);
+    monthDetail.querySelector("#monthStatGiocate").innerHTML =
+      stats.giocate + (stats.inAttesa ? ' <span style="font-size:11px;color:var(--accent)">(' + stats.inAttesa + ' in corso)</span>' : "");
+    monthDetail.querySelector("#monthStatVinte").textContent = stats.vinte;
+    monthDetail.querySelector("#monthStatPerse").textContent = stats.perse;
+    monthDetail.querySelector("#monthStatWinrate").textContent = stats.winrate === null ? "—" : stats.winrate.toFixed(0) + "%";
+    monthDetail.querySelector("#monthStatProfitto").textContent = stats.winrate === null ? "0 u" : fmtNum(stats.profitto, 1) + " u";
+
+    const tableHost = monthDetail.querySelector("#monthTableHost");
+    if (rows.length === 0) {
+      tableHost.innerHTML = '<div class="chart-empty"><div class="glyph">🗒️</div><p>Nessuna giocata in questo filtro.</p></div>';
+      return;
+    }
+    const sorted = [...rows].sort((a, b) => b.data.localeCompare(a.data));
+    const tip = key => TIPOLOGIE.find(t => t.key === key) || { icon: "" };
+    const trs = sorted.map(g => {
+      const t = tip(g.tipologia);
+      const badge = g.esito === "vinta" ? '<span class="badge win">✓ Vinta</span>'
+        : g.esito === "persa" ? '<span class="badge loss">✕ Persa</span>'
+        : '<span class="badge pending">⏳ In corso</span>';
+      // Paracadute non ha quota/stake singoli ma un array "quote" e importo libero
+      const quotaCol = g.tipologia === "Paracadute"
+        ? (g.quote || []).map(q => q.toFixed(2)).join(" · ")
+        : g.quota.toFixed(2);
+      const stakeCol = g.tipologia === "Paracadute" ? "libero" : g.stake + " u";
+      const evtCol = g.evento +
+        (g.codice ? ' <span style="color:var(--ink-muted);font-size:11px">#' + g.codice + '</span>' : "") +
+        (g.nota ? '<div style="font-size:11.5px;color:var(--ink-secondary);font-style:italic;margin-top:2px">' + g.nota + '</div>' : "");
+      return '<tr><td>' + g.data + '</td><td>' + evtCol + '</td><td>' + t.icon + ' ' + g.tipologia + '</td>' +
+        '<td>' + quotaCol + '</td><td>' + stakeCol + '</td><td>' + badge + '</td></tr>';
+    }).join("");
+
+    tableHost.innerHTML =
+      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Evento</th><th>Tipologia</th><th>Quota</th><th>Stake</th><th>Esito</th></tr></thead>' +
+      '<tbody>' + trs + '</tbody></table></div>';
+  }
+
+  function initTopFilters() {
+    const row = document.getElementById("topTipoFilters");
+    CORE_TIPOLOGIE.forEach(t => {
+      const btn = document.createElement("button");
+      btn.className = "filter-pill active";
+      btn.dataset.tipo = t.key;
+      btn.innerHTML = t.icon + " " + t.key;
+      row.appendChild(btn);
+    });
+    row.addEventListener("click", e => {
+      const btn = e.target.closest(".filter-pill");
+      if (!btn) return;
+      const key = btn.dataset.tipo;
+      if (state.topTipologieSelected.has(key)) {
+        if (state.topTipologieSelected.size === 1) return;
+        state.topTipologieSelected.delete(key);
+        btn.classList.remove("active");
+      } else {
+        state.topTipologieSelected.add(key);
+        btn.classList.add("active");
+      }
+      updateTop();
+    });
+
+    document.getElementById("calcUnitValue").addEventListener("input", () => renderCalculator(getTopRows()));
+    document.getElementById("paraBaseInput").addEventListener("input", renderParacadute);
+  }
+
+  /* ============================================================
+     Caricamento dati — fetch da dati/giocate.json (unica fonte).
+     Richiede di essere servita via http/https (Netlify, un server
+     locale...): aprendo il file direttamente come file:// il
+     browser blocca il fetch per sicurezza e la pagina resta vuota.
+     ============================================================ */
+  fetch("giocate.json")
+    .then(r => r.json())
+    .then(data => {
+      GIOCATE = data.giocate || [];
+      BANKROLL_INIZIALE = data.bankroll_iniziale || 100;
+      initTopFilters();
+      initMonthDetailFilters();
+      updateTop();
+      renderParacadute();
+      buildAccordion();
+    })
+    .catch(err => {
+      document.querySelector(".wrap").insertAdjacentHTML("afterbegin",
+        '<div class="chart-empty"><div class="glyph">⚠️</div><p>Impossibile caricare dati/giocate.json — se stai aprendo il file direttamente dal computer (file://), serve invece un server (es. il sito pubblicato su Netlify) perché il browser blocca questo tipo di richiesta per sicurezza.</p></div>');
+      console.error(err);
+    });
+</script>
+</body>
+</html>
