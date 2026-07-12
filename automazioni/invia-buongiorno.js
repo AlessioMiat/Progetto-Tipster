@@ -32,8 +32,11 @@ function chiamaApi(metodo, corpo) {
 }
 
 async function main() {
-  const ritardoMinuti = Math.floor(Math.random() * 120); // 0-120 min dopo l'orario base del workflow
-  console.log(`Ritardo casuale: ${ritardoMinuti} minuti`);
+  // Il ritardo casuale si applica solo alle esecuzioni schedulate (di notte/mattina
+  // presto): se lanciato a mano ("Run workflow" su GitHub) parte subito, comodo per test.
+  const isTest = process.env.GITHUB_EVENT_NAME === "workflow_dispatch";
+  const ritardoMinuti = isTest ? 0 : Math.floor(Math.random() * 120);
+  console.log(`Ritardo casuale: ${ritardoMinuti} minuti${isTest ? " (test manuale, nessuna attesa)" : ""}`);
   await new Promise(r => setTimeout(r, ritardoMinuti * 60 * 1000));
 
   const lista = JSON.parse(fs.readFileSync(LISTA_FILE, "utf8"));

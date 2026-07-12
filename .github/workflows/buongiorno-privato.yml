@@ -19,4 +19,5 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID_PRIVATO: ${{ secrets.TELEGRAM_CHAT_ID_PRIVATO }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: node automazioni/invia-buongiorno.js
