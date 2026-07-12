@@ -12,6 +12,12 @@
 const GITHUB_API = "https://api.github.com";
 const TIPOLOGIE_VALIDE = ["Tridente", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"];
 
+// Sticker di risposta che segnano l'esito (file_unique_id, stabile per sticker
+// anche se lo si invia da chat diverse). Presi il 12/07/2026 dagli sticker
+// che Alessio usa gia' nel canale per "vinta" + il nuovo scelto per "persa".
+const STICKER_VINTA = "AgADxhkAAs6koVI";
+const STICKER_PERSA = "AgADIR8AApvVoVI";
+
 function estraiCampo(testo, etichetta) {
   const re = new RegExp(etichetta + "\\s*:\\s*(.+)", "i");
   const m = testo.match(re);
@@ -114,17 +120,18 @@ exports.handler = async event => {
       return { statusCode: 200, body: "ok" };
     }
 
-    // Caso 2: risposta a un post -> sticker = vinta, testo con "persa" = persa
-    if (post.reply_to_message) {
-      const isVittoria = !!post.sticker;
-      const isSconfitta = !!post.text && /persa/i.test(post.text);
-      if (isVittoria || isSconfitta) {
+    // Caso 2: risposta a un post -> sticker vinta/persa dedicati segnano l'esito.
+    // Qualunque altro sticker o testo (commenti, contesto) viene ignorato.
+    if (post.reply_to_message && post.sticker) {
+      const id = post.sticker.file_unique_id;
+      const esito = id === STICKER_VINTA ? "vinta" : id === STICKER_PERSA ? "persa" : null;
+      if (esito) {
         const refId = post.reply_to_message.message_id;
         const { data, sha } = await leggiGiocateJson();
         const giocata = data.giocate.find(g => g.telegram_message_id === refId);
         if (giocata) {
-          giocata.esito = isVittoria ? "vinta" : "persa";
-          await scriviGiocateJson(data, sha, `bot: esito ${giocata.esito} (msg ${refId})`);
+          giocata.esito = esito;
+          await scriviGiocateJson(data, sha, `bot: esito ${esito} (msg ${refId})`);
         }
       }
     }
