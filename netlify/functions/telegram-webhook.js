@@ -13,6 +13,7 @@
 
 const { leggiFileJson, scriviFileJson } = require("./lib/github-files");
 const { gestisciMessaggioPrivato } = require("./lib/recap");
+const { chiamaApi } = require("./lib/telegram");
 
 const TIPOLOGIE_VALIDE = ["Tridente", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"];
 
@@ -139,6 +140,18 @@ exports.handler = async event => {
     return { statusCode: 200, body: "ok" };
   } catch (err) {
     console.error(err);
+    // Rete di sicurezza: se qualcosa si rompe (es. permessi del token GitHub
+    // tolti di nuovo), avvisa subito Alessio invece di fallire in silenzio
+    // (successo il 13/07/2026 e scoperto solo controllando i log Netlify a
+    // mano). Best-effort: se anche l'avviso fallisce, non deve rompere altro.
+    try {
+      await chiamaApi("sendMessage", {
+        chat_id: ALESSIO_USER_ID,
+        text: `⚠️ Il bot ha un errore tecnico: ${err.message || err}. Controlla i log su Netlify.`
+      });
+    } catch (_) {
+      // niente da fare se anche l'avviso fallisce
+    }
     return { statusCode: 500, body: "error" };
   }
 };
