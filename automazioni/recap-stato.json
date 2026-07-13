@@ -1,7 +1,7 @@
 {
   "data": "2026-07-13",
-  "fase": "anteprima",
-  "risolto": false,
+  "fase": "annullato",
+  "risolto": true,
   "vinte": [
     {
       "evento": "TEST - Inter - Milan",
