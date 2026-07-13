@@ -1,8 +1,9 @@
 // Promemoria orario per Alessio: dal 1 agosto 2026 (inizio bilancio), ogni ora
-// tra le 10 e le 20 circa, controlla se ha gia' risposto oggi (screenshot,
-// "oggi no", qualsiasi cosa - lo segna il webhook in promemoria-stato.json) e
-// se non l'ha ancora fatto gli manda un promemoria. Si ferma da solo appena
-// risolto per la giornata, senza bisogno di disattivare nulla a mano.
+// tra le 10 e le 20 circa, controlla a che punto e' il recap del canale
+// pubblico (stato in recap-stato.json, gestito dal webhook - vedi
+// netlify/functions/lib/recap.js) e gli ricorda cosa manca. Si ferma da solo
+// appena il recap e' concluso per la giornata (pubblicato/annullato/nessuna
+// vinta), senza bisogno di disattivare nulla a mano.
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
@@ -33,6 +34,19 @@ function chiamaApi(metodo, corpo) {
   });
 }
 
+function messaggioPerFase(stato) {
+  switch (stato.fase) {
+    case "raccolta_screenshot":
+      return `Promemoria: mandami gli screenshot di ieri per il recap (siamo a ${stato.screenshotRicevuti.length}/${stato.vinte.length}), o scrivimi "oggi no".`;
+    case "raccolta_testo":
+      return "Promemoria: mancano solo il tuo testo per il post del recap.";
+    case "anteprima":
+      return "Promemoria: l'anteprima del recap ti aspetta — rispondi OK per pubblicarla o ANNULLA.";
+    default:
+      return 'Promemoria: mandami gli screenshot di ieri per il recap (o rispondimi anche solo "oggi no").';
+  }
+}
+
 async function main() {
   const oggi = new Date().toISOString().slice(0, 10);
   if (oggi < DATA_INIZIO) {
@@ -40,17 +54,15 @@ async function main() {
     return;
   }
 
-  const statoPath = path.join(__dirname, "promemoria-stato.json");
+  const statoPath = path.join(__dirname, "recap-stato.json");
   const stato = JSON.parse(fs.readFileSync(statoPath, "utf8"));
   if (stato.data === oggi && stato.risolto) {
-    console.log("Gia' risolto per oggi — nessun promemoria.");
+    console.log("Recap gia' concluso per oggi — nessun promemoria.");
     return;
   }
 
-  const risp = await chiamaApi("sendMessage", {
-    chat_id: ALESSIO_USER_ID,
-    text: "Promemoria: mandami gli screenshot di ieri per il recap (o rispondimi anche solo \"oggi no\")."
-  });
+  const testo = stato.data === oggi ? messaggioPerFase(stato) : messaggioPerFase({ fase: null });
+  const risp = await chiamaApi("sendMessage", { chat_id: ALESSIO_USER_ID, text: testo });
   console.log("Promemoria inviato:", JSON.stringify(risp));
   if (!risp.ok) process.exitCode = 1;
 }

@@ -1,9 +1,12 @@
 [build]
   functions = "netlify/functions"
-  # Il bot scrive solo su giocate.json: senza questa regola, ogni sua
-  # giocata farebbe ripartire una build qui, sprecando i minuti gratuiti
-  # per niente. Si ricostruisce SOLO se cambia il codice della funzione.
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- netlify/functions netlify.toml"
+  # Il bot scrive solo su giocate.json/recap-stato.json: senza questa regola,
+  # ogni sua scrittura farebbe ripartire una build qui, sprecando i minuti
+  # gratuiti per niente. Si ricostruisce SOLO se cambia codice/dipendenze.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- netlify/functions netlify.toml package.json"
 
 [functions]
   node_bundler = "esbuild"
+  # sharp ha binari nativi: va escluso dal bundling esbuild (che lo
+  # romperebbe) e lasciato come dipendenza normale di node_modules.
+  external_node_modules = ["sharp"]
