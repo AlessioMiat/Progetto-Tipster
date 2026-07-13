@@ -1,6 +1,6 @@
 {
   "data": "2026-07-13",
-  "fase": "raccolta_testo",
+  "fase": "anteprima",
   "risolto": false,
   "vinte": [
     {
@@ -20,5 +20,5 @@
   "screenshotRicevuti": [
     "AgACAgQAAxkBAAMQalS4V1ydVN9TzktXsYZNiAzmyaoAAqsOaxvOpKFS9yL0eBeZl_ABAAMCAAN5AAM8BA"
   ],
-  "testoPersonale": ""
+  "testoPersonale": "Test end-to-end completo, tutto ok."
 }
