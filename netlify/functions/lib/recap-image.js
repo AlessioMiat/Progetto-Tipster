@@ -17,9 +17,11 @@
 // disegnate a mano, non glifi di font. Le emoji nel testo del MESSAGGIO
 // restano invece sicure, perche' le disegna il client Telegram, non sharp.
 const sharp = require("sharp");
+const LOGO_BASE64 = require("./logo-base64");
 
 const W = 1080;
 const PAD = 40;
+const LOGO_D = 52;
 const HEADER_H = 90;
 const TITLE_H = 110;
 const COL_GAP = 20;
@@ -40,10 +42,22 @@ function elencoTipologie(vinte) {
 
 function headerSvg() {
   return `
-    <circle cx="${PAD + 26}" cy="${PAD + 26}" r="26" fill="#000" stroke="#e0aa3e" stroke-width="2"/>
-    <text x="${PAD + 26}" y="${PAD + 34}" font-family="serif" font-size="22" font-weight="800" text-anchor="middle" fill="#e0aa3e">L'I</text>
-    <text x="${PAD + 66}" y="${PAD + 33}" font-family="sans-serif" font-size="21" font-weight="800" letter-spacing="1.5" fill="#e0aa3e">L'ISOLA — BILANCIO DI IERI</text>
+    <circle cx="${PAD + LOGO_D / 2}" cy="${PAD + LOGO_D / 2}" r="${LOGO_D / 2 + 2}" fill="none" stroke="#e0aa3e" stroke-width="2"/>
+    <text x="${PAD + LOGO_D + 20}" y="${PAD + 33}" font-family="sans-serif" font-size="21" font-weight="800" letter-spacing="1.5" fill="#e0aa3e">L'ISOLA — BILANCIO DI IERI</text>
   `;
+}
+
+// Logo reale (dashboard/logo.jpeg, incorporato come base64 in logo-base64.js)
+// ritagliato in cerchio per il brand-mark dell'header.
+async function logoCircolare() {
+  const maschera = Buffer.from(
+    `<svg width="${LOGO_D}" height="${LOGO_D}"><circle cx="${LOGO_D / 2}" cy="${LOGO_D / 2}" r="${LOGO_D / 2}" fill="#fff"/></svg>`
+  );
+  return sharp(Buffer.from(LOGO_BASE64, "base64"))
+    .resize(LOGO_D, LOGO_D, { fit: "cover" })
+    .composite([{ input: maschera, blend: "dest-in" }])
+    .png()
+    .toBuffer();
 }
 
 function flameSvg(x, y) {
@@ -168,8 +182,9 @@ async function generaImmagineRecap(vinte, screenshotBuffers, stats) {
 
   const frameBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
   const badgeBuffer = await sharp(Buffer.from(badgeSvg())).png().toBuffer();
+  const logoBuffer = await logoCircolare();
 
-  const composite = [];
+  const composite = [{ input: logoBuffer, top: PAD, left: PAD }];
   for (let i = 0; i < vinte.length; i++) {
     const { x, y } = posizioni[i];
     const shot = await sharp(screenshotBuffers[i]).resize(colW, imgHeights[i], { fit: "fill" }).png().toBuffer();
