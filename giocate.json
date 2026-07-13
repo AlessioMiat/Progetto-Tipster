@@ -2,26 +2,5 @@
   "bankroll_iniziale": 100,
   "unita": "1 unità = 1% del bankroll totale",
   "tipologie": ["Tridente", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"],
-  "giocate": [
-    {
-      "evento": "TEST - Inter - Milan",
-      "tipologia": "Marcatore",
-      "selezione": "Marcatore: Lautaro Martinez",
-      "quota": 1.85,
-      "stake": 5,
-      "esito": "vinta",
-      "data": "2026-07-12",
-      "telegram_message_id": 900001
-    },
-    {
-      "evento": "TEST - Roma - Lazio",
-      "tipologia": "Tridente",
-      "selezione": "Tridente derby",
-      "quota": 3.1,
-      "stake": 3,
-      "esito": "persa",
-      "data": "2026-07-12",
-      "telegram_message_id": 900002
-    }
-  ]
+  "giocate": []
 }
