@@ -10,6 +10,9 @@ on:
     # NOTA: quando l'Italia passa a CET (ultima domenica di ottobre), cambiare
     # in '7 7 * * *' per restare sulle 08:00-09:30 locali.
     - cron: "7 6 * * *"
+    # TEST TEMPORANEO 13/07 ore 08:54 — verifica che il trigger schedulato scatti
+    # puntuale: 07:05 UTC = 09:05 CEST. Da rimuovere subito dopo il test.
+    - cron: "5 7 * * *"
   workflow_dispatch: {}
 
 jobs:
