@@ -1,24 +1,11 @@
 {
-  "data": "2026-07-13",
-  "fase": "annullato",
-  "risolto": true,
-  "vinte": [
-    {
-      "evento": "TEST - Inter - Milan",
-      "tipologia": "Marcatore",
-      "selezione": "Marcatore: Lautaro Martinez",
-      "quota": 1.85,
-      "stake": 5,
-      "esito": "vinta",
-      "data": "2026-07-12",
-      "telegram_message_id": 900001
-    }
-  ],
-  "totaleGiocate": 2,
-  "profittoUnita": 1.25,
-  "winRatePct": 50,
-  "screenshotRicevuti": [
-    "AgACAgQAAxkBAAMQalS4V1ydVN9TzktXsYZNiAzmyaoAAqsOaxvOpKFS9yL0eBeZl_ABAAMCAAN5AAM8BA"
-  ],
-  "testoPersonale": "Test end-to-end completo, tutto ok."
+  "data": "",
+  "fase": "inattivo",
+  "risolto": false,
+  "vinte": [],
+  "totaleGiocate": 0,
+  "profittoUnita": 0,
+  "winRatePct": 0,
+  "screenshotRicevuti": [],
+  "testoPersonale": ""
 }
