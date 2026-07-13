@@ -1,13 +1,14 @@
 // Bot L'ISOLA — riceve gli aggiornamenti dal canale Telegram e aggiorna
-// giocate.json direttamente su GitHub (che fa poi ripubblicare Netlify da solo).
+// giocate.json (e promemoria-stato.json) direttamente su GitHub, nel repo
+// Progetto-Tipster (che fa poi ripubblicare GitHub Pages da solo).
 //
 // Variabili d'ambiente richieste (da impostare su Netlify, MAI scritte qui):
 //   TELEGRAM_BOT_TOKEN   token del bot (da BotFather)
 //   TELEGRAM_CHAT_ID     id del canale privato L'ISOLA (numero negativo tipo -1001234567890)
 //   GITHUB_TOKEN         Personal Access Token con permesso di scrittura sul repo
-//   GITHUB_REPO          es. "AlessioMiat/alessio-sistema"
+//   GITHUB_REPO          es. "AlessioMiat/Progetto-Tipster"
 //   GITHUB_BRANCH        es. "main"
-//   GITHUB_FILE_PATH     es. "Alessio/Alessio/Scommesse/dashboard/giocate.json"
+//   GITHUB_FILE_PATH     es. "giocate.json"
 
 const GITHUB_API = "https://api.github.com";
 const TIPOLOGIE_VALIDE = ["Tridente", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"];
@@ -17,6 +18,12 @@ const TIPOLOGIE_VALIDE = ["Tridente", "Marcatore", "RaddoppioAI", "Live", "Quote
 // sticker definitivi scelti da Alessio per il canale privato (vinta/persa).
 const STICKER_VINTA = "AgAD3UAAAt2OoVI";
 const STICKER_PERSA = "AgAD3kAAAt2OoVI";
+
+// ID Telegram di Alessio (chat privata col bot) — usato per il promemoria
+// giornaliero: qualunque risposta sua lì (foto o testo, qualsiasi contenuto)
+// segna la giornata come "risolta" e ferma i controlli orari successivi.
+const ALESSIO_USER_ID = 628218072;
+const PROMEMORIA_PATH = "automazioni/promemoria-stato.json";
 
 function estraiCampo(testo, etichetta) {
   const re = new RegExp(etichetta + "\\s*:\\s*(.+)", "i");
@@ -70,19 +77,19 @@ function parseParacaduteStep(testo) {
   };
 }
 
-async function leggiGiocateJson() {
-  const url = `${GITHUB_API}/repos/${process.env.GITHUB_REPO}/contents/${process.env.GITHUB_FILE_PATH}?ref=${process.env.GITHUB_BRANCH}`;
+async function leggiFileJson(path) {
+  const url = `${GITHUB_API}/repos/${process.env.GITHUB_REPO}/contents/${path}?ref=${process.env.GITHUB_BRANCH}`;
   const res = await fetch(url, {
     headers: { Authorization: `token ${process.env.GITHUB_TOKEN}`, "User-Agent": "isola-bot" }
   });
-  if (!res.ok) throw new Error("Lettura giocate.json fallita: " + res.status);
+  if (!res.ok) throw new Error(`Lettura ${path} fallita: ` + res.status);
   const json = await res.json();
   const content = Buffer.from(json.content, "base64").toString("utf-8");
   return { data: JSON.parse(content), sha: json.sha };
 }
 
-async function scriviGiocateJson(data, sha, messaggioCommit) {
-  const url = `${GITHUB_API}/repos/${process.env.GITHUB_REPO}/contents/${process.env.GITHUB_FILE_PATH}`;
+async function scriviFileJson(path, data, sha, messaggioCommit) {
+  const url = `${GITHUB_API}/repos/${process.env.GITHUB_REPO}/contents/${path}`;
   const contentB64 = Buffer.from(JSON.stringify(data, null, 2)).toString("base64");
   const res = await fetch(url, {
     method: "PUT",
@@ -93,12 +100,34 @@ async function scriviGiocateJson(data, sha, messaggioCommit) {
     },
     body: JSON.stringify({ message: messaggioCommit, content: contentB64, sha, branch: process.env.GITHUB_BRANCH })
   });
-  if (!res.ok) throw new Error("Scrittura giocate.json fallita: " + res.status);
+  if (!res.ok) throw new Error(`Scrittura ${path} fallita: ` + res.status);
+}
+
+async function leggiGiocateJson() {
+  return leggiFileJson(process.env.GITHUB_FILE_PATH);
+}
+
+async function scriviGiocateJson(data, sha, messaggioCommit) {
+  return scriviFileJson(process.env.GITHUB_FILE_PATH, data, sha, messaggioCommit);
 }
 
 exports.handler = async event => {
   try {
     const update = JSON.parse(event.body);
+
+    // Messaggio privato di Alessio al bot (qualsiasi contenuto: foto, testo,
+    // "oggi no"...) -> segna il promemoria giornaliero come risolto, cosi'
+    // i controlli orari successivi smettono di scrivergli.
+    const privato = update.message;
+    if (privato && privato.chat.type === "private" && privato.from && privato.from.id === ALESSIO_USER_ID) {
+      const oggi = new Date().toISOString().slice(0, 10);
+      const { data, sha } = await leggiFileJson(PROMEMORIA_PATH);
+      if (data.data !== oggi || !data.risolto) {
+        await scriviFileJson(PROMEMORIA_PATH, { data: oggi, risolto: true }, sha, `bot: promemoria risolto ${oggi}`);
+      }
+      return { statusCode: 200, body: "ok" };
+    }
+
     const post = update.channel_post;
     if (!post || String(post.chat.id) !== process.env.TELEGRAM_CHAT_ID) {
       return { statusCode: 200, body: "ignorato" };

@@ -1,0 +1,23 @@
+name: Promemoria recap
+
+on:
+  schedule:
+    # 08:13-18:13 UTC = ~10:13-20:13 ora italiana (CEST), un controllo ogni ora.
+    # Minuto "storto" (13, non in punto) per lo stesso motivo del Buongiorno:
+    # evitare i ritardi sul carico di punta allo scoccare dell'ora.
+    # Lo script si ferma da solo (nessun invio) prima del 1 agosto 2026 e nei
+    # giorni in cui Alessio ha gia' risposto qualcosa in privato al bot.
+    # NOTA: quando l'Italia passa a CET (ultima domenica di ottobre), cambiare
+    # in '13 9-19 * * *' per restare sulle 10:00-20:00 locali.
+    - cron: "13 8-18 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  controlla:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlla e invia promemoria se non risolto
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: node automazioni/controlla-promemoria.js
