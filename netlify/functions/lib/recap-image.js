@@ -1,8 +1,8 @@
-// Compone l'immagine brandizzata del recap pubblico: header L'ISOLA, titolo
-// "X su Y vinte" + tipologie, griglia a 1-2 colonne di card (screenshot +
-// evento/selezione/quota + badge), riga statistiche, footer con invito.
-// Renderizzato come SVG (testo/forme) + gli screenshot reali incollati sopra
-// con sharp (niente servizi esterni).
+// Compone l'immagine brandizzata del recap pubblico: titolo "X su Y vinte" a
+// sinistra e brand (logo+wordmark) a destra sulla stessa riga, sottotitolo
+// tipologie, griglia a 1-2 colonne di card (screenshot + tipologia + badge),
+// riga statistiche, footer con invito. Renderizzato come SVG (testo/forme) +
+// gli screenshot reali incollati sopra con sharp (niente servizi esterni).
 //
 // Griglia invece di una colonna unica (13/07/2026, dopo un confronto diretto
 // con la demo originale): una singola colonna a piena larghezza, con card
@@ -13,20 +13,19 @@
 //
 // Niente emoji nei testi disegnati dentro l'immagine: i server Linux di
 // Netlify potrebbero non avere font emoji a colori installati e il glifo
-// uscirebbe vuoto/rotto. Il monogramma e la fiammella sono forme vettoriali
-// disegnate a mano, non glifi di font. Le emoji nel testo del MESSAGGIO
-// restano invece sicure, perche' le disegna il client Telegram, non sharp.
+// uscirebbe vuoto/rotto. Le emoji nel testo del MESSAGGIO restano invece
+// sicure, perche' le disegna il client Telegram, non sharp.
 const sharp = require("sharp");
 const LOGO_BASE64 = require("./logo-base64");
 
 const W = 1080;
 const PAD = 40;
-const LOGO_D = 52;
-const HEADER_H = 90;
-const TITLE_H = 110;
+const LOGO_D = 72;
+const HEADER_ROW_H = 90;
+const SUBTITLE_H = 40;
 const COL_GAP = 20;
 const TILE_GAP = 20;
-const LABEL_H = 64;
+const LABEL_H = 48;
 const STATS_H = 100;
 const FOOTER_H = 90;
 
@@ -40,11 +39,22 @@ function elencoTipologie(vinte) {
   return uniche.slice(0, -1).join(", ") + " e " + uniche[uniche.length - 1];
 }
 
-function headerSvg() {
+// Riga header: titolo "X su Y vinte" a sinistra, logo+wordmark a destra.
+function headerRowSvg(vinte, totaleGiocate) {
+  const rowCenterY = PAD + HEADER_ROW_H / 2;
+  const logoCx = W - PAD - LOGO_D / 2;
+  const wordmarkX = logoCx - LOGO_D / 2 - 18;
   return `
-    <circle cx="${PAD + LOGO_D / 2}" cy="${PAD + LOGO_D / 2}" r="${LOGO_D / 2 + 2}" fill="none" stroke="#e0aa3e" stroke-width="2"/>
-    <text x="${PAD + LOGO_D + 20}" y="${PAD + 33}" font-family="sans-serif" font-size="21" font-weight="800" letter-spacing="1.5" fill="#e0aa3e">L'ISOLA — BILANCIO DI IERI</text>
+    <text x="${PAD}" y="${rowCenterY + 15}" font-family="sans-serif" font-size="46" font-weight="800" letter-spacing="-0.5" xml:space="preserve"><tspan fill="#17c964">${vinte.length}</tspan><tspan fill="#f5ecd8"> su ${totaleGiocate} vinte</tspan></text>
+    <circle cx="${logoCx}" cy="${rowCenterY}" r="${LOGO_D / 2 + 2}" fill="none" stroke="#e0aa3e" stroke-width="2"/>
+    <text x="${wordmarkX}" y="${rowCenterY - 4}" text-anchor="end" font-family="sans-serif" font-size="19" font-weight="800" letter-spacing="1" fill="#e0aa3e">L'ISOLA</text>
+    <text x="${wordmarkX}" y="${rowCenterY + 16}" text-anchor="end" font-family="sans-serif" font-size="13" letter-spacing="1" fill="#7a6b52">BILANCIO DI IERI</text>
   `;
+}
+
+function subtitleSvg(vinte, subtitleTop) {
+  const tipologie = elencoTipologie(vinte);
+  return `<text x="${PAD}" y="${subtitleTop}" font-family="sans-serif" font-size="18" fill="#b3a186">${escXml(tipologie)} portate a casa</text>`;
 }
 
 // Logo reale (dashboard/logo.jpeg, incorporato come base64 in logo-base64.js)
@@ -58,21 +68,6 @@ async function logoCircolare() {
     .composite([{ input: maschera, blend: "dest-in" }])
     .png()
     .toBuffer();
-}
-
-function flameSvg(x, y) {
-  return `<path transform="translate(${x},${y}) scale(0.8)" d="M20 0 C6 16 0 28 0 37 C0 48 9 56 20 56 C31 56 40 48 40 37 C40 28 34 16 20 0 Z M20 44 C15 44 11 40 11 35 C11 31 14 27 20 20 C26 27 29 31 29 35 C29 40 25 44 20 44 Z" fill="#e0703a"/>`;
-}
-
-function titleSvg(vinte, totaleGiocate, titleTop) {
-  const tipologie = elencoTipologie(vinte);
-  return `
-    <text x="${PAD}" y="${titleTop + 48}" font-family="sans-serif" font-size="46" font-weight="800" letter-spacing="-0.5">
-      <tspan fill="#17c964">${vinte.length}</tspan><tspan fill="#f5ecd8"> su ${totaleGiocate} vinte</tspan>
-    </text>
-    ${flameSvg(PAD + 340, titleTop + 2)}
-    <text x="${PAD}" y="${titleTop + 80}" font-family="sans-serif" font-size="18" fill="#b3a186">${escXml(tipologie)} portate a casa</text>
-  `;
 }
 
 function statsSvg(stats, statsTop) {
@@ -134,8 +129,8 @@ async function generaImmagineRecap(vinte, screenshotBuffers, stats) {
   const imgHeights = metas.map(m => Math.round((colW * m.height) / m.width));
   const tileHeights = imgHeights.map(h => h + LABEL_H);
 
-  const titleTop = PAD + HEADER_H;
-  const tilesTop = titleTop + TITLE_H;
+  const subtitleTop = PAD + HEADER_ROW_H + 8;
+  const tilesTop = subtitleTop + SUBTITLE_H;
 
   const colonne = impaginaColonne(tileHeights);
   const posizioni = []; // per indice originale: {x, y}
@@ -159,8 +154,7 @@ async function generaImmagineRecap(vinte, screenshotBuffers, stats) {
     const labelTop = y + imgHeights[i];
     cards += `
       <rect x="${x}" y="${y}" width="${colW}" height="${tileHeights[i]}" rx="16" fill="#1c150d" stroke="rgba(224,170,62,0.35)" stroke-width="1"/>
-      <text x="${x + 18}" y="${labelTop + 26}" font-family="sans-serif" font-size="19" font-weight="800" fill="#f5ecd8">${escXml(v.evento)}</text>
-      <text x="${x + 18}" y="${labelTop + 48}" font-family="sans-serif" font-size="14" fill="#b3a186">${escXml(v.selezione || "")}${v.selezione ? " · " : ""}quota ${v.quota}</text>
+      <text x="${x + 18}" y="${labelTop + 32}" font-family="sans-serif" font-size="17" font-weight="800" letter-spacing="1" fill="#f5ecd8">${escXml(v.tipologia.toUpperCase())}</text>
     `;
   });
 
@@ -173,8 +167,8 @@ async function generaImmagineRecap(vinte, screenshotBuffers, stats) {
     </defs>
     <rect width="${W}" height="${totalH}" fill="#0b0905"/>
     <rect width="${W}" height="${totalH}" fill="url(#g1)"/>
-    ${headerSvg()}
-    ${titleSvg(vinte, stats.totaleGiocate, titleTop)}
+    ${headerRowSvg(vinte, stats.totaleGiocate)}
+    ${subtitleSvg(vinte, subtitleTop)}
     ${cards}
     ${statsSvg(stats, statsTop)}
     ${footerSvg(totalH)}
@@ -183,8 +177,10 @@ async function generaImmagineRecap(vinte, screenshotBuffers, stats) {
   const frameBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
   const badgeBuffer = await sharp(Buffer.from(badgeSvg())).png().toBuffer();
   const logoBuffer = await logoCircolare();
+  const logoCx = W - PAD - LOGO_D / 2;
+  const rowCenterY = PAD + HEADER_ROW_H / 2;
 
-  const composite = [{ input: logoBuffer, top: PAD, left: PAD }];
+  const composite = [{ input: logoBuffer, top: Math.round(rowCenterY - LOGO_D / 2), left: Math.round(logoCx - LOGO_D / 2) }];
   for (let i = 0; i < vinte.length; i++) {
     const { x, y } = posizioni[i];
     const shot = await sharp(screenshotBuffers[i]).resize(colW, imgHeights[i], { fit: "fill" }).png().toBuffer();
