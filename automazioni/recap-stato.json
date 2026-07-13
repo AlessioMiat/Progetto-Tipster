@@ -1,6 +1,6 @@
 {
   "data": "2026-07-13",
-  "fase": "raccolta_screenshot",
+  "fase": "raccolta_testo",
   "risolto": false,
   "vinte": [
     {
@@ -17,6 +17,8 @@
   "totaleGiocate": 2,
   "profittoUnita": 1.25,
   "winRatePct": 50,
-  "screenshotRicevuti": [],
+  "screenshotRicevuti": [
+    "AgACAgQAAxkBAAMQalS4V1ydVN9TzktXsYZNiAzmyaoAAqsOaxvOpKFS9yL0eBeZl_ABAAMCAAN5AAM8BA"
+  ],
   "testoPersonale": ""
 }
