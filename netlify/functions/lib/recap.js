@@ -26,7 +26,13 @@ async function ottieniGiocateIeri(oggi) {
   const ieri = isoIeri(oggi);
   const diIeri = data.giocate.filter(g => g.data === ieri && g.tipologia !== "Paracadute");
   const vinte = diIeri.filter(g => g.esito === "vinta");
-  return { totaleGiocate: diIeri.length, vinte };
+  const profittoUnita = diIeri.reduce((tot, g) => {
+    if (g.esito === "vinta") return tot + g.stake * (g.quota - 1);
+    if (g.esito === "persa") return tot - g.stake;
+    return tot;
+  }, 0);
+  const winRatePct = diIeri.length ? Math.round((vinte.length / diIeri.length) * 100) : 0;
+  return { totaleGiocate: diIeri.length, vinte, profittoUnita, winRatePct };
 }
 
 function messaggioElenco(vinte, totaleGiocate) {
@@ -56,7 +62,11 @@ async function componiRecap(stato) {
   for (const fileId of stato.screenshotRicevuti) {
     screenshotBuffers.push(await scaricaFile(fileId));
   }
-  const buffer = await generaImmagineRecap(stato.vinte, screenshotBuffers);
+  const buffer = await generaImmagineRecap(stato.vinte, screenshotBuffers, {
+    totaleGiocate: stato.totaleGiocate,
+    winRatePct: stato.winRatePct,
+    profittoUnita: stato.profittoUnita
+  });
   return { buffer, caption: costruisciCaption(stato) };
 }
 
@@ -80,14 +90,14 @@ async function gestisciMessaggioPrivato(message) {
   const { data: stato, sha } = await leggiFileJson(RECAP_PATH);
 
   if (stato.data !== oggi) {
-    const { totaleGiocate, vinte } = await ottieniGiocateIeri(oggi);
+    const { totaleGiocate, vinte, profittoUnita, winRatePct } = await ottieniGiocateIeri(oggi);
     if (vinte.length === 0) {
-      const nuovo = { data: oggi, fase: "nessuna_vinta", risolto: true, vinte: [], totaleGiocate, screenshotRicevuti: [], testoPersonale: "" };
+      const nuovo = { data: oggi, fase: "nessuna_vinta", risolto: true, vinte: [], totaleGiocate, profittoUnita, winRatePct, screenshotRicevuti: [], testoPersonale: "" };
       await scriviFileJson(RECAP_PATH, nuovo, sha, `bot: recap ${oggi} - nessuna vinta`);
       await chiamaApi("sendMessage", { chat_id: ALESSIO_CHAT_ID, text: "Nessuna giocata vinta ieri — niente da promuovere oggi." });
       return;
     }
-    const nuovo = { data: oggi, fase: "raccolta_screenshot", risolto: false, vinte, totaleGiocate, screenshotRicevuti: [], testoPersonale: "" };
+    const nuovo = { data: oggi, fase: "raccolta_screenshot", risolto: false, vinte, totaleGiocate, profittoUnita, winRatePct, screenshotRicevuti: [], testoPersonale: "" };
     await scriviFileJson(RECAP_PATH, nuovo, sha, `bot: recap ${oggi} - avviato`);
     await chiamaApi("sendMessage", { chat_id: ALESSIO_CHAT_ID, text: messaggioElenco(vinte, totaleGiocate) });
     return;
