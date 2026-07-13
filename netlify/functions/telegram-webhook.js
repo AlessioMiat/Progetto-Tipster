@@ -13,10 +13,10 @@ const GITHUB_API = "https://api.github.com";
 const TIPOLOGIE_VALIDE = ["Tridente", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"];
 
 // Sticker di risposta che segnano l'esito (file_unique_id, stabile per sticker
-// anche se lo si invia da chat diverse). Presi il 12/07/2026 dagli sticker
-// che Alessio usa gia' nel canale per "vinta" + il nuovo scelto per "persa".
-const STICKER_VINTA = "AgADxhkAAs6koVI";
-const STICKER_PERSA = "AgADIR8AApvVoVI";
+// anche se lo si invia da chat diverse). Aggiornati il 13/07/2026 con i due
+// sticker definitivi scelti da Alessio per il canale privato (vinta/persa).
+const STICKER_VINTA = "AgAD3UAAAt2OoVI";
+const STICKER_PERSA = "AgAD3kAAAt2OoVI";
 
 function estraiCampo(testo, etichetta) {
   const re = new RegExp(etichetta + "\\s*:\\s*(.+)", "i");
