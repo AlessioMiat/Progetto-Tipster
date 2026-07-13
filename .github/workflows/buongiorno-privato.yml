@@ -2,12 +2,14 @@ name: Buongiorno
 
 on:
   schedule:
-    # 06:00 UTC = 08:00 ora italiana (CEST, in vigore da fine marzo a fine ottobre).
-    # Lo script aspetta poi 0-90 minuti in piu' a caso (finestra 08:00-09:30),
+    # 06:07 UTC = ~08:07 ora italiana (CEST). L'orario "storto" (non 06:00 in
+    # punto) evita i ritardi che GitHub applica ai workflow schedulati esattamente
+    # allo scoccare dell'ora, quando il carico globale su Actions e' più alto.
+    # Lo script aspetta poi 0-90 minuti in piu' a caso (finestra ~08:00-09:30),
     # pubblica nel privato, poi altri 30-60 secondi e pubblica nel pubblico.
     # NOTA: quando l'Italia passa a CET (ultima domenica di ottobre), cambiare
-    # in '0 7 * * *' per restare sulle 08:00-09:30 locali.
-    - cron: "0 6 * * *"
+    # in '7 7 * * *' per restare sulle 08:00-09:30 locali.
+    - cron: "7 6 * * *"
   workflow_dispatch: {}
 
 jobs:
