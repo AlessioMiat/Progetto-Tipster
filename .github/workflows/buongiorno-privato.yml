@@ -28,6 +28,14 @@ on:
 permissions:
   contents: write
 
+# Mai due esecuzioni in parallelo: se due dei 10 tentativi dovessero scattare
+# quasi insieme, la seconda aspetta in coda che la prima finisca (non viene
+# annullata) e a quel punto trova gia' lo stato "inviato" - impossibile che
+# parta lo sticker due volte lo stesso giorno.
+concurrency:
+  group: buongiorno
+  cancel-in-progress: false
+
 jobs:
   invia:
     runs-on: ubuntu-latest
