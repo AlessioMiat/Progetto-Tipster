@@ -8,6 +8,7 @@ const { entitiesToHtml, escapeHtml } = require("./entities");
 
 const RECAP_PATH = "automazioni/recap-stato.json";
 const ALESSIO_CHAT_ID = 628218072;
+const DATA_INIZIO = "2026-08-01";
 
 function isoIeri(oggi) {
   const d = new Date(oggi + "T00:00:00Z");
@@ -87,6 +88,8 @@ async function pubblica(stato) {
 
 async function gestisciMessaggioPrivato(message) {
   const oggi = new Date().toISOString().slice(0, 10);
+  if (oggi < DATA_INIZIO) return; // il recap parte solo dal 1 agosto 2026
+
   const { data: stato, sha } = await leggiFileJson(RECAP_PATH);
 
   if (stato.data !== oggi) {
