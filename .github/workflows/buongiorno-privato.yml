@@ -2,25 +2,53 @@ name: Buongiorno
 
 on:
   schedule:
-    # 06:07 UTC = ~08:07 ora italiana (CEST). L'orario "storto" (non 06:00 in
-    # punto) evita i ritardi che GitHub applica ai workflow schedulati esattamente
-    # allo scoccare dell'ora, quando il carico globale su Actions e' più alto.
-    # Lo script aspetta poi 0-90 minuti in piu' a caso (finestra ~08:00-09:30),
-    # pubblica nel privato, poi altri 30-60 secondi e pubblica nel pubblico.
-    # NOTA: quando l'Italia passa a CET (ultima domenica di ottobre), cambiare
-    # in '7 7 * * *' per restare sulle 08:00-09:30 locali.
-    - cron: "7 6 * * *"
+    # Piu' tentativi ogni 10 minuti dentro la finestra 08:00-09:30 CEST
+    # (06:00-07:30 UTC), + uno di sicurezza alle 09:45 CEST. Il primo
+    # tentativo che GitHub fa partire in orario manda il buongiorno e segna
+    # lo stato (automazioni/buongiorno-stato.json) - tutti i successivi
+    # quel giorno lo trovano gia' segnato e non fanno nulla. Deciso il
+    # 14/07/2026 dopo che un singolo cron + attesa interna a caso e' partito
+    # con 2h12m di ritardo (limite noto di GitHub Actions sotto carico) e ha
+    # mandato il buongiorno alle 11:46 invece che nella finestra.
+    # NOTA: quando l'Italia passa a CET (ultima domenica di ottobre),
+    # spostare tutti gli orari di un'ora avanti (07:03->08:03 ecc, l'ultimo
+    # 08:45).
+    - cron: "3 6 * * *"
+    - cron: "13 6 * * *"
+    - cron: "23 6 * * *"
+    - cron: "33 6 * * *"
+    - cron: "43 6 * * *"
+    - cron: "53 6 * * *"
+    - cron: "3 7 * * *"
+    - cron: "13 7 * * *"
+    - cron: "23 7 * * *"
+    - cron: "45 7 * * *"
   workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
   invia:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Invia buongiorno (privato poi pubblico)
+      - name: Invia buongiorno se non gia' fatto oggi (privato poi pubblico)
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID_PRIVATO: ${{ secrets.TELEGRAM_CHAT_ID_PRIVATO }}
           TELEGRAM_CHAT_ID_PUBBLICO: ${{ secrets.TELEGRAM_CHAT_ID_PUBBLICO }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: node automazioni/invia-buongiorno.js
+      - name: Salva lo stato solo se e' stato inviato davvero
+        run: |
+          if git diff --quiet -- automazioni/buongiorno-stato.json; then
+            echo "Niente da salvare (gia' inviato da un tentativo precedente, o test)."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add automazioni/buongiorno-stato.json
+            git commit -m "bot: buongiorno inviato $(date -u +%Y-%m-%d)"
+            git pull --rebase
+            git push
+          fi
