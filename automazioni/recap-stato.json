@@ -1,7 +1,7 @@
 {
-  "data": "",
-  "fase": "inattivo",
-  "risolto": false,
+  "data": "2026-07-19",
+  "fase": "nessuna_vinta",
+  "risolto": true,
   "vinte": [],
   "totaleGiocate": 0,
   "profittoUnita": 0,
