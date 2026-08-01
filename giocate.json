@@ -32,6 +32,17 @@
       "codice": "VAIO20571",
       "data": "2026-08-01",
       "telegram_message_id": 119
+    },
+    {
+      "evento": "Amichevoli",
+      "tipologia": "Live",
+      "selezione": "over 1.5 Match",
+      "quota": 1.65,
+      "stake": 4,
+      "esito": "in_attesa",
+      "codice": "CIRO20572",
+      "data": "2026-08-01",
+      "telegram_message_id": 120
     }
   ]
 }
