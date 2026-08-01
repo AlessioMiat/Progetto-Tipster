@@ -1,6 +1,26 @@
 {
   "bankroll_iniziale": 100,
   "unita": "1 unità = 1% del bankroll totale",
-  "tipologie": ["Tridente", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"],
-  "giocate": []
+  "tipologie": [
+    "Tridente",
+    "Marcatore",
+    "RaddoppioAI",
+    "Live",
+    "QuoteBoostate",
+    "Paracadute"
+  ],
+  "giocate": [
+    {
+      "evento": "Urvalsdeild e 1St Division",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5",
+      "quota": 1.95,
+      "stake": 2,
+      "esito": "in_attesa",
+      "codice": "VOLT20570",
+      "nota": "Iniziamo il nostro percorso ufficialmente",
+      "data": "2026-08-01",
+      "telegram_message_id": 118
+    }
+  ]
 }
