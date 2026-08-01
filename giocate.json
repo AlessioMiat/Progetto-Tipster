@@ -21,6 +21,17 @@
       "nota": "Iniziamo il nostro percorso ufficialmente",
       "data": "2026-08-01",
       "telegram_message_id": 118
+    },
+    {
+      "evento": "Eliteserien",
+      "tipologia": "Live",
+      "selezione": "over 1.5 Match",
+      "quota": 1.7,
+      "stake": 2,
+      "esito": "in_attesa",
+      "codice": "VAIO20571",
+      "data": "2026-08-01",
+      "telegram_message_id": 119
     }
   ]
 }
