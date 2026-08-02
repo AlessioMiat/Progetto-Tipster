@@ -16,7 +16,7 @@
       "selezione": "Over 2.5",
       "quota": 1.95,
       "stake": 2,
-      "esito": "in_attesa",
+      "esito": "persa",
       "codice": "VOLT20570",
       "nota": "Iniziamo il nostro percorso ufficialmente",
       "data": "2026-08-01",
@@ -28,7 +28,7 @@
       "selezione": "over 1.5 Match",
       "quota": 1.7,
       "stake": 2,
-      "esito": "in_attesa",
+      "esito": "persa",
       "codice": "VAIO20571",
       "data": "2026-08-01",
       "telegram_message_id": 119
@@ -39,7 +39,7 @@
       "selezione": "over 1.5 Match",
       "quota": 1.65,
       "stake": 4,
-      "esito": "in_attesa",
+      "esito": "persa",
       "codice": "CIRO20572",
       "data": "2026-08-01",
       "telegram_message_id": 120
