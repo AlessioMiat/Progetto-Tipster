@@ -43,6 +43,17 @@
       "codice": "CIRO20572",
       "data": "2026-08-01",
       "telegram_message_id": 120
+    },
+    {
+      "evento": "1St Division",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Ov.2.5 + GG & over",
+      "quota": 1.74,
+      "stake": 5,
+      "esito": "in_attesa",
+      "codice": "BIVI20577",
+      "data": "2026-08-02",
+      "telegram_message_id": 123
     }
   ]
 }
