@@ -37,8 +37,16 @@ function escXml(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+// Etichetta leggibile della tipologia (le sigle "attaccate" come RaddoppioAI
+// o QuoteBoostate rendono male scritte cosi' come sono nel dato).
+function labelTipologia(t, upper) {
+  const mappa = { RaddoppioAI: "Raddoppio AI", QuoteBoostate: "Quote Boostate" };
+  const label = mappa[t] || t;
+  return upper ? label.toUpperCase() : label;
+}
+
 function elencoTipologie(vinte) {
-  const uniche = [...new Set(vinte.map(v => v.tipologia))];
+  const uniche = [...new Set(vinte.map(v => labelTipologia(v.tipologia, false)))];
   if (uniche.length === 1) return uniche[0];
   return uniche.slice(0, -1).join(", ") + " e " + uniche[uniche.length - 1];
 }
@@ -111,17 +119,18 @@ function badgeSvg() {
   </svg>`;
 }
 
-// Distribuisce gli screenshot in 1 o 2 colonne, bilanciando l'altezza totale
-// di ciascuna colonna (masonry semplice), cosi' la griglia resta compatta
-// qualunque sia il numero di giocate (1 sola, 2, 3, 4+...).
-function impaginaColonne(tileHeights) {
-  if (tileHeights.length === 1) return [[0]];
+// Distribuisce gli screenshot in 1 o 2 colonne, bilanciando l'altezza (masonry
+// semplice, dai piu' alti ai piu' bassi per un bilanciamento migliore).
+// Restituisce l'elenco indici per colonna.
+function impaginaColonne(tileHeights, nColonne) {
+  const ordine = tileHeights.map((_, i) => i).sort((a, b) => tileHeights[b] - tileHeights[a]);
+  if (nColonne === 1) return [ordine.sort((a, b) => a - b)];
   const colonne = [[], []];
-  const altezzeColonne = [0, 0];
-  tileHeights.forEach((h, i) => {
-    const col = altezzeColonne[0] <= altezzeColonne[1] ? 0 : 1;
-    colonne[col].push(i);
-    altezzeColonne[col] += h + TILE_GAP;
+  const altezze = [0, 0];
+  ordine.forEach(i => {
+    const c = altezze[0] <= altezze[1] ? 0 : 1;
+    colonne[c].push(i);
+    altezze[c] += tileHeights[i] + TILE_GAP;
   });
   return colonne.filter(c => c.length > 0);
 }
@@ -133,34 +142,45 @@ async function generaImmagineRecap(vinte, screenshotBuffers, stats) {
 
   const metas = await Promise.all(screenshotBuffers.map(b => sharp(b).metadata()));
   const imgHeights = metas.map(m => Math.round((colW * m.height) / m.width));
-  const tileHeights = imgHeights.map(h => h + LABEL_H);
+  const tileNaturali = imgHeights.map(h => h + LABEL_H);
 
   const subtitleTop = PAD + HEADER_ROW_H + 8;
   const tilesTop = subtitleTop + SUBTITLE_H;
 
-  const colonne = impaginaColonne(tileHeights);
-  const posizioni = []; // per indice originale: {x, y}
-  let altezzaMassimaColonne = 0;
-  colonne.forEach((indici, colIdx) => {
+  const colonne = impaginaColonne(tileNaturali, nColonne);
+
+  // Altezza naturale di ogni colonna, poi si allunga la piu' corta cosi' le
+  // due finiscono alla stessa altezza: niente piu' "vuoto nero" sotto la
+  // colonna piu' corta (l'extra viene distribuito estendendo le card).
+  const colH = colonne.map(idxs => idxs.reduce((s, i) => s + tileNaturali[i] + TILE_GAP, 0) - (idxs.length ? TILE_GAP : 0));
+  const targetH = Math.max(...colH);
+
+  const tileHeights = [];
+  const posizioni = []; // per indice originale: {x, panelY, contentY}
+  colonne.forEach((idxs, colIdx) => {
+    const extraPerCard = idxs.length ? (targetH - colH[colIdx]) / idxs.length : 0;
     let y = tilesTop;
     const x = PAD + colIdx * (colW + COL_GAP);
-    indici.forEach(i => {
-      posizioni[i] = { x, y };
+    idxs.forEach(i => {
+      tileHeights[i] = tileNaturali[i] + extraPerCard;
+      // Contenuto (screenshot + etichetta) centrato verticalmente nella card:
+      // se la card e' stata allungata per pareggiare le colonne, lo spazio in
+      // piu' si divide sopra e sotto invece di lasciare un vuoto in fondo.
+      posizioni[i] = { x, panelY: y, contentY: y + extraPerCard / 2 };
       y += tileHeights[i] + TILE_GAP;
     });
-    altezzaMassimaColonne = Math.max(altezzaMassimaColonne, y - TILE_GAP);
   });
 
-  const statsTop = altezzaMassimaColonne + 30;
+  const statsTop = tilesTop + targetH + 30;
   const totalH = statsTop + STATS_H + FOOTER_H;
 
   let cards = "";
   vinte.forEach((v, i) => {
-    const { x, y } = posizioni[i];
-    const labelTop = y + imgHeights[i];
+    const { x, panelY, contentY } = posizioni[i];
+    const labelTop = contentY + imgHeights[i];
     cards += `
-      <rect x="${x}" y="${y}" width="${colW}" height="${tileHeights[i]}" rx="16" fill="#1c150d" stroke="rgba(224,170,62,0.35)" stroke-width="1"/>
-      <text x="${x + 18}" y="${labelTop + 32}" font-family="sans-serif" font-size="17" font-weight="800" letter-spacing="1" fill="#f5ecd8">${escXml(v.tipologia.toUpperCase())}</text>
+      <rect x="${x}" y="${panelY}" width="${colW}" height="${tileHeights[i]}" rx="16" fill="#1c150d" stroke="rgba(224,170,62,0.35)" stroke-width="1"/>
+      <text x="${x + 18}" y="${labelTop + 32}" font-family="sans-serif" font-size="17" font-weight="800" letter-spacing="1" fill="#f5ecd8">${escXml(labelTipologia(v.tipologia, true))}</text>
     `;
   });
 
@@ -188,10 +208,11 @@ async function generaImmagineRecap(vinte, screenshotBuffers, stats) {
 
   const composite = [{ input: logoBuffer, top: Math.round(logoCy - LOGO_D / 2), left: Math.round(logoCx - LOGO_D / 2) }];
   for (let i = 0; i < vinte.length; i++) {
-    const { x, y } = posizioni[i];
+    const { x, contentY } = posizioni[i];
+    const top = Math.round(contentY);
     const shot = await sharp(screenshotBuffers[i]).resize(colW, imgHeights[i], { fit: "fill" }).png().toBuffer();
-    composite.push({ input: shot, top: y, left: x });
-    composite.push({ input: badgeBuffer, top: y + 12, left: x + colW - 12 - 96 });
+    composite.push({ input: shot, top, left: x });
+    composite.push({ input: badgeBuffer, top: top + 12, left: x + colW - 12 - 96 });
   }
 
   return sharp(frameBuffer).composite(composite).png().toBuffer();

@@ -20,6 +20,16 @@ const listaPrivato = require("../../automazioni/buongiorno-privato.json");
 const listaPubblico = require("../../automazioni/buongiorno-pubblico.json");
 
 const STATO_PATH = "automazioni/buongiorno-stato.json";
+const ALESSIO_CHAT_ID = 628218072;
+
+// Su Netlify il canale privato e' salvato come TELEGRAM_CHAT_ID (usato dal
+// webhook), NON come TELEGRAM_CHAT_ID_PRIVATO (nome usato dai secret di
+// GitHub Actions). Il fallback fa funzionare la funzione qualunque nome sia
+// impostato. Bug scoperto il 02/08/2026: il buongiorno risultava "inviato"
+// ma non arrivava, perche' inviava a un chat_id undefined e falliva in
+// silenzio (nessun controllo dell'esito prima di segnare lo stato).
+const CHAT_PRIVATO = process.env.TELEGRAM_CHAT_ID_PRIVATO || process.env.TELEGRAM_CHAT_ID;
+const CHAT_PUBBLICO = process.env.TELEGRAM_CHAT_ID_PUBBLICO;
 
 function scegli(lista) {
   return lista[Math.floor(Math.random() * lista.length)];
@@ -44,16 +54,32 @@ exports.handler = schedule("*/15 6-7 * * *", async () => {
     return { statusCode: 200 };
   }
 
-  const rispPrivato = await invia(process.env.TELEGRAM_CHAT_ID_PRIVATO, scegli(listaPrivato));
+  // Invia al privato. Se fallisce NON segna lo stato (cosi' il tentativo
+  // successivo riprova) e avvisa Alessio, invece di fallire in silenzio.
+  const rispPrivato = await invia(CHAT_PRIVATO, scegli(listaPrivato));
   console.log("Privato:", JSON.stringify(rispPrivato));
-
-  if (process.env.TELEGRAM_CHAT_ID_PUBBLICO) {
-    const ritardoSec = 30 + Math.floor(Math.random() * 30);
-    await aspetta(ritardoSec * 1000);
-    const rispPubblico = await invia(process.env.TELEGRAM_CHAT_ID_PUBBLICO, scegli(listaPubblico));
-    console.log("Pubblico:", JSON.stringify(rispPubblico));
+  if (!rispPrivato.ok) {
+    await chiamaApi("sendMessage", {
+      chat_id: ALESSIO_CHAT_ID,
+      text: `⚠️ Buongiorno NON inviato al canale privato: ${rispPrivato.description || "errore"}. Riprovo al prossimo controllo.`
+    }).catch(() => {});
+    return { statusCode: 200 };
   }
 
+  if (CHAT_PUBBLICO) {
+    const ritardoSec = 30 + Math.floor(Math.random() * 30);
+    await aspetta(ritardoSec * 1000);
+    const rispPubblico = await invia(CHAT_PUBBLICO, scegli(listaPubblico));
+    console.log("Pubblico:", JSON.stringify(rispPubblico));
+    if (!rispPubblico.ok) {
+      await chiamaApi("sendMessage", {
+        chat_id: ALESSIO_CHAT_ID,
+        text: `⚠️ Buongiorno inviato al privato ma NON al pubblico: ${rispPubblico.description || "errore"}.`
+      }).catch(() => {});
+    }
+  }
+
+  // Segna "inviato" solo dopo che il privato e' andato a buon fine.
   await scriviFileJson(STATO_PATH, { data: oggi }, sha, `bot: buongiorno inviato ${oggi} (Netlify scheduled)`);
   return { statusCode: 200 };
 });
