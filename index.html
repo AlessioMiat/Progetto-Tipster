@@ -1133,7 +1133,7 @@
      locale...): aprendo il file direttamente come file:// il
      browser blocca il fetch per sicurezza e la pagina resta vuota.
      ============================================================ */
-  fetch("giocate.json")
+  fetch("giocate.json?v=" + Date.now(), { cache: "no-store" })
     .then(r => r.json())
     .then(data => {
       GIOCATE = data.giocate || [];
