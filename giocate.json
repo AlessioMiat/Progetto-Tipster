@@ -65,6 +65,17 @@
       "codice": "TEMI20577",
       "data": "2026-08-02",
       "telegram_message_id": 126
+    },
+    {
+      "evento": "Norvegia",
+      "tipologia": "Live",
+      "selezione": "over 0.5 casa",
+      "quota": 1.8,
+      "stake": 3,
+      "esito": "in_attesa",
+      "codice": "DITA20578",
+      "data": "2026-08-02",
+      "telegram_message_id": 129
     }
   ]
 }
