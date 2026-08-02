@@ -9,6 +9,9 @@ const { entitiesToHtml, escapeHtml } = require("./entities");
 const RECAP_PATH = "automazioni/recap-stato.json";
 const ALESSIO_CHAT_ID = 628218072;
 const DATA_INIZIO = "2026-08-01";
+// Canale pubblico DennyBet: fallback all'id noto se la env var non e'
+// impostata su Netlify (id di canale = non segreto). Vedi buongiorno-scheduled.js.
+const CHAT_PUBBLICO = process.env.TELEGRAM_CHAT_ID_PUBBLICO || "-1002381477114";
 
 function isoIeri(oggi) {
   const d = new Date(oggi + "T00:00:00Z");
@@ -83,7 +86,7 @@ async function inviaAnteprima(stato) {
 
 async function pubblica(stato) {
   const { buffer, caption } = await componiRecap(stato);
-  await inviaFoto(process.env.TELEGRAM_CHAT_ID_PUBBLICO, buffer, caption, "HTML");
+  await inviaFoto(CHAT_PUBBLICO, buffer, caption, "HTML");
 }
 
 async function gestisciMessaggioPrivato(message) {

@@ -29,7 +29,11 @@ const ALESSIO_CHAT_ID = 628218072;
 // ma non arrivava, perche' inviava a un chat_id undefined e falliva in
 // silenzio (nessun controllo dell'esito prima di segnare lo stato).
 const CHAT_PRIVATO = process.env.TELEGRAM_CHAT_ID_PRIVATO || process.env.TELEGRAM_CHAT_ID;
-const CHAT_PUBBLICO = process.env.TELEGRAM_CHAT_ID_PUBBLICO;
+// Il canale pubblico DennyBet: fallback all'id noto se la env var non e'
+// impostata su Netlify (stesso motivo del privato — vedi sopra). L'id di un
+// canale non e' un segreto (a differenza del bot token), quindi si puo'
+// tenere qui come rete di sicurezza.
+const CHAT_PUBBLICO = process.env.TELEGRAM_CHAT_ID_PUBBLICO || "-1002381477114";
 
 function scegli(lista) {
   return lista[Math.floor(Math.random() * lista.length)];
