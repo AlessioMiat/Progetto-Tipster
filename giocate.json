@@ -54,6 +54,17 @@
       "codice": "BIVI20577",
       "data": "2026-08-02",
       "telegram_message_id": 123
+    },
+    {
+      "evento": "Danimarca",
+      "tipologia": "Live",
+      "selezione": "over 0.5 casa",
+      "quota": 1.99,
+      "stake": 3,
+      "esito": "in_attesa",
+      "codice": "TEMI20577",
+      "data": "2026-08-02",
+      "telegram_message_id": 126
     }
   ]
 }
