@@ -42,6 +42,7 @@ function parseGiocataSecca(testo, tipologia) {
   const quotaStr = estraiCampo(testo, "Quota");
   const stakeStr = estraiCampo(testo, "Stake");
   if (!evento || !quotaStr || !stakeStr) return null;
+  const campionato = estraiCampo(testo, "Campionato");
   const codice = estraiCampo(testo, "Codice");
   const nota = estraiCampo(testo, "Nota");
   return {
@@ -51,6 +52,7 @@ function parseGiocataSecca(testo, tipologia) {
     quota: parseFloat(quotaStr.replace(",", ".")),
     stake: parseFloat(stakeStr.replace(",", ".").replace(/u\b/i, "").trim()),
     esito: "in_attesa",
+    ...(campionato ? { campionato } : {}),
     ...(codice ? { codice } : {}),
     ...(nota ? { nota } : {})
   };
@@ -64,6 +66,7 @@ function parseParacaduteStep(testo) {
   const evento = estraiCampo(testo, "Evento");
   const quotaStr = estraiCampo(testo, "Quota");
   if (!cicloStr || !stepStr || !evento || !quotaStr) return null;
+  const campionato = estraiCampo(testo, "Campionato");
   const codice = estraiCampo(testo, "Codice");
   const nota = estraiCampo(testo, "Nota");
   return {
@@ -74,9 +77,17 @@ function parseParacaduteStep(testo) {
     ciclo: parseInt(cicloStr, 10),
     step: parseInt(stepStr, 10),
     esito: "in_attesa",
+    ...(campionato ? { campionato } : {}),
     ...(codice ? { codice } : {}),
     ...(nota ? { nota } : {})
   };
+}
+
+function parseCaption(caption) {
+  const tipologia = estraiTipologia(caption);
+  if (!tipologia) return { tipologia: null, giocata: null };
+  const giocata = tipologia === "Paracadute" ? parseParacaduteStep(caption) : parseGiocataSecca(caption, tipologia);
+  return { tipologia, giocata };
 }
 
 async function leggiGiocateJson() {
@@ -100,6 +111,26 @@ exports.handler = async event => {
       return { statusCode: 200, body: "ok" };
     }
 
+    // Post modificato nel canale -> ri-parsa e aggiorna la giocata esistente
+    // (utile per correggere/aggiungere il Campionato dopo). Mantiene data ed
+    // esito gia' segnato con lo sticker.
+    const edited = update.edited_channel_post;
+    if (edited && String(edited.chat.id) === process.env.TELEGRAM_CHAT_ID && edited.caption) {
+      const { tipologia, giocata } = parseCaption(edited.caption);
+      if (giocata) {
+        const { data, sha } = await leggiGiocateJson();
+        const idx = data.giocate.findIndex(g => g.telegram_message_id === edited.message_id);
+        if (idx >= 0) {
+          giocata.data = data.giocate[idx].data;
+          giocata.telegram_message_id = edited.message_id;
+          giocata.esito = data.giocate[idx].esito;
+          data.giocate[idx] = giocata;
+          await scriviGiocateJson(data, sha, `bot: giocata aggiornata ${tipologia} (msg ${edited.message_id})`);
+        }
+      }
+      return { statusCode: 200, body: "ok" };
+    }
+
     const post = update.channel_post;
     if (!post || String(post.chat.id) !== process.env.TELEGRAM_CHAT_ID) {
       return { statusCode: 200, body: "ignorato" };
@@ -107,10 +138,7 @@ exports.handler = async event => {
 
     // Caso 1: nuovo post con didascalia strutturata -> nuova giocata "in_attesa"
     if (post.caption) {
-      const tipologia = estraiTipologia(post.caption);
-      const giocata = tipologia === "Paracadute" ? parseParacaduteStep(post.caption)
-        : tipologia ? parseGiocataSecca(post.caption, tipologia)
-        : null;
+      const { tipologia, giocata } = parseCaption(post.caption);
       if (giocata) {
         giocata.data = new Date(post.date * 1000).toISOString().slice(0, 10);
         giocata.telegram_message_id = post.message_id;

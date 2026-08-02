@@ -36,14 +36,12 @@ function chiamaApi(metodo, corpo) {
 
 function messaggioPerFase(stato) {
   switch (stato.fase) {
-    case "raccolta_screenshot":
-      return `Promemoria: mandami gli screenshot di ieri per il recap (siamo a ${stato.screenshotRicevuti.length}/${stato.vinte.length}), o scrivimi "oggi no".`;
-    case "raccolta_testo":
-      return "Promemoria: mancano solo il tuo testo per il post del recap.";
+    case "attesa_testo":
+      return "Promemoria: manca il tuo testo per il post del recap — modificalo e rimandamelo.";
     case "anteprima":
       return "Promemoria: l'anteprima del recap ti aspetta — rispondi OK per pubblicarla o ANNULLA.";
     default:
-      return 'Promemoria: mandami gli screenshot di ieri per il recap (o rispondimi anche solo "oggi no").';
+      return 'Vuoi fare il riepilogo di oggi? Rispondimi qualsiasi cosa e parto (o scrivimi "oggi no").';
   }
 }
 

@@ -1,11 +1,8 @@
 {
-  "data": "2026-08-02",
-  "fase": "nessuna_vinta",
-  "risolto": true,
+  "data": "",
+  "fase": "inattivo",
+  "risolto": false,
   "vinte": [],
-  "totaleGiocate": 3,
-  "profittoUnita": 0,
-  "winRatePct": 0,
-  "screenshotRicevuti": [],
-  "testoPersonale": ""
+  "totaleGiocate": 0,
+  "testoFinale": ""
 }
