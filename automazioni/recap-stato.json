@@ -4,7 +4,7 @@
   "risolto": false,
   "vinte": [
     {
-      "evento": "1St Division",
+      "evento": "Lyng - Sogndal & Kongsvinger - Strommen",
       "tipologia": "RaddoppioAI",
       "selezione": "Ov.2.5 + GG & over",
       "quota": 1.74,
@@ -12,10 +12,11 @@
       "esito": "vinta",
       "codice": "BIVI20577",
       "data": "2026-08-02",
-      "telegram_message_id": 123
+      "telegram_message_id": 123,
+      "campionato": "Norvegia 1ª Divisione"
     },
     {
-      "evento": "Danimarca",
+      "evento": "Brøndby - Viborg",
       "tipologia": "Live",
       "selezione": "over 0.5 casa",
       "quota": 1.99,
@@ -23,10 +24,11 @@
       "esito": "vinta",
       "codice": "TEMI20577",
       "data": "2026-08-02",
-      "telegram_message_id": 126
+      "telegram_message_id": 126,
+      "campionato": "Danimarca 1ª Divisione"
     },
     {
-      "evento": "Norvegia",
+      "evento": "Kongsvinger - Strommen",
       "tipologia": "Live",
       "selezione": "over 0.5 casa",
       "quota": 1.8,
@@ -34,10 +36,11 @@
       "esito": "vinta",
       "codice": "DITA20578",
       "data": "2026-08-02",
-      "telegram_message_id": 129
+      "telegram_message_id": 129,
+      "campionato": "Norvegia 2ª Divisione"
     },
     {
-      "evento": "Brann vs Rosenborg",
+      "evento": "Brann - Rosenborg",
       "tipologia": "Live",
       "selezione": "over 1.5 ospite",
       "quota": 1.85,

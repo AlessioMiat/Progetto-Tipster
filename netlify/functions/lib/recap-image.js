@@ -71,6 +71,10 @@ function cardSvg(v, x, y, w) {
   const tag = labelTip(v.tipologia);
   const tagW = 26 + tag.length * 10.2;
   const titoloY = v.campionato ? y + 108 : y + 100;
+  // Auto-adatta la dimensione del titolo (squadre) alla larghezza della card,
+  // cosi' anche le combo lunghe (es. Tridente / doppie) non escono dal bordo.
+  const usable = w - 48;
+  const titoloFs = Math.max(15, Math.min(26, Math.floor(usable / (String(v.evento).length * 0.6))));
   return `
     <g>
       <rect x="${x}" y="${y}" width="${w}" height="${CARD_H}" rx="18" fill="#f4efe1" stroke="#7ec13a" stroke-width="2"/>
@@ -81,7 +85,7 @@ function cardSvg(v, x, y, w) {
         <text x="58" y="31" text-anchor="middle" font-family="sans-serif" font-size="25" font-weight="800" letter-spacing="2" fill="#4ea812">VINTA</text>
       </g>
       ${v.campionato ? `<text x="${x + 24}" y="${y + 82}" font-family="sans-serif" font-size="15" font-weight="700" letter-spacing="0.5" fill="#9a8f79">${esc(String(v.campionato).toUpperCase())}</text>` : ""}
-      <text x="${x + 24}" y="${titoloY}" font-family="sans-serif" font-size="26" font-weight="800" fill="#1a1a1a">${esc(v.evento)}</text>
+      <text x="${x + 24}" y="${titoloY}" font-family="sans-serif" font-size="${titoloFs}" font-weight="800" fill="#1a1a1a">${esc(v.evento)}</text>
       <circle cx="${x + 30}" cy="${y + 134}" r="6" fill="#3ea01e"/>
       <text x="${x + 46}" y="${y + 141}" font-family="sans-serif" font-size="19" fill="#333">${esc(v.selezione || "")}</text>
       <text x="${x + w - 24}" y="${y + 141}" text-anchor="end" font-family="sans-serif" font-size="22" font-weight="800" fill="#1a1a1a">${String(v.quota).replace(".", ",")}</text>
