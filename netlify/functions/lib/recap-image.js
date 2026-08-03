@@ -12,7 +12,36 @@
 // Niente emoji nei testi disegnati (i font emoji possono mancare sui server
 // Linux di Netlify): il template le contiene gia' come immagine.
 const sharp = require("sharp");
+const fs = require("fs");
+const path = require("path");
 const TEMPLATE_BASE64 = require("./template-base64");
+const FONT_BASE64 = require("./font-base64");
+
+// I server Netlify (AWS Lambda) non hanno font installati: senza, il testo
+// SVG renderizzato da sharp esce come quadratini (□). Qui, all'avvio, scrivo
+// il font DejaVu Sans e un fonts.conf su /tmp e configuro fontconfig perche'
+// "sans-serif" usi quel font. Va fatto PRIMA del primo render sharp.
+(function setupFont() {
+  try {
+    const dir = "/tmp/isola-fonts";
+    fs.mkdirSync(dir, { recursive: true });
+    const fontPath = path.join(dir, "DejaVuSans.ttf");
+    if (!fs.existsSync(fontPath)) fs.writeFileSync(fontPath, Buffer.from(FONT_BASE64, "base64"));
+    const confPath = path.join(dir, "fonts.conf");
+    fs.writeFileSync(confPath,
+      `<?xml version="1.0"?><!DOCTYPE fontconfig SYSTEM "fonts.dtd"><fontconfig>` +
+      `<dir>${dir}</dir><cachedir>/tmp/fc-cache</cachedir>` +
+      `<match target="pattern"><test name="family"><string>sans-serif</string></test>` +
+      `<edit name="family" mode="assign" binding="strong"><string>DejaVu Sans</string></edit></match>` +
+      `<match target="pattern"><test name="family"><string>serif</string></test>` +
+      `<edit name="family" mode="assign" binding="strong"><string>DejaVu Sans</string></edit></match>` +
+      `</fontconfig>`);
+    process.env.FONTCONFIG_FILE = confPath;
+    process.env.FONTCONFIG_PATH = dir;
+  } catch (e) {
+    console.error("setup font fallito:", e && e.message);
+  }
+})();
 
 const EURO_PER_UNITA = 100;
 const W = 1254;

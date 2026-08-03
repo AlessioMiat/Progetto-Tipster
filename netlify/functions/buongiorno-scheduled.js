@@ -58,6 +58,17 @@ exports.handler = schedule("*/15 6-7 * * *", async () => {
     return { statusCode: 200 };
   }
 
+  // Orario CASUALE dentro la finestra (per non sembrare un robot che manda
+  // sempre alla stessa ora): ad ogni controllo mando con probabilita' ~35%,
+  // ma all'ULTIMO slot (>= 07:45 UTC = 09:45 CEST) mando comunque, cosi' e'
+  // garantito che parta una volta al giorno, a un orario diverso ogni giorno.
+  const ora = new Date();
+  const ultimoSlot = ora.getUTCHours() > 7 || (ora.getUTCHours() === 7 && ora.getUTCMinutes() >= 45);
+  if (!ultimoSlot && Math.random() > 0.35) {
+    console.log("Salto questo slot (orario casuale) — riprovo al prossimo.");
+    return { statusCode: 200 };
+  }
+
   // Invia al privato. Se fallisce NON segna lo stato (cosi' il tentativo
   // successivo riprova) e avvisa Alessio, invece di fallire in silenzio.
   const rispPrivato = await invia(CHAT_PRIVATO, scegli(listaPrivato));
@@ -71,7 +82,10 @@ exports.handler = schedule("*/15 6-7 * * *", async () => {
   }
 
   if (CHAT_PUBBLICO) {
-    const ritardoSec = 30 + Math.floor(Math.random() * 30);
+    // Stacco BREVE (pochi secondi): una funzione serverless ha un tempo massimo
+    // di esecuzione ridotto, i 30-60s di prima la interrompevano prima di
+    // mandare il pubblico (per questo non arrivava). 3-7s bastano per lo stacco.
+    const ritardoSec = 3 + Math.floor(Math.random() * 5);
     await aspetta(ritardoSec * 1000);
     const rispPubblico = await invia(CHAT_PUBBLICO, scegli(listaPubblico));
     console.log("Pubblico:", JSON.stringify(rispPubblico));
