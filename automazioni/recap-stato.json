@@ -1,8 +1,54 @@
 {
-  "data": "",
-  "fase": "inattivo",
+  "data": "2026-08-03",
+  "fase": "attesa_testo",
   "risolto": false,
-  "vinte": [],
-  "totaleGiocate": 0,
+  "vinte": [
+    {
+      "evento": "1St Division",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Ov.2.5 + GG & over",
+      "quota": 1.74,
+      "stake": 5,
+      "esito": "vinta",
+      "codice": "BIVI20577",
+      "data": "2026-08-02",
+      "telegram_message_id": 123
+    },
+    {
+      "evento": "Danimarca",
+      "tipologia": "Live",
+      "selezione": "over 0.5 casa",
+      "quota": 1.99,
+      "stake": 3,
+      "esito": "vinta",
+      "codice": "TEMI20577",
+      "data": "2026-08-02",
+      "telegram_message_id": 126
+    },
+    {
+      "evento": "Norvegia",
+      "tipologia": "Live",
+      "selezione": "over 0.5 casa",
+      "quota": 1.8,
+      "stake": 3,
+      "esito": "vinta",
+      "codice": "DITA20578",
+      "data": "2026-08-02",
+      "telegram_message_id": 129
+    },
+    {
+      "evento": "Brann vs Rosenborg",
+      "tipologia": "Live",
+      "selezione": "over 1.5 ospite",
+      "quota": 1.85,
+      "stake": 2,
+      "esito": "vinta",
+      "campionato": "Eliteserien",
+      "codice": "SOCA20578",
+      "data": "2026-08-02",
+      "telegram_message_id": 134
+    }
+  ],
+  "totaleGiocate": 4,
   "testoFinale": ""
 }
