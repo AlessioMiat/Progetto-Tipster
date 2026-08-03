@@ -1,28 +1,13 @@
 name: Buongiorno
 
 on:
-  schedule:
-    # Piu' tentativi ogni 10 minuti dentro la finestra 08:00-09:30 CEST
-    # (06:00-07:30 UTC), + uno di sicurezza alle 09:45 CEST. Il primo
-    # tentativo che GitHub fa partire in orario manda il buongiorno e segna
-    # lo stato (automazioni/buongiorno-stato.json) - tutti i successivi
-    # quel giorno lo trovano gia' segnato e non fanno nulla. Deciso il
-    # 14/07/2026 dopo che un singolo cron + attesa interna a caso e' partito
-    # con 2h12m di ritardo (limite noto di GitHub Actions sotto carico) e ha
-    # mandato il buongiorno alle 11:46 invece che nella finestra.
-    # NOTA: quando l'Italia passa a CET (ultima domenica di ottobre),
-    # spostare tutti gli orari di un'ora avanti (07:03->08:03 ecc, l'ultimo
-    # 08:45).
-    - cron: "3 6 * * *"
-    - cron: "13 6 * * *"
-    - cron: "23 6 * * *"
-    - cron: "33 6 * * *"
-    - cron: "43 6 * * *"
-    - cron: "53 6 * * *"
-    - cron: "3 7 * * *"
-    - cron: "13 7 * * *"
-    - cron: "23 7 * * *"
-    - cron: "45 7 * * *"
+  # SCHEDULING DISATTIVATO il 03/08/2026: girava insieme alla funzione
+  # schedulata Netlify (buongiorno-scheduled.js) e i due si scontravano sulla
+  # scrittura di buongiorno-stato.json (git push di GitHub Actions vs API di
+  # Netlify) -> lo stato non si aggiornava a "oggi" e ogni cron rimandava il
+  # buongiorno a raffica. Ora il buongiorno lo manda SOLO Netlify (un solo
+  # meccanismo, scrive via API senza conflitti). Questo workflow resta solo
+  # come backup manuale ("Run workflow").
   workflow_dispatch: {}
 
 permissions:
