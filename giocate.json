@@ -115,6 +115,18 @@
       "codice": "TOLO20581",
       "data": "2026-08-03",
       "telegram_message_id": 153
+    },
+    {
+      "evento": "Dinamo vs Kauno & Sparta Vs Lione",
+      "tipologia": "RaddoppioAI",
+      "selezione": "O.1.5 Casa & Casa segna",
+      "quota": 1.65,
+      "stake": 5,
+      "esito": "in_attesa",
+      "campionato": "Champions qualificazioni",
+      "codice": "ESCA20585",
+      "data": "2026-08-04",
+      "telegram_message_id": 160
     }
   ]
 }
