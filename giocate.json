@@ -127,6 +127,19 @@
       "codice": "ESCA20585",
       "data": "2026-08-04",
       "telegram_message_id": 160
+    },
+    {
+      "evento": "USG vs Bodo",
+      "tipologia": "Paracadute",
+      "selezione": "GG o Over",
+      "quota": 1.36,
+      "ciclo": 1,
+      "step": 1,
+      "esito": "in_attesa",
+      "campionato": "Champions qualificazioni",
+      "codice": "FUMA20585",
+      "data": "2026-08-04",
+      "telegram_message_id": 161
     }
   ]
 }
