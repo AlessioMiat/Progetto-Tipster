@@ -1,57 +1,21 @@
 {
-  "data": "2026-08-03",
-  "fase": "pubblicato",
-  "risolto": true,
+  "data": "2026-08-04",
+  "fase": "attesa_testo",
+  "risolto": false,
   "vinte": [
     {
-      "evento": "Lyng - Sogndal & Kongsvinger - Strommen",
-      "tipologia": "RaddoppioAI",
-      "selezione": "Ov.2.5 + GG & over",
-      "quota": 1.74,
+      "evento": "Djurgarden vs VSK & Halmstad vs Sirius",
+      "tipologia": "QuoteBoostate",
+      "selezione": "2-5 Osp + G or O.2.5",
+      "quota": 2,
       "stake": 5,
       "esito": "vinta",
-      "codice": "BIVI20577",
-      "data": "2026-08-02",
-      "telegram_message_id": 123,
-      "campionato": "Norvegia 1ª Divisione"
-    },
-    {
-      "evento": "Brøndby - Viborg",
-      "tipologia": "Live",
-      "selezione": "over 0.5 casa",
-      "quota": 1.99,
-      "stake": 3,
-      "esito": "vinta",
-      "codice": "TEMI20577",
-      "data": "2026-08-02",
-      "telegram_message_id": 126,
-      "campionato": "Danimarca 1ª Divisione"
-    },
-    {
-      "evento": "Kongsvinger - Strommen",
-      "tipologia": "Live",
-      "selezione": "over 0.5 casa",
-      "quota": 1.8,
-      "stake": 3,
-      "esito": "vinta",
-      "codice": "DITA20578",
-      "data": "2026-08-02",
-      "telegram_message_id": 129,
-      "campionato": "Norvegia 2ª Divisione"
-    },
-    {
-      "evento": "Brann - Rosenborg",
-      "tipologia": "Live",
-      "selezione": "over 1.5 ospite",
-      "quota": 1.85,
-      "stake": 2,
-      "esito": "vinta",
       "campionato": "Eliteserien",
-      "codice": "SOCA20578",
-      "data": "2026-08-02",
-      "telegram_message_id": 134
+      "codice": "FOPUP33",
+      "data": "2026-08-03",
+      "telegram_message_id": 151
     }
   ],
-  "totaleGiocate": 4,
-  "testoFinale": "<b>🤩 4 su 4 nel privato 🏝️</b>\n<i>Raddoppio AI e Live</i> X3 <i>in</i> <b>CASSA ✅</b>\n\n✍️ <b>COME PUOI PENSARE DI RIMANERE FUORI </b>??? <b>FOLLIA</b> \n📌I Live saranno la ciliegina sulla torta di questo fantastico anno. Abbiamo appena iniziato 😎\n\n<b>UNISCITI A NOI CHE ASPETTI ?</b> Una registrazione e sei dentro forza 👇🏻👇🏻\n\n<i>👉🏻 Qui guardi 👀 nel privato</i> <b>VINCI 🤑</b>\n📈 Giornata da +10.8 unità\nScrivi a @Denny_Bet"
+  "totaleGiocate": 2,
+  "testoFinale": ""
 }
