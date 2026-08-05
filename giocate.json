@@ -152,6 +152,19 @@
       "codice": "PACE20586",
       "data": "2026-08-04",
       "telegram_message_id": 164
+    },
+    {
+      "evento": "Chelsea vs Juventus",
+      "tipologia": "Paracadute",
+      "selezione": "Over 2,5",
+      "quota": 1.43,
+      "ciclo": 1,
+      "step": 2,
+      "esito": "in_attesa",
+      "campionato": "Amichevoli",
+      "codice": "MUSA20588",
+      "data": "2026-08-05",
+      "telegram_message_id": 168
     }
   ]
 }
