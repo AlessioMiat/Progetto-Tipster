@@ -1,21 +1,21 @@
 {
-  "data": "2026-08-04",
-  "fase": "annullato",
-  "risolto": true,
+  "data": "2026-08-05",
+  "fase": "attesa_testo",
+  "risolto": false,
   "vinte": [
     {
-      "evento": "Djurgarden vs VSK & Halmstad vs Sirius",
-      "tipologia": "QuoteBoostate",
-      "selezione": "2-5 Osp + G or O.2.5",
-      "quota": 2,
+      "evento": "Dinamo vs Kauno & Sparta Vs Lione",
+      "tipologia": "RaddoppioAI",
+      "selezione": "O.1.5 Casa & Casa segna",
+      "quota": 1.65,
       "stake": 5,
       "esito": "vinta",
-      "campionato": "Eliteserien",
-      "codice": "FOPUP33",
-      "data": "2026-08-03",
-      "telegram_message_id": 151
+      "campionato": "Champions qualificazioni",
+      "codice": "ESCA20585",
+      "data": "2026-08-04",
+      "telegram_message_id": 160
     }
   ],
   "totaleGiocate": 2,
-  "testoFinale": "No"
+  "testoFinale": ""
 }
