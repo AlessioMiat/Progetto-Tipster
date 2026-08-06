@@ -165,6 +165,18 @@
       "codice": "MUSA20588",
       "data": "2026-08-05",
       "telegram_message_id": 168
+    },
+    {
+      "evento": "Benfica vs Midlothian",
+      "tipologia": "Marcatore",
+      "selezione": "Pavlidis segna + Ov.1.5",
+      "quota": 1.77,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Europa League",
+      "codice": "REDA20593",
+      "data": "2026-08-06",
+      "telegram_message_id": 172
     }
   ]
 }
