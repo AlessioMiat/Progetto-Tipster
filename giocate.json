@@ -177,6 +177,17 @@
       "codice": "REDA20593",
       "data": "2026-08-06",
       "telegram_message_id": 172
+    },
+    {
+      "evento": "Ajax + Midtylland",
+      "tipologia": "Tridente",
+      "selezione": "Dolberg + Franculino",
+      "quota": 2.8,
+      "stake": 2,
+      "esito": "in_attesa",
+      "codice": "HARD20594",
+      "data": "2026-08-06",
+      "telegram_message_id": 174
     }
   ]
 }
