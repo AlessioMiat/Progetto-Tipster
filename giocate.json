@@ -188,6 +188,18 @@
       "codice": "HARD20594",
       "data": "2026-08-06",
       "telegram_message_id": 174
+    },
+    {
+      "evento": "Hradec vs Besiktas",
+      "tipologia": "Live",
+      "selezione": "over 0.5 ospite",
+      "quota": 2.15,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "europa league qual.",
+      "codice": "ZIGO20595",
+      "data": "2026-08-06",
+      "telegram_message_id": 175
     }
   ]
 }
