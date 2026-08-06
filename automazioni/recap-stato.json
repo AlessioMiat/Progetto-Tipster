@@ -1,7 +1,7 @@
 {
-  "data": "2026-08-05",
-  "fase": "pubblicato",
-  "risolto": true,
+  "data": "2026-08-06",
+  "fase": "attesa_testo",
+  "risolto": false,
   "vinte": [
     {
       "evento": "Dinamo vs Kauno & Sparta Vs Lione",
@@ -17,5 +17,5 @@
     }
   ],
   "totaleGiocate": 2,
-  "testoFinale": "Annulla"
+  "testoFinale": ""
 }
