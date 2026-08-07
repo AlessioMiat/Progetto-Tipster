@@ -160,7 +160,7 @@
       "quota": 1.43,
       "ciclo": 1,
       "step": 2,
-      "esito": "in_attesa",
+      "esito": "persa",
       "campionato": "Amichevoli",
       "codice": "MUSA20588",
       "data": "2026-08-05",
@@ -200,6 +200,24 @@
       "codice": "ZIGO20595",
       "data": "2026-08-06",
       "telegram_message_id": 175
+    },
+    {
+      "evento": "Ajax - Shelbourne",
+      "tipologia": "Marcatore",
+      "selezione": "Dolberg marcatore + Over 1.5",
+      "quota": 1.63,
+      "stake": 3,
+      "esito": "vinta",
+      "data": "2026-08-06"
+    },
+    {
+      "evento": "Bohemian - Midtjylland",
+      "tipologia": "Marcatore",
+      "selezione": "Franculino marcatore",
+      "quota": 1.72,
+      "stake": 3,
+      "esito": "vinta",
+      "data": "2026-08-06"
     }
   ]
 }
