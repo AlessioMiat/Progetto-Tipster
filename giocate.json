@@ -218,6 +218,18 @@
       "stake": 3,
       "esito": "vinta",
       "data": "2026-08-06"
+    },
+    {
+      "evento": "Cambuur vs Excelsior &  Venlo vs Heracles",
+      "tipologia": "RaddoppioAI",
+      "selezione": "GG+Over & Over 2.5",
+      "quota": 2.9,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Eredivise e Eeestedivise",
+      "codice": "IRTE20598",
+      "data": "2026-08-07",
+      "telegram_message_id": 192
     }
   ]
 }
