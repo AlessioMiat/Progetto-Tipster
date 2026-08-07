@@ -230,6 +230,18 @@
       "codice": "IRTE20598",
       "data": "2026-08-07",
       "telegram_message_id": 192
+    },
+    {
+      "evento": "Brugge vs Kortrijk",
+      "tipologia": "Marcatore",
+      "selezione": "Tresoldi Marcatore Plus",
+      "quota": 2,
+      "stake": 5,
+      "esito": "in_attesa",
+      "campionato": "Pro League",
+      "codice": "POPAP11",
+      "data": "2026-08-07",
+      "telegram_message_id": 193
     }
   ]
 }
