@@ -1,21 +1,62 @@
 {
-  "data": "2026-08-06",
-  "fase": "annullato",
-  "risolto": true,
+  "data": "2026-08-07",
+  "fase": "attesa_testo",
+  "risolto": false,
   "vinte": [
     {
-      "evento": "Dinamo vs Kauno & Sparta Vs Lione",
-      "tipologia": "RaddoppioAI",
-      "selezione": "O.1.5 Casa & Casa segna",
-      "quota": 1.65,
-      "stake": 5,
+      "evento": "Benfica vs Midlothian",
+      "tipologia": "Marcatore",
+      "selezione": "Pavlidis segna + Ov.1.5",
+      "quota": 1.77,
+      "stake": 4,
       "esito": "vinta",
-      "campionato": "Champions qualificazioni",
-      "codice": "ESCA20585",
-      "data": "2026-08-04",
-      "telegram_message_id": 160
+      "campionato": "Europa League",
+      "codice": "REDA20593",
+      "data": "2026-08-06",
+      "telegram_message_id": 172
+    },
+    {
+      "evento": "Ajax + Midtylland",
+      "tipologia": "Tridente",
+      "selezione": "Dolberg + Franculino",
+      "quota": 2.8,
+      "stake": 2,
+      "esito": "vinta",
+      "codice": "HARD20594",
+      "data": "2026-08-06",
+      "telegram_message_id": 174
+    },
+    {
+      "evento": "Hradec vs Besiktas",
+      "tipologia": "Live",
+      "selezione": "over 0.5 ospite",
+      "quota": 2.15,
+      "stake": 2,
+      "esito": "vinta",
+      "campionato": "europa league qual.",
+      "codice": "ZIGO20595",
+      "data": "2026-08-06",
+      "telegram_message_id": 175
+    },
+    {
+      "evento": "Ajax - Shelbourne",
+      "tipologia": "Marcatore",
+      "selezione": "Dolberg marcatore + Over 1.5",
+      "quota": 1.63,
+      "stake": 3,
+      "esito": "vinta",
+      "data": "2026-08-06"
+    },
+    {
+      "evento": "Bohemian - Midtjylland",
+      "tipologia": "Marcatore",
+      "selezione": "Franculino marcatore",
+      "quota": 1.72,
+      "stake": 3,
+      "esito": "vinta",
+      "data": "2026-08-06"
     }
   ],
-  "totaleGiocate": 2,
-  "testoFinale": "Annulla"
+  "totaleGiocate": 5,
+  "testoFinale": ""
 }
