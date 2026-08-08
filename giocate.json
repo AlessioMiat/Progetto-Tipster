@@ -302,6 +302,18 @@
       "codice": "TOOL20607",
       "data": "2026-08-08",
       "telegram_message_id": 216
+    },
+    {
+      "evento": "Az vs Den Haag",
+      "tipologia": "Marcatore",
+      "selezione": "Meerdik marcatore Plus",
+      "quota": 2.35,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Eredivise",
+      "codice": "CUBA20608",
+      "data": "2026-08-08",
+      "telegram_message_id": 221
     }
   ]
 }
