@@ -242,6 +242,18 @@
       "codice": "POPAP11",
       "data": "2026-08-07",
       "telegram_message_id": 193
+    },
+    {
+      "evento": "Viking vs Sarpsborg & PSV vs Fortuna",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5",
+      "quota": 2.01,
+      "stake": 2.5,
+      "esito": "in_attesa",
+      "campionato": "Eliteserien e Eerste divise",
+      "codice": "DOOL3",
+      "data": "2026-08-08",
+      "telegram_message_id": 202
     }
   ]
 }
