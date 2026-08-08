@@ -278,6 +278,18 @@
       "codice": "SAGO20606",
       "data": "2026-08-08",
       "telegram_message_id": 205
+    },
+    {
+      "evento": "NEC vs telstat",
+      "tipologia": "Live",
+      "selezione": "over 0.5 Casa",
+      "quota": 1.83,
+      "stake": 5,
+      "esito": "in_attesa",
+      "campionato": "Eerste divise",
+      "codice": "ZANA20606",
+      "data": "2026-08-08",
+      "telegram_message_id": 208
     }
   ]
 }
