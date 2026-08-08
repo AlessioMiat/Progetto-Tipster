@@ -254,6 +254,18 @@
       "codice": "DOOL3",
       "data": "2026-08-08",
       "telegram_message_id": 202
+    },
+    {
+      "evento": "Viking vs Sarpsborg",
+      "tipologia": "Live",
+      "selezione": "over 1.5 Casa",
+      "quota": 1.8,
+      "stake": 2.5,
+      "esito": "in_attesa",
+      "campionato": "Eliteserien",
+      "codice": "PALO20606",
+      "data": "2026-08-08",
+      "telegram_message_id": 204
     }
   ]
 }
