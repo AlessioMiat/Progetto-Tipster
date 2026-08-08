@@ -1,62 +1,33 @@
 {
-  "data": "2026-08-07",
-  "fase": "pubblicato",
-  "risolto": true,
+  "data": "2026-08-08",
+  "fase": "attesa_testo",
+  "risolto": false,
   "vinte": [
     {
-      "evento": "Benfica vs Midlothian",
-      "tipologia": "Marcatore",
-      "selezione": "Pavlidis segna + Ov.1.5",
-      "quota": 1.77,
-      "stake": 4,
-      "esito": "vinta",
-      "campionato": "Europa League",
-      "codice": "REDA20593",
-      "data": "2026-08-06",
-      "telegram_message_id": 172
-    },
-    {
-      "evento": "Ajax + Midtylland",
-      "tipologia": "Tridente",
-      "selezione": "Dolberg + Franculino",
-      "quota": 2.8,
-      "stake": 2,
-      "esito": "vinta",
-      "codice": "HARD20594",
-      "data": "2026-08-06",
-      "telegram_message_id": 174
-    },
-    {
-      "evento": "Hradec vs Besiktas",
+      "evento": "Viking vs Sarpsborg",
       "tipologia": "Live",
-      "selezione": "over 0.5 ospite",
-      "quota": 2.15,
-      "stake": 2,
+      "selezione": "over 1.5 Casa",
+      "quota": 1.8,
+      "stake": 2.5,
       "esito": "vinta",
-      "campionato": "europa league qual.",
-      "codice": "ZIGO20595",
-      "data": "2026-08-06",
-      "telegram_message_id": 175
+      "campionato": "Eliteserien",
+      "codice": "PALO20606",
+      "data": "2026-08-08",
+      "telegram_message_id": 204
     },
     {
-      "evento": "Ajax - Shelbourne",
-      "tipologia": "Marcatore",
-      "selezione": "Dolberg marcatore + Over 1.5",
-      "quota": 1.63,
-      "stake": 3,
+      "evento": "NEC vs telstat",
+      "tipologia": "Live",
+      "selezione": "over 0.5 Casa",
+      "quota": 1.83,
+      "stake": 5,
       "esito": "vinta",
-      "data": "2026-08-06"
-    },
-    {
-      "evento": "Bohemian - Midtjylland",
-      "tipologia": "Marcatore",
-      "selezione": "Franculino marcatore",
-      "quota": 1.72,
-      "stake": 3,
-      "esito": "vinta",
-      "data": "2026-08-06"
+      "campionato": "Eerste divise",
+      "codice": "ZANA20606",
+      "data": "2026-08-08",
+      "telegram_message_id": 208
     }
   ],
-  "totaleGiocate": 5,
-  "testoFinale": "<b>🤩 5 su 5 nel privato 🏝️</b>\n<i>Marcatore, Tridente e Live</i> <i>in</i> <b>CASSA ✅</b>\n\n✍️ <b>FOLLIAAAAAAA</b> ma non le vittorie ma il fatto che ti affidi ancora al gruppo pubblico <b>SEI UN PAZZO</b> ! \n\nNon è fortuna 😎<b> È QUOTIDIANITÀ</b> ➡️ <b>SEI UN PAZZO</b>\n\n<i>👉🏻 Qui guardi 👀 nel privato</i> <b>VINCI 🤑</b>\n📈 Giornata da +13.0 unità\nScrivi a @Denny_Bet"
+  "totaleGiocate": 4,
+  "testoFinale": ""
 }
