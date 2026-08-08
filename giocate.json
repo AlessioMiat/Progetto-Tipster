@@ -290,6 +290,18 @@
       "codice": "ZANA20606",
       "data": "2026-08-08",
       "telegram_message_id": 208
+    },
+    {
+      "evento": "Losanna vs Young Boys",
+      "tipologia": "Live",
+      "selezione": "over 0.5 Casa",
+      "quota": 2.04,
+      "stake": 1.5,
+      "esito": "in_attesa",
+      "campionato": "Swiss super league",
+      "codice": "TOOL20607",
+      "data": "2026-08-08",
+      "telegram_message_id": 216
     }
   ]
 }
