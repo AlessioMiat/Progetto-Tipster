@@ -374,6 +374,18 @@
       "codice": "FIFA20615",
       "data": "2026-08-09",
       "telegram_message_id": 234
+    },
+    {
+      "evento": "Kristiansund vs Molde",
+      "tipologia": "Live",
+      "selezione": "over 1.5 Casa",
+      "quota": 1.84,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Eliteserien",
+      "codice": "FOLI20615",
+      "data": "2026-08-09",
+      "telegram_message_id": 235
     }
   ]
 }
