@@ -326,6 +326,18 @@
       "codice": "DAPAP77",
       "data": "2026-08-09",
       "telegram_message_id": 225
+    },
+    {
+      "evento": "Malmo vs Degerfors",
+      "tipologia": "Marcatore",
+      "selezione": "Botheim marcatore",
+      "quota": 1.87,
+      "stake": 6,
+      "esito": "in_attesa",
+      "campionato": "Allavenkan",
+      "codice": "URCA20612",
+      "data": "2026-08-09",
+      "telegram_message_id": 228
     }
   ]
 }
