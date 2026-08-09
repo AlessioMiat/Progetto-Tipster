@@ -386,6 +386,18 @@
       "codice": "FOLI20615",
       "data": "2026-08-09",
       "telegram_message_id": 235
+    },
+    {
+      "evento": "Flamengo vs Vitoria",
+      "tipologia": "Marcatore",
+      "selezione": "Pedro marcatore + over 1.5",
+      "quota": 1.95,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Liga Brasiliana",
+      "codice": "RENA20615",
+      "data": "2026-08-09",
+      "telegram_message_id": 241
     }
   ]
 }
