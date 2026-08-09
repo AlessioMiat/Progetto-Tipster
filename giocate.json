@@ -314,6 +314,18 @@
       "codice": "CUBA20608",
       "data": "2026-08-08",
       "telegram_message_id": 221
+    },
+    {
+      "evento": "Sparta vs Feyenoord",
+      "tipologia": "Marcatore",
+      "selezione": "Ueda Plus marcatore",
+      "quota": 2.16,
+      "stake": 5,
+      "esito": "in_attesa",
+      "campionato": "Eredivise",
+      "codice": "POPAP11",
+      "data": "2026-08-09",
+      "telegram_message_id": 225
     }
   ]
 }
