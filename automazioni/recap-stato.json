@@ -1,8 +1,20 @@
 {
-  "data": "2026-08-08",
-  "fase": "annullato",
-  "risolto": true,
+  "data": "2026-08-09",
+  "fase": "attesa_testo",
+  "risolto": false,
   "vinte": [
+    {
+      "evento": "Viking vs Sarpsborg & PSV vs Fortuna",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5",
+      "quota": 2.01,
+      "stake": 2.5,
+      "esito": "vinta",
+      "campionato": "Eliteserien e Eerste divise",
+      "codice": "DOOL3",
+      "data": "2026-08-08",
+      "telegram_message_id": 202
+    },
     {
       "evento": "Viking vs Sarpsborg",
       "tipologia": "Live",
@@ -26,8 +38,20 @@
       "codice": "ZANA20606",
       "data": "2026-08-08",
       "telegram_message_id": 208
+    },
+    {
+      "evento": "Losanna vs Young Boys",
+      "tipologia": "Live",
+      "selezione": "over 0.5 Casa",
+      "quota": 2.04,
+      "stake": 1.5,
+      "esito": "vinta",
+      "campionato": "Swiss super league",
+      "codice": "TOOL20607",
+      "data": "2026-08-08",
+      "telegram_message_id": 216
     }
   ],
-  "totaleGiocate": 4,
-  "testoFinale": "Annulla"
+  "totaleGiocate": 6,
+  "testoFinale": ""
 }
