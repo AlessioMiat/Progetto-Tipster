@@ -350,6 +350,18 @@
       "codice": "PIPA20614",
       "data": "2026-08-09",
       "telegram_message_id": 230
+    },
+    {
+      "evento": "Kristiansund vs Molde",
+      "tipologia": "Live",
+      "selezione": "over 0.5 ospite",
+      "quota": 1.65,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Eliteserien",
+      "codice": "DITA20615",
+      "data": "2026-08-09",
+      "telegram_message_id": 232
     }
   ]
 }
