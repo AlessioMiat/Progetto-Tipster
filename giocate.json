@@ -338,6 +338,18 @@
       "codice": "URCA20612",
       "data": "2026-08-09",
       "telegram_message_id": 228
+    },
+    {
+      "evento": "Porto vs Alverca e Benfica vs Academico",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5 + Over 1.5 casa",
+      "quota": 1.88,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Liga portoghese",
+      "codice": "PIPA20614",
+      "data": "2026-08-09",
+      "telegram_message_id": 230
     }
   ]
 }
