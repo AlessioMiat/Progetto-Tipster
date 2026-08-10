@@ -398,6 +398,18 @@
       "codice": "RENA20615",
       "data": "2026-08-09",
       "telegram_message_id": 241
+    },
+    {
+      "evento": "Sirius vs Brommapojkarna",
+      "tipologia": "Marcatore",
+      "selezione": "Ljungberg Marcatore",
+      "quota": 2.7,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Allsvenskan",
+      "codice": "BACO20618",
+      "data": "2026-08-10",
+      "telegram_message_id": 246
     }
   ]
 }
