@@ -1,6 +1,6 @@
 {
   "data": "2026-08-11",
-  "fase": "attesa_testo",
+  "fase": "anteprima",
   "risolto": false,
   "vinte": [
     {
@@ -41,5 +41,5 @@
     }
   ],
   "totaleGiocate": 7,
-  "testoFinale": ""
+  "testoFinale": "Annulla"
 }
