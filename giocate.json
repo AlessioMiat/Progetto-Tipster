@@ -446,6 +446,19 @@
       "codice": "DOPO20638",
       "data": "2026-08-14",
       "telegram_message_id": 263
+    },
+    {
+      "evento": "Kiel vs Pauli",
+      "tipologia": "Paracadute",
+      "selezione": "Goal o Over 2,5",
+      "quota": 1.3,
+      "ciclo": 2,
+      "step": 1,
+      "esito": "in_attesa",
+      "campionato": "Bundesliga 2",
+      "codice": "FINA20638",
+      "data": "2026-08-14",
+      "telegram_message_id": 264
     }
   ]
 }
