@@ -471,6 +471,18 @@
       "codice": "VERA20640",
       "data": "2026-08-14",
       "telegram_message_id": 266
+    },
+    {
+      "evento": "Sporting vs Vitoria",
+      "tipologia": "Marcatore",
+      "selezione": "Marcatore plus",
+      "quota": 1.85,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Liga portoghese",
+      "codice": "FONT20641",
+      "data": "2026-08-14",
+      "telegram_message_id": 268
     }
   ]
 }
