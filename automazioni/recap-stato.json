@@ -1,7 +1,7 @@
 {
-  "data": "2026-08-11",
-  "fase": "annullato",
-  "risolto": true,
+  "data": "2026-08-14",
+  "fase": "attesa_testo",
+  "risolto": false,
   "vinte": [
     {
       "evento": "Porto vs Alverca e Benfica vs Academico",
@@ -41,5 +41,5 @@
     }
   ],
   "totaleGiocate": 7,
-  "testoFinale": "Annulla"
+  "testoFinale": ""
 }
