@@ -459,6 +459,18 @@
       "codice": "FINA20638",
       "data": "2026-08-14",
       "telegram_message_id": 264
+    },
+    {
+      "evento": "Galatasaray + Corum",
+      "tipologia": "Marcatore",
+      "selezione": "Marcatore + over 1.5",
+      "quota": 1.75,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Super lig",
+      "codice": "VERA20640",
+      "data": "2026-08-14",
+      "telegram_message_id": 266
     }
   ]
 }
