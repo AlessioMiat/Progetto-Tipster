@@ -1,45 +1,45 @@
 {
-  "data": "2026-08-14",
-  "fase": "annullato",
-  "risolto": true,
+  "data": "2026-08-15",
+  "fase": "attesa_testo",
+  "risolto": false,
   "vinte": [
     {
-      "evento": "Porto vs Alverca e Benfica vs Academico",
+      "evento": "Sporting vs Victoria & Galatasaray vs Corum",
       "tipologia": "RaddoppioAI",
-      "selezione": "Over 2.5 + Over 1.5 casa",
-      "quota": 1.88,
+      "selezione": "Over 1.5 casa",
+      "quota": 1.87,
+      "stake": 5,
+      "esito": "vinta",
+      "campionato": "Liga portoghese + Super lig",
+      "codice": "DOPO20638",
+      "data": "2026-08-14",
+      "telegram_message_id": 263
+    },
+    {
+      "evento": "Galatasaray + Corum",
+      "tipologia": "Marcatore",
+      "selezione": "Marcatore + over 1.5",
+      "quota": 1.75,
       "stake": 3,
       "esito": "vinta",
-      "campionato": "Liga portoghese",
-      "codice": "PIPA20614",
-      "data": "2026-08-09",
-      "telegram_message_id": 230
+      "campionato": "Super lig",
+      "codice": "VERA20640",
+      "data": "2026-08-14",
+      "telegram_message_id": 266
     },
     {
-      "evento": "Kristiansund vs Molde",
-      "tipologia": "Live",
-      "selezione": "over 0.5 ospite",
-      "quota": 1.65,
-      "stake": 4,
-      "esito": "vinta",
-      "campionato": "Eliteserien",
-      "codice": "DITA20615",
-      "data": "2026-08-09",
-      "telegram_message_id": 232
-    },
-    {
-      "evento": "Benfica Vs Academica",
+      "evento": "Sporting vs Vitoria",
       "tipologia": "Marcatore",
-      "selezione": "Pavlidis marcatore + over 2.5",
-      "quota": 1.9,
+      "selezione": "Marcatore plus",
+      "quota": 1.85,
       "stake": 2,
       "esito": "vinta",
       "campionato": "Liga portoghese",
-      "codice": "FIFA20615",
-      "data": "2026-08-09",
-      "telegram_message_id": 234
+      "codice": "FONT20641",
+      "data": "2026-08-14",
+      "telegram_message_id": 268
     }
   ],
-  "totaleGiocate": 7,
-  "testoFinale": "Annulla"
+  "totaleGiocate": 3,
+  "testoFinale": ""
 }
