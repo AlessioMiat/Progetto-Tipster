@@ -532,6 +532,18 @@
       "codice": "FONO20647",
       "data": "2026-08-15",
       "telegram_message_id": 287
+    },
+    {
+      "evento": "Genclerbirlig vs Fenerbahce",
+      "tipologia": "Live",
+      "selezione": "over 1.5 ospite",
+      "quota": 1.7,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Super lig",
+      "codice": "GIGA20647",
+      "data": "2026-08-15",
+      "telegram_message_id": 289
     }
   ]
 }
