@@ -520,6 +520,18 @@
       "codice": "BABA20647",
       "data": "2026-08-15",
       "telegram_message_id": 283
+    },
+    {
+      "evento": "Stjarnan vs Keflavik",
+      "tipologia": "Live",
+      "selezione": "over 1.5 ospite + Over 1.5 ospite + over 1.5 2T",
+      "quota": 2.54,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Super lig + Pro league +",
+      "codice": "FONO20647",
+      "data": "2026-08-15",
+      "telegram_message_id": 287
     }
   ]
 }
