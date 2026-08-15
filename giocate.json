@@ -495,6 +495,19 @@
       "codice": "FONO20643",
       "data": "2026-08-15",
       "telegram_message_id": 280
+    },
+    {
+      "evento": "Fortuna vs PSV",
+      "tipologia": "Paracadute",
+      "selezione": "Over 2,5",
+      "quota": 1.36,
+      "ciclo": 2,
+      "step": 2,
+      "esito": "in_attesa",
+      "campionato": "Eredivise",
+      "codice": "ASTI20643",
+      "data": "2026-08-15",
+      "telegram_message_id": 282
     }
   ]
 }
