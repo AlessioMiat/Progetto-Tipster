@@ -508,6 +508,18 @@
       "codice": "ASTI20643",
       "data": "2026-08-15",
       "telegram_message_id": 282
+    },
+    {
+      "evento": "Genclerbirligi vs Fenerbahce",
+      "tipologia": "Marcatore",
+      "selezione": "Talisca Marcatore plus",
+      "quota": 1.85,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "super lig",
+      "codice": "BABA20647",
+      "data": "2026-08-15",
+      "telegram_message_id": 283
     }
   ]
 }
