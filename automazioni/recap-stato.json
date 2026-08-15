@@ -1,8 +1,45 @@
 {
-  "data": "",
-  "fase": "inattivo",
+  "data": "2026-08-15",
+  "fase": "attesa_testo",
   "risolto": false,
-  "vinte": [],
-  "totaleGiocate": 0,
+  "vinte": [
+    {
+      "evento": "Sporting vs Victoria & Galatasaray vs Corum",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 1.5 casa",
+      "quota": 1.87,
+      "stake": 5,
+      "esito": "vinta",
+      "campionato": "Liga portoghese + Super lig",
+      "codice": "DOPO20638",
+      "data": "2026-08-14",
+      "telegram_message_id": 263
+    },
+    {
+      "evento": "Galatasaray + Corum",
+      "tipologia": "Marcatore",
+      "selezione": "Osimhen marcatore + over 1.5",
+      "quota": 1.75,
+      "stake": 3,
+      "esito": "vinta",
+      "campionato": "Super lig",
+      "codice": "VERA20640",
+      "data": "2026-08-14",
+      "telegram_message_id": 266
+    },
+    {
+      "evento": "Sporting vs Vitoria",
+      "tipologia": "Marcatore",
+      "selezione": "Ioannidis Marcatore plus",
+      "quota": 1.85,
+      "stake": 2,
+      "esito": "vinta",
+      "campionato": "Liga portoghese",
+      "codice": "FONT20641",
+      "data": "2026-08-14",
+      "telegram_message_id": 268
+    }
+  ],
+  "totaleGiocate": 3,
   "testoFinale": ""
 }
