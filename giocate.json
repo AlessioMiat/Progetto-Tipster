@@ -483,6 +483,18 @@
       "codice": "FONT20641",
       "data": "2026-08-14",
       "telegram_message_id": 268
+    },
+    {
+      "evento": "Hertha vs Heidenheim & Nordic vs Varbergs",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Goal + Goal o over",
+      "quota": 1.88,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Liga portoghese + Super lig",
+      "codice": "FONO20643",
+      "data": "2026-08-15",
+      "telegram_message_id": 280
     }
   ]
 }
