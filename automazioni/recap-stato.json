@@ -1,45 +1,8 @@
 {
-  "data": "2026-08-15",
-  "fase": "annullato",
-  "risolto": true,
-  "vinte": [
-    {
-      "evento": "Sporting vs Victoria & Galatasaray vs Corum",
-      "tipologia": "RaddoppioAI",
-      "selezione": "Over 1.5 casa",
-      "quota": 1.87,
-      "stake": 5,
-      "esito": "vinta",
-      "campionato": "Liga portoghese + Super lig",
-      "codice": "DOPO20638",
-      "data": "2026-08-14",
-      "telegram_message_id": 263
-    },
-    {
-      "evento": "Galatasaray + Corum",
-      "tipologia": "Marcatore",
-      "selezione": "Marcatore + over 1.5",
-      "quota": 1.75,
-      "stake": 3,
-      "esito": "vinta",
-      "campionato": "Super lig",
-      "codice": "VERA20640",
-      "data": "2026-08-14",
-      "telegram_message_id": 266
-    },
-    {
-      "evento": "Sporting vs Vitoria",
-      "tipologia": "Marcatore",
-      "selezione": "Marcatore plus",
-      "quota": 1.85,
-      "stake": 2,
-      "esito": "vinta",
-      "campionato": "Liga portoghese",
-      "codice": "FONT20641",
-      "data": "2026-08-14",
-      "telegram_message_id": 268
-    }
-  ],
-  "totaleGiocate": 3,
-  "testoFinale": "<b>🤩 3 su 3 nel privato 🏝️</b>\n<i>Raddoppio AI e Marcatore X2  in</i> <b>CASSA ✅</b>\n\n<b>I MARCATORI SONO LA NOSTRA SPECIALITÀ</b> 👉🏻 <b>COSTANZA</b> ✅ I Top campionati non sono ancora iniziati e noi stiamo andando come TRENI 🚂 in questo caldo Agosto 😎 \n\nOggi il pranzo è stato offerto da Dennybet con il fantastico 3/3 + Inizio scalata paracadute 🪂 \n\nOGGI ( così come da 14 giorni ) continueremo a vincere <b>nell’Isola</b> 🏝️ \n\n<i>👉🏻 Qui guardi 👀 nel privato</i> <b>VINCI 🤑</b>\n📈 Giornata da +8.3 unità\nScrivi a @Denny_Bet"
+  "data": "",
+  "fase": "inattivo",
+  "risolto": false,
+  "vinte": [],
+  "totaleGiocate": 0,
+  "testoFinale": ""
 }
