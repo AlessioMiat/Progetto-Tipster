@@ -605,6 +605,18 @@
       "codice": "HOME20653",
       "data": "2026-08-16",
       "telegram_message_id": 306
+    },
+    {
+      "evento": "Lazio vs Mantova & Besiktas vs Eyupspor",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 1.5 casa",
+      "quota": 1.88,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Coppa Italia & Super lig",
+      "codice": "CINE20655",
+      "data": "2026-08-16",
+      "telegram_message_id": 309
     }
   ]
 }
