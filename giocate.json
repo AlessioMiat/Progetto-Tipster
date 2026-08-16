@@ -628,6 +628,18 @@
       "codice": "NAPO20655",
       "data": "2026-08-16",
       "telegram_message_id": 310
+    },
+    {
+      "evento": "Lens vs PSG",
+      "tipologia": "Live",
+      "selezione": "over 1.5 ospite",
+      "quota": 1.75,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Coppa di Francia",
+      "codice": "REFE20655",
+      "data": "2026-08-16",
+      "telegram_message_id": 311
     }
   ]
 }
