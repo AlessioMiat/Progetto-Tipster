@@ -617,6 +617,17 @@
       "codice": "CINE20655",
       "data": "2026-08-16",
       "telegram_message_id": 309
+    },
+    {
+      "evento": "Lazio Vs Mantova & Lens vs PSG",
+      "tipologia": "Tridente",
+      "selezione": "Dia + Zaccagni + Kvara Marcatore Plus",
+      "quota": 11.27,
+      "stake": 1,
+      "esito": "in_attesa",
+      "codice": "NAPO20655",
+      "data": "2026-08-16",
+      "telegram_message_id": 310
     }
   ]
 }
