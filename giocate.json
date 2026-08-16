@@ -557,6 +557,18 @@
       "codice": "TOPA20651",
       "data": "2026-08-16",
       "telegram_message_id": 294
+    },
+    {
+      "evento": "Nordsjaelland vs Silkeborg & Aelesunds vs Valerenga",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5",
+      "quota": 1.82,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Superligaen & Eliteserien",
+      "codice": "BABY20652",
+      "data": "2026-08-16",
+      "telegram_message_id": 295
     }
   ]
 }
