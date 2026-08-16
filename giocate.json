@@ -593,6 +593,18 @@
       "codice": "BONA20653",
       "data": "2026-08-16",
       "telegram_message_id": 299
+    },
+    {
+      "evento": "Racing vs Villareal",
+      "tipologia": "Marcatore",
+      "selezione": "Mikautadze Marcatore plus",
+      "quota": 2.3,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "LaLiga",
+      "codice": "HOME20653",
+      "data": "2026-08-16",
+      "telegram_message_id": 306
     }
   ]
 }
