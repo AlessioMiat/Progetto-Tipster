@@ -544,6 +544,19 @@
       "codice": "GIGA20647",
       "data": "2026-08-15",
       "telegram_message_id": 289
+    },
+    {
+      "evento": "Feyenoord - Go Ahead",
+      "tipologia": "Paracadute",
+      "selezione": "Over 2,5",
+      "quota": 1.36,
+      "ciclo": 2,
+      "step": 3,
+      "esito": "in_attesa",
+      "campionato": "Eredivise",
+      "codice": "TOPA20651",
+      "data": "2026-08-16",
+      "telegram_message_id": 294
     }
   ]
 }
