@@ -664,6 +664,18 @@
       "codice": "POME20660",
       "data": "2026-08-17",
       "telegram_message_id": 317
+    },
+    {
+      "evento": "Grindavik vs Grotta",
+      "tipologia": "Live",
+      "selezione": "over 0.5 casa",
+      "quota": 2.2,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Islanda 2 Divisione",
+      "codice": "SPIA20660",
+      "data": "2026-08-17",
+      "telegram_message_id": 318
     }
   ]
 }
