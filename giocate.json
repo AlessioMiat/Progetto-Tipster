@@ -640,6 +640,18 @@
       "codice": "REFE20655",
       "data": "2026-08-16",
       "telegram_message_id": 311
+    },
+    {
+      "evento": "Brondby vs soenderjyske & Casa pia vs Benfica",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 1.5 casa + Over 1.5 ospite",
+      "quota": 1.88,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Superligaen & Liga portoghese",
+      "codice": "ERBE20658",
+      "data": "2026-08-17",
+      "telegram_message_id": 314
     }
   ]
 }
