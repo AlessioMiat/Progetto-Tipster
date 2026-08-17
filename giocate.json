@@ -652,6 +652,18 @@
       "codice": "ERBE20658",
       "data": "2026-08-17",
       "telegram_message_id": 314
+    },
+    {
+      "evento": "Casa pia vs Benfica",
+      "tipologia": "Marcatore",
+      "selezione": "Pavlidis + Benfica vince",
+      "quota": 1.83,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Liga portoghese",
+      "codice": "POME20660",
+      "data": "2026-08-17",
+      "telegram_message_id": 317
     }
   ]
 }
