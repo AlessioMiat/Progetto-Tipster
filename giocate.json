@@ -688,6 +688,18 @@
       "codice": "NOVO20663",
       "data": "2026-08-18",
       "telegram_message_id": 328
+    },
+    {
+      "evento": "Fenerbahce vs Lione",
+      "tipologia": "Marcatore",
+      "selezione": "Muriqi Marcatore plus",
+      "quota": 1.85,
+      "stake": 1.5,
+      "esito": "in_attesa",
+      "campionato": "champions qualificazione",
+      "codice": "COSE20666",
+      "data": "2026-08-18",
+      "telegram_message_id": 329
     }
   ]
 }
