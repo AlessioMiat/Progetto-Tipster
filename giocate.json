@@ -712,6 +712,16 @@
       "codice": "COSE20671",
       "data": "2026-08-19",
       "telegram_message_id": 339
+    },
+    {
+      "evento": "Orlando City - Chicago Fire",
+      "tipologia": "Marcatore",
+      "selezione": "Lewandowski marcatore plus",
+      "quota": 1.68,
+      "stake": 3,
+      "esito": "vinta",
+      "campionato": "MLS",
+      "data": "2026-08-14"
     }
   ]
 }
