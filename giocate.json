@@ -722,6 +722,18 @@
       "esito": "vinta",
       "campionato": "MLS",
       "data": "2026-08-14"
+    },
+    {
+      "evento": "Benfica vs Aarhus & Nordsjaelland vs ST.Gallen",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5 + Over 2.5",
+      "quota": 1.78,
+      "stake": 5,
+      "esito": "in_attesa",
+      "campionato": "Europa & Conference qualificazioni",
+      "codice": "TEMI20676",
+      "data": "2026-08-20",
+      "telegram_message_id": 350
     }
   ]
 }
