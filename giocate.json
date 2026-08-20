@@ -734,6 +734,17 @@
       "codice": "TEMI20676",
       "data": "2026-08-20",
       "telegram_message_id": 350
+    },
+    {
+      "evento": "Midtjylland vs HNK + Besiktas vs Kauno + Atalanta vs Tel Aviv",
+      "tipologia": "Tridente",
+      "selezione": "Franculino + Cerny + Kristovic - Marcatore Plus",
+      "quota": 6.95,
+      "stake": 1,
+      "esito": "in_attesa",
+      "codice": "VERE20678",
+      "data": "2026-08-20",
+      "telegram_message_id": 351
     }
   ]
 }
