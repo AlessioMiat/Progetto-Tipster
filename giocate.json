@@ -757,6 +757,18 @@
       "codice": "DIVA20684",
       "data": "2026-08-21",
       "telegram_message_id": 356
+    },
+    {
+      "evento": "Arsenal vs Coventry",
+      "tipologia": "Marcatore",
+      "selezione": "Havertz marcatore plus",
+      "quota": 1.85,
+      "stake": 3.5,
+      "esito": "in_attesa",
+      "campionato": "Premier League",
+      "codice": "CECA20689",
+      "data": "2026-08-21",
+      "telegram_message_id": 357
     }
   ]
 }
