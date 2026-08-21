@@ -1,15 +1,12 @@
 name: Promemoria recap
 
 on:
-  schedule:
-    # 08:13-18:13 UTC = ~10:13-20:13 ora italiana (CEST), un controllo ogni ora.
-    # Minuto "storto" (13, non in punto) per lo stesso motivo del Buongiorno:
-    # evitare i ritardi sul carico di punta allo scoccare dell'ora.
-    # Lo script si ferma da solo (nessun invio) prima del 1 agosto 2026 e nei
-    # giorni in cui Alessio ha gia' risposto qualcosa in privato al bot.
-    # NOTA: quando l'Italia passa a CET (ultima domenica di ottobre), cambiare
-    # in '13 9-19 * * *' per restare sulle 10:00-20:00 locali.
-    - cron: "13 8-18 * * *"
+  # PROMEMORIA RECAP DISATTIVATO il 20/08/2026 su richiesta di Alessio: il
+  # recap giornaliero non serve piu' (si valuta il passaggio a un recap
+  # SETTIMANALE automatico - vedi task Todoist). Niente piu' messaggi orari
+  # "vuoi fare il riepilogo?". Il flusso recap resta nel codice ma dormiente
+  # (parte solo se Alessio scrive al bot in privato). Resta solo l'avvio
+  # manuale, nel caso serva riattivarlo al volo.
   workflow_dispatch: {}
 
 concurrency:
