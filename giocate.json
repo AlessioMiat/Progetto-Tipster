@@ -781,6 +781,18 @@
       "codice": "UNDE20697",
       "data": "2026-08-22",
       "telegram_message_id": 371
+    },
+    {
+      "evento": "Sporting vs Alverca + Inter vs Monza + Al Ahli vs Abha",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 1.5 casa",
+      "quota": 1.95,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Liga portoghese + Serie A + Saudi pro league",
+      "codice": "IANO20692",
+      "data": "2026-08-22",
+      "telegram_message_id": 375
     }
   ]
 }
