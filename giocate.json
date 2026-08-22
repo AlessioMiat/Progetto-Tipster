@@ -829,6 +829,18 @@
       "codice": "IANO20701",
       "data": "2026-08-22",
       "telegram_message_id": 380
+    },
+    {
+      "evento": "Espanol vs Real",
+      "tipologia": "Live",
+      "selezione": "over 2.5",
+      "quota": 2.15,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Laliga",
+      "codice": "GENI20705",
+      "data": "2026-08-22",
+      "telegram_message_id": 383
     }
   ]
 }
