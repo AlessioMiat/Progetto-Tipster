@@ -793,6 +793,18 @@
       "codice": "IANO20692",
       "data": "2026-08-22",
       "telegram_message_id": 375
+    },
+    {
+      "evento": "Hull vs Manchester utd",
+      "tipologia": "Live",
+      "selezione": "over 0.5 ospite 2T",
+      "quota": 2.25,
+      "stake": 1,
+      "esito": "in_attesa",
+      "campionato": "premier league",
+      "codice": "ALBI20699",
+      "data": "2026-08-22",
+      "telegram_message_id": 376
     }
   ]
 }
