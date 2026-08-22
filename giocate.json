@@ -817,6 +817,18 @@
       "codice": "CENE20701",
       "data": "2026-08-22",
       "telegram_message_id": 378
+    },
+    {
+      "evento": "Fortuna vs Az",
+      "tipologia": "Live",
+      "selezione": "over 1.5 ospite",
+      "quota": 1.7,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Eredivise",
+      "codice": "IANO20701",
+      "data": "2026-08-22",
+      "telegram_message_id": 380
     }
   ]
 }
