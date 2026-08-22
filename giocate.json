@@ -769,6 +769,18 @@
       "codice": "CECA20689",
       "data": "2026-08-21",
       "telegram_message_id": 357
+    },
+    {
+      "evento": "wehen vs leverkusen",
+      "tipologia": "Live",
+      "selezione": "over 0.5 ospite 1T",
+      "quota": 2.25,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "DFB POKAL",
+      "codice": "UNDE20697",
+      "data": "2026-08-22",
+      "telegram_message_id": 371
     }
   ]
 }
