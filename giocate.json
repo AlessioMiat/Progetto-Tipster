@@ -805,6 +805,18 @@
       "codice": "ALBI20699",
       "data": "2026-08-22",
       "telegram_message_id": 376
+    },
+    {
+      "evento": "Everton vs Crystal Palace",
+      "tipologia": "Live",
+      "selezione": "ospite segna si",
+      "quota": 1.75,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "premier league",
+      "codice": "CENE20701",
+      "data": "2026-08-22",
+      "telegram_message_id": 378
     }
   ]
 }
