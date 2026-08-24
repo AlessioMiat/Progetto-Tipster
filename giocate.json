@@ -853,6 +853,18 @@
       "codice": "ERTE20696",
       "data": "2026-08-23",
       "telegram_message_id": 387
+    },
+    {
+      "evento": "PSV vs Oss & Utrecht vs Heracles",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5",
+      "quota": 1.89,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Eerste divisie",
+      "codice": "RANA20721",
+      "data": "2026-08-24",
+      "telegram_message_id": 394
     }
   ]
 }
