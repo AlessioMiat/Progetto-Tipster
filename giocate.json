@@ -877,6 +877,19 @@
       "codice": "SETE20721",
       "data": "2026-08-24",
       "telegram_message_id": 395
+    },
+    {
+      "evento": "Verls vs HSV",
+      "tipologia": "Paracadute",
+      "selezione": "Over 2,5",
+      "quota": 1.33,
+      "ciclo": 2,
+      "step": 4,
+      "esito": "in_attesa",
+      "campionato": "DFP POKAL",
+      "codice": "ARMI20723",
+      "data": "2026-08-24",
+      "telegram_message_id": 396
     }
   ]
 }
