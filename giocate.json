@@ -890,6 +890,19 @@
       "codice": "ARMI20723",
       "data": "2026-08-24",
       "telegram_message_id": 396
+    },
+    {
+      "evento": "Valencia va Betis",
+      "tipologia": "Paracadute",
+      "selezione": "casa segna si",
+      "quota": 1.35,
+      "ciclo": 2,
+      "step": 5,
+      "esito": "in_attesa",
+      "campionato": "Laliga",
+      "codice": "PALA20729",
+      "data": "2026-08-25",
+      "telegram_message_id": 402
     }
   ]
 }
