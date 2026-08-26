@@ -903,6 +903,18 @@
       "codice": "PALA20729",
       "data": "2026-08-25",
       "telegram_message_id": 402
+    },
+    {
+      "evento": "Tottenham vs Charlton & Real Madrid vs Sociedad",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5 match + 2-5 casa",
+      "quota": 1.81,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "EFL + LaLiga",
+      "codice": "FILE20739",
+      "data": "2026-08-26",
+      "telegram_message_id": 405
     }
   ]
 }
