@@ -927,6 +927,18 @@
       "codice": "NOLO20745",
       "data": "2026-08-27",
       "telegram_message_id": 411
+    },
+    {
+      "evento": "Tel aviv vs Atalanta + San Gallo vs Nordsjaelland",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 1.5 osp + Over 1.5 Casa",
+      "quota": 2.38,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Conference qual.",
+      "codice": "PATE20745",
+      "data": "2026-08-27",
+      "telegram_message_id": 413
     }
   ]
 }
