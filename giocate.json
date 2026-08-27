@@ -939,6 +939,17 @@
       "codice": "PATE20745",
       "data": "2026-08-27",
       "telegram_message_id": 413
+    },
+    {
+      "evento": "Chelsea vs Luton & Barcellona vs Bilbao",
+      "tipologia": "Tridente",
+      "selezione": "Wellback Plus + Raphina Plus",
+      "quota": 2.67,
+      "stake": 2,
+      "esito": "in_attesa",
+      "codice": "ARTO20748",
+      "data": "2026-08-27",
+      "telegram_message_id": 414
     }
   ]
 }
