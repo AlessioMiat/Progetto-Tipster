@@ -915,6 +915,18 @@
       "codice": "FILE20739",
       "data": "2026-08-26",
       "telegram_message_id": 405
+    },
+    {
+      "evento": "Brighton vs Tromso & Barcellona vs Bilbao",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5 Match + Over 1.5 casa",
+      "quota": 1.75,
+      "stake": 5,
+      "esito": "in_attesa",
+      "campionato": "Conference qual. + LaLiga",
+      "codice": "NOLO20745",
+      "data": "2026-08-27",
+      "telegram_message_id": 411
     }
   ]
 }
