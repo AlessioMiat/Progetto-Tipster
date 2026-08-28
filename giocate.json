@@ -1005,6 +1005,18 @@
       "campionato": "LaLiga",
       "data": "2026-08-27",
       "nota": "singola della doppia ARTO20748"
+    },
+    {
+      "evento": "Lille vs Psg & Milan vs venezia",
+      "tipologia": "RaddoppioAI",
+      "selezione": "x2+over 1.5 + over 1.5 casa",
+      "quota": 2.25,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Ligue 1 + Serie A",
+      "codice": "OMAI20755",
+      "data": "2026-08-28",
+      "telegram_message_id": 427
     }
   ]
 }
