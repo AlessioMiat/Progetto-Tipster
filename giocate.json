@@ -1029,6 +1029,18 @@
       "codice": "RAFE20755",
       "data": "2026-08-28",
       "telegram_message_id": 428
+    },
+    {
+      "evento": "Milan vs Venezia",
+      "tipologia": "Marcatore",
+      "selezione": "Goncalo Ramos Marcatore Plus",
+      "quota": 1.85,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Serie A",
+      "codice": "DOSE20759",
+      "data": "2026-08-28",
+      "telegram_message_id": 429
     }
   ]
 }
