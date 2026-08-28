@@ -1017,6 +1017,18 @@
       "codice": "OMAI20755",
       "data": "2026-08-28",
       "telegram_message_id": 427
+    },
+    {
+      "evento": "Bosch vs Vitesse & waalwijk vs PSV",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5 match + over 2.5 match",
+      "quota": 1.9,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "eerste divise",
+      "codice": "RAFE20755",
+      "data": "2026-08-28",
+      "telegram_message_id": 428
     }
   ]
 }
