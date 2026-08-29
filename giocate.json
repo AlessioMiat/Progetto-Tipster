@@ -1041,6 +1041,18 @@
       "codice": "DOSE20759",
       "data": "2026-08-28",
       "telegram_message_id": 429
+    },
+    {
+      "evento": "Galatasaray vs Goztepe + Dortmund vs Amburho",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 1.5 Casa + Over 1.5 casa",
+      "quota": 1.86,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Super Lig + Bundesliga",
+      "codice": "VASO20764",
+      "data": "2026-08-29",
+      "telegram_message_id": 442
     }
   ]
 }
