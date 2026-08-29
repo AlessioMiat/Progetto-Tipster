@@ -1065,6 +1065,18 @@
       "codice": "OAKS20770",
       "data": "2026-08-29",
       "telegram_message_id": 443
+    },
+    {
+      "evento": "Juventus vs Parma",
+      "tipologia": "Marcatore",
+      "selezione": "Kolo Muani marcatore plus",
+      "quota": 1.88,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Serie A",
+      "codice": "PIRO20776",
+      "data": "2026-08-29",
+      "telegram_message_id": 448
     }
   ]
 }
