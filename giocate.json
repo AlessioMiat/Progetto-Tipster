@@ -1088,6 +1088,18 @@
       "codice": "DURO20782",
       "data": "2026-08-30",
       "telegram_message_id": 454
+    },
+    {
+      "evento": "Manchester United vs Ipswich",
+      "tipologia": "Marcatore",
+      "selezione": "Cunha marcatore plus",
+      "quota": 2.48,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Premier Legue",
+      "codice": "CASE20790",
+      "data": "2026-08-30",
+      "telegram_message_id": 460
     }
   ]
 }
