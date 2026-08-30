@@ -1077,6 +1077,17 @@
       "codice": "PIRO20776",
       "data": "2026-08-29",
       "telegram_message_id": 448
+    },
+    {
+      "evento": "Rennes vs Le Mans + Real vs Malaga + Feyenoord vs Den Haag",
+      "tipologia": "Tridente",
+      "selezione": "Lepaul Plus + Bellingham goal o assist plus + Ueda e over 1.5",
+      "quota": 5.51,
+      "stake": 1.5,
+      "esito": "in_attesa",
+      "codice": "DURO20782",
+      "data": "2026-08-30",
+      "telegram_message_id": 454
     }
   ]
 }
