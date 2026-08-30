@@ -1100,6 +1100,18 @@
       "codice": "CASE20790",
       "data": "2026-08-30",
       "telegram_message_id": 460
+    },
+    {
+      "evento": "Cagliari vs Inter",
+      "tipologia": "Marcatore",
+      "selezione": "Lautaro marcatore plus",
+      "quota": 1.93,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Serie A",
+      "codice": "CORO20793",
+      "data": "2026-08-30",
+      "telegram_message_id": 466
     }
   ]
 }
