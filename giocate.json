@@ -1112,6 +1112,18 @@
       "codice": "CORO20793",
       "data": "2026-08-30",
       "telegram_message_id": 466
+    },
+    {
+      "evento": "Barcellona vs Rayo & Benfica vs Estoril",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Casa vince 1T + Casa vince 1T",
+      "quota": 1.99,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "LaLiga + Liga portogallo",
+      "codice": "SAIO20799",
+      "data": "2026-08-31",
+      "telegram_message_id": 474
     }
   ]
 }
