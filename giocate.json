@@ -1124,6 +1124,18 @@
       "codice": "SAIO20799",
       "data": "2026-08-31",
       "telegram_message_id": 474
+    },
+    {
+      "evento": "Palermo vs Mantova + Lugano vs Servette + Tolosa vs Lille",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Passaggio 1, GG o Over, Ospite segna",
+      "quota": 2.04,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Coppa Italia, Superliga, Ligue 1",
+      "codice": "303123",
+      "data": "2026-09-03",
+      "telegram_message_id": 489
     }
   ]
 }
