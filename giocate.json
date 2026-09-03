@@ -1136,6 +1136,18 @@
       "codice": "303123",
       "data": "2026-09-03",
       "telegram_message_id": 489
+    },
+    {
+      "evento": "Mjalby vs Djurgarden",
+      "tipologia": "Marcatore",
+      "selezione": "Lien marcatore plus",
+      "quota": 1.88,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Allsvenskan",
+      "codice": "792890",
+      "data": "2026-09-03",
+      "telegram_message_id": 491
     }
   ]
 }
