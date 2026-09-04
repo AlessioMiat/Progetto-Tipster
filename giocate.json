@@ -1148,6 +1148,18 @@
       "codice": "792890",
       "data": "2026-09-03",
       "telegram_message_id": 491
+    },
+    {
+      "evento": "Ipswich vs Liverpool + Sparta vs Zwolle",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Ospite almeno un Tempo + Over 2.5",
+      "quota": 1.9,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Premier League + Eredivise",
+      "codice": "100591",
+      "data": "2026-09-04",
+      "telegram_message_id": 500
     }
   ]
 }
