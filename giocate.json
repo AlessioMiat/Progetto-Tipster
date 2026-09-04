@@ -1160,6 +1160,18 @@
       "codice": "100591",
       "data": "2026-09-04",
       "telegram_message_id": 500
+    },
+    {
+      "evento": "Al Shabab vs Al Hilal",
+      "tipologia": "Marcatore",
+      "selezione": "Watkins marcatore XL",
+      "quota": 1.66,
+      "stake": 5,
+      "esito": "in_attesa",
+      "campionato": "Saudi Legue",
+      "codice": "627065",
+      "data": "2026-09-04",
+      "telegram_message_id": 501
     }
   ]
 }
