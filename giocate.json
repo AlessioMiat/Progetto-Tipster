@@ -1195,6 +1195,18 @@
       "codice": "760906",
       "data": "2026-09-05",
       "telegram_message_id": 511
+    },
+    {
+      "evento": "Schalke vs Bayern",
+      "tipologia": "Marcatore",
+      "selezione": "Saibari marcatore XXL",
+      "quota": 1.94,
+      "stake": 6,
+      "esito": "in_attesa",
+      "campionato": "Bundesliga",
+      "codice": "333528",
+      "data": "2026-09-05",
+      "telegram_message_id": 515
     }
   ]
 }
