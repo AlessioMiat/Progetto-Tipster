@@ -1184,6 +1184,17 @@
       "codice": "111703",
       "data": "2026-09-05",
       "telegram_message_id": 509
+    },
+    {
+      "evento": "Premier + Bundesliga",
+      "tipologia": "Tridente",
+      "selezione": "Halland e Igor almeno 2 goal + Kleindiest marcatore XXL + Schick Marcatore XXL",
+      "quota": 6.04,
+      "stake": 1.5,
+      "esito": "in_attesa",
+      "codice": "760906",
+      "data": "2026-09-05",
+      "telegram_message_id": 511
     }
   ]
 }
