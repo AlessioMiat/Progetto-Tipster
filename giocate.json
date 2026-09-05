@@ -1172,6 +1172,18 @@
       "codice": "627065",
       "data": "2026-09-04",
       "telegram_message_id": 501
+    },
+    {
+      "evento": "M.City vs Coventry + Schalke vs Bayern",
+      "tipologia": "RaddoppioAI",
+      "selezione": "1 Handicap Casa +       Over 2.5 ospite",
+      "quota": 2.09,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Premier League + Bundesliga",
+      "codice": "111703",
+      "data": "2026-09-05",
+      "telegram_message_id": 509
     }
   ]
 }
