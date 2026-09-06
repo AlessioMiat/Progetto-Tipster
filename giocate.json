@@ -1219,6 +1219,18 @@
       "codice": "627541",
       "data": "2026-09-06",
       "telegram_message_id": 518
+    },
+    {
+      "evento": "Frosinone vs Venezia + Francoforte vs Ausburg",
+      "tipologia": "RaddoppioAI",
+      "selezione": "1-3 casa e 0-2 ospite + 1x",
+      "quota": 1.97,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Serie A + Bundesliga",
+      "codice": "360346",
+      "data": "2026-09-06",
+      "telegram_message_id": 519
     }
   ]
 }
