@@ -1243,6 +1243,18 @@
       "codice": "750428",
       "data": "2026-09-06",
       "telegram_message_id": 520
+    },
+    {
+      "evento": "Trabzonspor vs Genglerbirligi",
+      "tipologia": "Marcatore",
+      "selezione": "Salah marcatore XL",
+      "quota": 1.83,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Super lig",
+      "codice": "036278",
+      "data": "2026-09-06",
+      "telegram_message_id": 522
     }
   ]
 }
