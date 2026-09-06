@@ -1207,6 +1207,18 @@
       "codice": "333528",
       "data": "2026-09-05",
       "telegram_message_id": 515
+    },
+    {
+      "evento": "Rennes o marsiglia + Valencia vs Barcellona",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Segna Gouiri o Lepaul + Raphinha o Yamal",
+      "quota": 1.95,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Ligue 1 + Laliga",
+      "codice": "627541",
+      "data": "2026-09-06",
+      "telegram_message_id": 518
     }
   ]
 }
