@@ -1231,6 +1231,18 @@
       "codice": "360346",
       "data": "2026-09-06",
       "telegram_message_id": 519
+    },
+    {
+      "evento": "Bologna vs Sassuolo + Marsiglia vs Paris fc",
+      "tipologia": "RaddoppioAI",
+      "selezione": "1x+ 1-5 + 1x+1-5",
+      "quota": 1.97,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Serie A + Ligue 1",
+      "codice": "750428",
+      "data": "2026-09-06",
+      "telegram_message_id": 520
     }
   ]
 }
