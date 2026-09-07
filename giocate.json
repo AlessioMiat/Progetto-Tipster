@@ -1255,6 +1255,17 @@
       "codice": "036278",
       "data": "2026-09-06",
       "telegram_message_id": 522
+    },
+    {
+      "evento": "Saudi pro league + Serie B",
+      "tipologia": "Tridente",
+      "selezione": "Watkins XXL + Pohjanpalo XXL",
+      "quota": 3.05,
+      "stake": 1.5,
+      "esito": "in_attesa",
+      "codice": "872472",
+      "data": "2026-09-07",
+      "telegram_message_id": 532
     }
   ]
 }
