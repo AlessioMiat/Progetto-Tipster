@@ -1266,6 +1266,18 @@
       "codice": "872472",
       "data": "2026-09-07",
       "telegram_message_id": 532
+    },
+    {
+      "evento": "Porto Vs City + Dortmund vs Villareal",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 8.5 tiri tot casa + Over 1.5 Casa",
+      "quota": 1.97,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Champions League",
+      "codice": "026170",
+      "data": "2026-09-08",
+      "telegram_message_id": 536
     }
   ]
 }
