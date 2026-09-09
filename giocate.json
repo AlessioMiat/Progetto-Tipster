@@ -1289,6 +1289,18 @@
       "codice": "489762",
       "data": "2026-09-09",
       "telegram_message_id": 540
+    },
+    {
+      "evento": "Napoli vs Arsenal",
+      "tipologia": "Live",
+      "selezione": "Ospite over 0.5",
+      "quota": 1.7,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "Champions",
+      "codice": "065974",
+      "data": "2026-09-09",
+      "telegram_message_id": 551
     }
   ]
 }
