@@ -1301,6 +1301,18 @@
       "codice": "065974",
       "data": "2026-09-09",
       "telegram_message_id": 551
+    },
+    {
+      "evento": "Psv vs Shaktar + Bayern vs Bodo",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5 + over 3.5",
+      "quota": 1.85,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Champions",
+      "codice": "827483",
+      "data": "2026-09-10",
+      "telegram_message_id": 561
     }
   ]
 }
