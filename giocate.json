@@ -1313,6 +1313,17 @@
       "codice": "827483",
       "data": "2026-09-10",
       "telegram_message_id": 561
+    },
+    {
+      "evento": "Champions + Eredivise",
+      "tipologia": "Tridente",
+      "selezione": "Sesko XL + Olise Assist XL",
+      "quota": 2.91,
+      "stake": 2,
+      "esito": "in_attesa",
+      "codice": "985899",
+      "data": "2026-09-10",
+      "telegram_message_id": 562
     }
   ]
 }
