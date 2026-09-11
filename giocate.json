@@ -1336,6 +1336,18 @@
       "codice": "879472",
       "data": "2026-09-11",
       "telegram_message_id": 570
+    },
+    {
+      "evento": "Ried vs Salisburgo",
+      "tipologia": "Marcatore",
+      "selezione": "Tabakovic XXL",
+      "quota": 1.96,
+      "stake": 5,
+      "esito": "in_attesa",
+      "campionato": "Bundesliga Austria",
+      "codice": "424865",
+      "data": "2026-09-11",
+      "telegram_message_id": 571
     }
   ]
 }
