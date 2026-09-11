@@ -1348,6 +1348,18 @@
       "codice": "424865",
       "data": "2026-09-11",
       "telegram_message_id": 571
+    },
+    {
+      "evento": "Venezia vs Fiorentina",
+      "tipologia": "Marcatore",
+      "selezione": "Mastantuono quasi marcatori  XL",
+      "quota": 2.3,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Serie A",
+      "codice": "240643",
+      "data": "2026-09-11",
+      "telegram_message_id": 572
     }
   ]
 }
