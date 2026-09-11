@@ -1324,6 +1324,18 @@
       "codice": "985899",
       "data": "2026-09-10",
       "telegram_message_id": 562
+    },
+    {
+      "evento": "Venezia vs Fiorentina",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 1.5 + over 6.5 corner + over 11.5 tiri tot sq2",
+      "quota": 1.72,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "Serie A",
+      "codice": "879472",
+      "data": "2026-09-11",
+      "telegram_message_id": 570
     }
   ]
 }
