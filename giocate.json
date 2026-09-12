@@ -1360,6 +1360,17 @@
       "codice": "240643",
       "data": "2026-09-11",
       "telegram_message_id": 572
+    },
+    {
+      "evento": "Bundesliga + Premier + Eredivise",
+      "tipologia": "Tridente",
+      "selezione": "Guirassy Xl+ Isak XL + Weghorst",
+      "quota": 4.83,
+      "stake": 2,
+      "esito": "in_attesa",
+      "codice": "321767",
+      "data": "2026-09-12",
+      "telegram_message_id": 581
     }
   ]
 }
