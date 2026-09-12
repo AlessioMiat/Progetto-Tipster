@@ -1371,6 +1371,18 @@
       "codice": "321767",
       "data": "2026-09-12",
       "telegram_message_id": 581
+    },
+    {
+      "evento": "Al-Khaleeb vs Al Nassar",
+      "tipologia": "Live",
+      "selezione": "Ospite over 0.5",
+      "quota": 2.1,
+      "stake": 2,
+      "esito": "in_attesa",
+      "campionato": "saudi league",
+      "codice": "514602",
+      "data": "2026-09-12",
+      "telegram_message_id": 587
     }
   ]
 }
