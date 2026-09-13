@@ -1430,6 +1430,18 @@
       "codice": "241642",
       "data": "2026-09-13",
       "telegram_message_id": 604
+    },
+    {
+      "evento": "Sassuolo vs Juventus",
+      "tipologia": "Marcatore",
+      "selezione": "Kolo Muani  XL",
+      "quota": 2.31,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Serie A",
+      "codice": "797135",
+      "data": "2026-09-13",
+      "telegram_message_id": 606
     }
   ]
 }
