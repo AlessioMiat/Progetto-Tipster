@@ -1383,6 +1383,18 @@
       "codice": "514602",
       "data": "2026-09-12",
       "telegram_message_id": 587
+    },
+    {
+      "evento": "Elverdberg vs Bayern + Napoli vs Bologna",
+      "tipologia": "RaddoppioAI",
+      "selezione": "Over 2.5 osp + 1-3 casa & 1x",
+      "quota": 1.96,
+      "stake": 4,
+      "esito": "in_attesa",
+      "campionato": "bundesliga + Serie A",
+      "codice": "552699",
+      "data": "2026-09-13",
+      "telegram_message_id": 594
     }
   ]
 }
