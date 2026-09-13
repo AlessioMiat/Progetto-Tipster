@@ -1407,6 +1407,17 @@
       "codice": "691655",
       "data": "2026-09-13",
       "telegram_message_id": 595
+    },
+    {
+      "evento": "Laliga, Bundesliga, Liga portugal",
+      "tipologia": "Tridente",
+      "selezione": "yamal XXL, kane XL, Pavlidis XL",
+      "quota": 3.4,
+      "stake": 1.5,
+      "esito": "in_attesa",
+      "codice": "152061",
+      "data": "2026-09-13",
+      "telegram_message_id": 599
     }
   ]
 }
