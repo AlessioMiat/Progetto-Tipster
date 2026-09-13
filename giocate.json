@@ -1418,6 +1418,18 @@
       "codice": "152061",
       "data": "2026-09-13",
       "telegram_message_id": 599
+    },
+    {
+      "evento": "diriyah club vs Abha",
+      "tipologia": "Marcatore",
+      "selezione": "Nunez  XL",
+      "quota": 1.74,
+      "stake": 3,
+      "esito": "in_attesa",
+      "campionato": "Eliteserien",
+      "codice": "241642",
+      "data": "2026-09-13",
+      "telegram_message_id": 604
     }
   ]
 }
