@@ -1073,11 +1073,12 @@
       "selezione": "Kolo Muani marcatore plus",
       "quota": 1.88,
       "stake": 2,
-      "esito": "persa",
+      "esito": "vinta",
       "campionato": "Serie A",
       "codice": "PIRO20776",
       "data": "2026-08-29",
-      "telegram_message_id": 448
+      "telegram_message_id": 448,
+      "nota": "Esito confermato da Alessio il 16/09/2026 (mercato reale non registrato nel campo selezione)"
     },
     {
       "evento": "Rennes vs Le Mans + Real vs Malaga + Feyenoord vs Den Haag",
@@ -1096,11 +1097,12 @@
       "selezione": "Cunha marcatore plus",
       "quota": 2.48,
       "stake": 2,
-      "esito": "in_attesa",
+      "esito": "vinta",
       "campionato": "Premier Legue",
       "codice": "CASE20790",
       "data": "2026-08-30",
-      "telegram_message_id": 460
+      "telegram_message_id": 460,
+      "nota": "Esito confermato da Alessio il 16/09/2026 (mercato reale non registrato nel campo selezione)"
     },
     {
       "evento": "Cagliari vs Inter",
@@ -1108,11 +1110,12 @@
       "selezione": "Lautaro marcatore plus",
       "quota": 1.93,
       "stake": 2,
-      "esito": "persa",
+      "esito": "vinta",
       "campionato": "Serie A",
       "codice": "CORO20793",
       "data": "2026-08-30",
-      "telegram_message_id": 466
+      "telegram_message_id": 466,
+      "nota": "Esito confermato da Alessio il 16/09/2026 (mercato reale non registrato nel campo selezione)"
     },
     {
       "evento": "Barcellona vs Rayo & Benfica vs Estoril",
