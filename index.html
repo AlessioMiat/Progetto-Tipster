@@ -1156,14 +1156,12 @@
       const stakeCol = g.tipologia === "Paracadute" ? "libero"
         : g.tipologia === "QuoteBoostate" ? (typeof g.importo === "number" ? g.importo + " €" : "max bet")
         : g.stake + " u";
-      const codiceCol = (g.codice || '<span style="color:var(--ink-muted)">—</span>') +
-        (g.nota ? '<div style="font-size:11.5px;color:var(--ink-secondary);font-style:italic;margin-top:2px">' + g.nota + '</div>' : "");
-      return '<tr><td>' + g.data + '</td><td>' + t.icon + ' ' + g.tipologia + '</td><td>' + codiceCol + '</td>' +
+      return '<tr><td>' + g.data + '</td><td>' + t.icon + ' ' + g.tipologia + '</td>' +
         '<td>' + quotaCol + '</td><td>' + stakeCol + '</td><td>' + badge + '</td></tr>';
     }).join("");
 
     tableHost.innerHTML =
-      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Tipologia</th><th>Codice</th><th>Quota</th><th>Stake</th><th>Esito</th></tr></thead>' +
+      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Tipologia</th><th>Quota</th><th>Stake</th><th>Esito</th></tr></thead>' +
       '<tbody>' + trs + '</tbody></table></div>';
   }
 
