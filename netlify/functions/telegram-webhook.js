@@ -15,7 +15,7 @@ const { leggiFileJson, scriviFileJson } = require("./lib/github-files");
 const { gestisciMessaggioPrivato } = require("./lib/recap");
 const { chiamaApi } = require("./lib/telegram");
 
-const TIPOLOGIE_VALIDE = ["Tridente", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"];
+const TIPOLOGIE_VALIDE = ["Tridente", "Pokerino", "Marcatore", "RaddoppioAI", "Live", "QuoteBoostate", "Paracadute"];
 
 // Sticker di risposta che segnano l'esito (file_unique_id, stabile per sticker
 // anche se lo si invia da chat diverse). Aggiornati il 13/07/2026 con i due
@@ -33,26 +33,51 @@ function estraiCampo(testo, etichetta) {
   return m ? m[1].trim() : null;
 }
 
+// Hashtag riconosciuto senza badare a maiuscole (#pokerino = #Pokerino).
 function estraiTipologia(testo) {
-  return TIPOLOGIE_VALIDE.find(t => testo.includes("#" + t)) || null;
+  const t = testo.toLowerCase();
+  return TIPOLOGIE_VALIDE.find(tip => t.includes("#" + tip.toLowerCase())) || null;
 }
 
+// "1,85" / "5u" / "5 unità" / "200€" -> numero
+function numero(str) {
+  return parseFloat(String(str).replace(",", ".").replace(/[^\d.]/g, ""));
+}
+
+// Formato dal 14/09/2026: solo hashtag + Quota, Unità, Codice. Evento,
+// Campionato e Selezione non si scrivono piu'. "Unità:" e il vecchio
+// "Stake:" valgono entrambi.
 function parseGiocataSecca(testo, tipologia) {
-  const evento = estraiCampo(testo, "Evento");
   const quotaStr = estraiCampo(testo, "Quota");
-  const stakeStr = estraiCampo(testo, "Stake");
-  if (!evento || !quotaStr || !stakeStr) return null;
-  const campionato = estraiCampo(testo, "Campionato");
+  const stakeStr = estraiCampo(testo, "Unit[àa]'?") || estraiCampo(testo, "Stake");
+  if (!quotaStr || !stakeStr) return null;
   const codice = estraiCampo(testo, "Codice");
   const nota = estraiCampo(testo, "Nota");
   return {
-    evento,
     tipologia,
-    selezione: estraiCampo(testo, "Selezione") || "",
-    quota: parseFloat(quotaStr.replace(",", ".")),
-    stake: parseFloat(stakeStr.replace(",", ".").replace(/u\b/i, "").trim()),
+    quota: numero(quotaStr),
+    stake: numero(stakeStr),
     esito: "in_attesa",
-    ...(campionato ? { campionato } : {}),
+    ...(codice ? { codice } : {}),
+    ...(nota ? { nota } : {})
+  };
+}
+
+// Quote Boostate: bilancio a parte (fuori dal bankroll a unita'), si gioca la
+// max bet del bookmaker -> importo in euro. Struttura definitiva ancora da
+// decidere con Alessio: per ora Quota obbligatoria, importo facoltativo.
+function parseQuoteBoostate(testo) {
+  const quotaStr = estraiCampo(testo, "Quota");
+  if (!quotaStr) return null;
+  const importoStr = estraiCampo(testo, "Max\\s*bet") || estraiCampo(testo, "Importo");
+  const importo = importoStr ? numero(importoStr) : NaN;
+  const codice = estraiCampo(testo, "Codice");
+  const nota = estraiCampo(testo, "Nota");
+  return {
+    tipologia: "QuoteBoostate",
+    quota: numero(quotaStr),
+    ...(isNaN(importo) ? {} : { importo }),
+    esito: "in_attesa",
     ...(codice ? { codice } : {}),
     ...(nota ? { nota } : {})
   };
@@ -63,21 +88,16 @@ function parseParacaduteStep(testo) {
   // anticipo) — "Ciclo" collega gli step tra loro, "Step" li ordina.
   const cicloStr = estraiCampo(testo, "Ciclo");
   const stepStr = estraiCampo(testo, "Step");
-  const evento = estraiCampo(testo, "Evento");
   const quotaStr = estraiCampo(testo, "Quota");
-  if (!cicloStr || !stepStr || !evento || !quotaStr) return null;
-  const campionato = estraiCampo(testo, "Campionato");
+  if (!cicloStr || !stepStr || !quotaStr) return null;
   const codice = estraiCampo(testo, "Codice");
   const nota = estraiCampo(testo, "Nota");
   return {
-    evento,
     tipologia: "Paracadute",
-    selezione: estraiCampo(testo, "Selezione") || "",
-    quota: parseFloat(quotaStr.replace(",", ".")),
+    quota: numero(quotaStr),
     ciclo: parseInt(cicloStr, 10),
     step: parseInt(stepStr, 10),
     esito: "in_attesa",
-    ...(campionato ? { campionato } : {}),
     ...(codice ? { codice } : {}),
     ...(nota ? { nota } : {})
   };
@@ -86,7 +106,9 @@ function parseParacaduteStep(testo) {
 function parseCaption(caption) {
   const tipologia = estraiTipologia(caption);
   if (!tipologia) return { tipologia: null, giocata: null };
-  const giocata = tipologia === "Paracadute" ? parseParacaduteStep(caption) : parseGiocataSecca(caption, tipologia);
+  const giocata = tipologia === "Paracadute" ? parseParacaduteStep(caption)
+    : tipologia === "QuoteBoostate" ? parseQuoteBoostate(caption)
+    : parseGiocataSecca(caption, tipologia);
   return { tipologia, giocata };
 }
 
@@ -112,7 +134,7 @@ exports.handler = async event => {
     }
 
     // Post modificato nel canale -> ri-parsa e aggiorna la giocata esistente
-    // (utile per correggere/aggiungere il Campionato dopo). Mantiene data ed
+    // (utile per correggere quota/unita'/codice dopo). Mantiene data ed
     // esito gia' segnato con lo sticker.
     const edited = update.edited_channel_post;
     if (edited && String(edited.chat.id) === process.env.TELEGRAM_CHAT_ID && edited.caption) {

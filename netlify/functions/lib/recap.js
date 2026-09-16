@@ -28,7 +28,7 @@ function elencoTipologie(vinte) {
 // Giorno piu' recente con almeno una vinta -> le sue giocate vinte + contesto.
 async function ottieniVinte() {
   const { data } = await leggiFileJson(process.env.GITHUB_FILE_PATH);
-  const core = data.giocate.filter(g => g.tipologia !== "Paracadute");
+  const core = data.giocate.filter(g => g.tipologia !== "Paracadute" && g.tipologia !== "QuoteBoostate");
   const dateVinte = core.filter(g => g.esito === "vinta").map(g => g.data);
   if (dateVinte.length === 0) return null;
   const targetDate = dateVinte.sort().slice(-1)[0];

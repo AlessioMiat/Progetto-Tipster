@@ -510,8 +510,14 @@
   </div>
 
   <div class="section">
+    <h2>✅ Quote Boostate</h2>
+    <p class="section-sub">Bilancio a parte dal 1° settembre 2026 — si gioca la max bet, importo in euro. Non entra nel bankroll a unità.</p>
+    <div id="quoteBoostateHost"></div>
+  </div>
+
+  <div class="section">
     <h2>🪂 Paracadute</h2>
-    <p class="section-sub">Scala a 3 step all-in con incasso parziale — importo libero, non a unità. Simulazione: quanto avresti in tasca partendo da uno stake fisso ipotetico.</p>
+    <p class="section-sub">Scala a 3 step all-in: al terzo step vinto il ciclo si chiude vinto (metà in tasca, metà riparte). Importo libero, non a unità. Simulazione: quanto avresti in tasca partendo da uno stake fisso ipotetico.</p>
     <div class="calc-row">
       <label for="paraBaseInput">Stake iniziale ipotetico</label>
       <div class="calc-input-wrap">
@@ -535,14 +541,18 @@
   /* ============================================================
      DATI — caricati da dati/giocate.json (fonte di verità unica),
      non più embeddati qui. Schema di ogni giocata, per riferimento:
-     Giocata secca ("codice"/"nota" opzionali, solo informativi):
-       { data, evento, tipologia, selezione, quota, stake, esito, codice?, nota? }
+     Giocata secca (dal 14/09/2026 senza evento/campionato/selezione;
+     le giocate vecchie li hanno ancora ma non vengono mostrati):
+       { data, tipologia, quota, stake, esito, codice?, nota? }
+     Quote Boostate (bilancio a parte dal 1° settembre 2026, max bet
+     in euro, fuori dal bankroll a unità):
+       { data, tipologia: "QuoteBoostate", quota, importo?, esito, codice? }
      Paracadute (importo LIBERO, non a unità — ogni STEP è la sua
      riga: non si conoscono step 2/3 finché non li giocate davvero.
      Righe con lo stesso "ciclo" vengono raggruppate e ordinate per
-     "step"; il ciclo vince se lo step 3 vince, perde se un step
+     "step"; il ciclo si chiude vinto allo step 3, perde se uno step
      qualsiasi perde):
-       { data, evento, tipologia: "Paracadute", selezione, quota, ciclo, step, esito, codice? }
+       { data, tipologia: "Paracadute", quota, ciclo, step, esito, codice? }
      esito è "vinta" | "persa" | "in_attesa". Il bot (o il comando
      "traccia giocata") scrive solo su dati/giocate.json — questa
      pagina si limita a leggerlo ad ogni caricamento.
@@ -550,15 +560,18 @@
   let BANKROLL_INIZIALE = 100;
   const CORE_TIPOLOGIE = [
     { key: "Tridente",       icon: "🔱" },
+    { key: "Pokerino",       icon: "🃏" },
     { key: "Marcatore",      icon: "⚽" },
     { key: "RaddoppioAI",    icon: "🤖" },
-    { key: "Live",           icon: "🎥" },
-    { key: "QuoteBoostate",  icon: "✅" }
+    { key: "Live",           icon: "🎥" }
   ];
+  // Quote Boostate e Paracadute hanno una cassa a parte (importo in euro,
+  // non unità): stanno nelle loro sezioni, mai nel bankroll principale.
+  const QUOTE_BOOSTATE = { key: "QuoteBoostate", icon: "✅" };
   const PARACADUTE = { key: "Paracadute", icon: "🪂" };
-  const TIPOLOGIE = [...CORE_TIPOLOGIE, PARACADUTE];
+  const TIPOLOGIE = [...CORE_TIPOLOGIE, QUOTE_BOOSTATE, PARACADUTE];
 
-  function isCoreBet(g) { return g.tipologia !== "Paracadute"; }
+  function isCoreBet(g) { return g.tipologia !== "Paracadute" && g.tipologia !== "QuoteBoostate"; }
 
   let GIOCATE = [];
 
@@ -577,8 +590,8 @@
   }
 
   function computeStats(rows) {
-    // Il Paracadute ha un modello economico diverso (importo libero, non a
-    // unità) — anche se rows contiene righe Paracadute (es. dentro un mese),
+    // Paracadute e Quote Boostate hanno un modello economico diverso (importo
+    // in euro, non a unità) — anche se rows le contiene (es. dentro un mese),
     // qui vengono sempre escluse dal calcolo di vinte/perse/winrate/profitto.
     const core = rows.filter(isCoreBet);
     const settled = core.filter(isSettled);
@@ -829,7 +842,7 @@
         ultimaData = s.data;
         if (s.esito === "vinta") {
           running = running * s.quota;
-          if (s.step >= 3) esito = "vinta";
+          if (s.step >= 3) { esito = "vinta"; break; } // ciclo chiuso: niente step oltre il 3
         } else if (s.esito === "persa") {
           esito = "persa";
           break;
@@ -880,7 +893,7 @@
     }).join(" → ");
 
     const dettaglioStep = steps => steps.map(s =>
-      '<div style="font-size:11.5px;color:var(--ink-secondary)">Step ' + s.step + ': ' + s.evento + ' — ' + s.selezione +
+      '<div style="font-size:11.5px;color:var(--ink-secondary)">Step ' + s.step + ' · ' + s.quota.toFixed(2) +
       (s.codice ? ' <span style="color:var(--ink-muted)">#' + s.codice + '</span>' : '') + '</div>'
     ).join("");
 
@@ -902,6 +915,62 @@
 
     host.innerHTML = stats +
       '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Ciclo</th><th>Percorso quote</th><th>Stake sim.</th><th>Risultato sim.</th><th>Esito</th></tr></thead>' +
+      '<tbody>' + trs + '</tbody></table></div>';
+  }
+
+  /* ============================================================
+     Render: Quote Boostate (bilancio a parte, dal 1° settembre 2026)
+     Si gioca la max bet del bookmaker: importo in euro, non unità —
+     per questo non entra nel bankroll principale né nel win rate.
+     Struttura definitiva ancora da definire con Alessio.
+     ============================================================ */
+  const QB_DATA_INIZIO = "2026-09-01";
+
+  function renderQuoteBoostate() {
+    const host = document.getElementById("quoteBoostateHost");
+    const rows = GIOCATE.filter(g => g.tipologia === "QuoteBoostate" && g.data >= QB_DATA_INIZIO);
+    if (rows.length === 0) {
+      host.innerHTML = '<div class="chart-empty"><div class="glyph">✅</div><p>Nessuna Quota Boostata registrata da settembre.</p></div>';
+      return;
+    }
+    const risultatoEuro = g => {
+      if (typeof g.importo !== "number") return null;
+      if (g.esito === "vinta") return g.importo * (g.quota - 1);
+      if (g.esito === "persa") return -g.importo;
+      return null;
+    };
+    const fmtEuro = n => (n > 0 ? "+" : "") + n.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+    const settled = rows.filter(isSettled);
+    const vinte = settled.filter(g => g.esito === "vinta").length;
+    const perse = settled.length - vinte;
+    const inCorso = rows.length - settled.length;
+    const profitto = settled.reduce((s, g) => s + (risultatoEuro(g) || 0), 0);
+
+    const stats =
+      '<div class="stats" style="margin-bottom:18px">' +
+      '<div class="stat-tile"><p class="stat-label">Giocate</p><div class="stat-value">' + rows.length + (inCorso ? ' <span style="font-size:12px;color:var(--accent)">(' + inCorso + ' in corso)</span>' : '') + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Vinte</p><div class="stat-value good">' + vinte + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Perse</p><div class="stat-value critical">' + perse + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Win rate</p><div class="stat-value">' + (settled.length ? Math.round(vinte / settled.length * 100) + "%" : "—") + '</div></div>' +
+      '<div class="stat-tile"><p class="stat-label">Profitto</p><div class="stat-value ' + (profitto >= 0 ? "good" : "critical") + '">' + fmtEuro(profitto) + '</div></div>' +
+      '</div>';
+
+    const sorted = [...rows].sort((a, b) => b.data.localeCompare(a.data));
+    const trs = sorted.map(g => {
+      const badge = g.esito === "vinta" ? '<span class="badge win">✓ Vinta</span>'
+        : g.esito === "persa" ? '<span class="badge loss">✕ Persa</span>'
+        : '<span class="badge pending">⏳ In corso</span>';
+      const r = risultatoEuro(g);
+      return '<tr><td>' + g.data + '</td>' +
+        '<td>' + (g.codice || '—') + '</td>' +
+        '<td>' + g.quota.toFixed(2) + '</td>' +
+        '<td>' + (typeof g.importo === "number" ? g.importo + " €" : "—") + '</td>' +
+        '<td>' + (r === null ? "—" : fmtEuro(r)) + '</td>' +
+        '<td>' + badge + '</td></tr>';
+    }).join("");
+
+    host.innerHTML = stats +
+      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Codice</th><th>Quota</th><th>Max bet</th><th>Risultato</th><th>Esito</th></tr></thead>' +
       '<tbody>' + trs + '</tbody></table></div>';
   }
 
@@ -1082,20 +1151,19 @@
       const badge = g.esito === "vinta" ? '<span class="badge win">✓ Vinta</span>'
         : g.esito === "persa" ? '<span class="badge loss">✕ Persa</span>'
         : '<span class="badge pending">⏳ In corso</span>';
-      // Paracadute non ha quota/stake singoli ma un array "quote" e importo libero
-      const quotaCol = g.tipologia === "Paracadute"
-        ? (g.quote || []).map(q => q.toFixed(2)).join(" · ")
-        : g.quota.toFixed(2);
-      const stakeCol = g.tipologia === "Paracadute" ? "libero" : g.stake + " u";
-      const evtCol = g.evento +
-        (g.codice ? ' <span style="color:var(--ink-muted);font-size:11px">#' + g.codice + '</span>' : "") +
+      // Paracadute (importo libero) e Quote Boostate (max bet in euro) non sono a unità
+      const quotaCol = g.quota.toFixed(2);
+      const stakeCol = g.tipologia === "Paracadute" ? "libero"
+        : g.tipologia === "QuoteBoostate" ? (typeof g.importo === "number" ? g.importo + " €" : "max bet")
+        : g.stake + " u";
+      const codiceCol = (g.codice || '<span style="color:var(--ink-muted)">—</span>') +
         (g.nota ? '<div style="font-size:11.5px;color:var(--ink-secondary);font-style:italic;margin-top:2px">' + g.nota + '</div>' : "");
-      return '<tr><td>' + g.data + '</td><td>' + evtCol + '</td><td>' + t.icon + ' ' + g.tipologia + '</td>' +
+      return '<tr><td>' + g.data + '</td><td>' + t.icon + ' ' + g.tipologia + '</td><td>' + codiceCol + '</td>' +
         '<td>' + quotaCol + '</td><td>' + stakeCol + '</td><td>' + badge + '</td></tr>';
     }).join("");
 
     tableHost.innerHTML =
-      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Evento</th><th>Tipologia</th><th>Quota</th><th>Stake</th><th>Esito</th></tr></thead>' +
+      '<div class="table-scroll"><table><thead><tr><th>Data</th><th>Tipologia</th><th>Codice</th><th>Quota</th><th>Stake</th><th>Esito</th></tr></thead>' +
       '<tbody>' + trs + '</tbody></table></div>';
   }
 
@@ -1141,6 +1209,7 @@
       initTopFilters();
       initMonthDetailFilters();
       updateTop();
+      renderQuoteBoostate();
       renderParacadute();
       buildAccordion();
     })
